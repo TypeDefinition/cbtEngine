@@ -1,29 +1,29 @@
 #pragma once
 
 // Include CBT
-#include "CBTMesh.h"
-#include "Core/General/CBTLibrary.h"
+#include "cbtMesh.h"
+#include "Core/General/cbtLibrary.h"
 
 NS_CBT_BEGIN
 
-class CBTMeshBuilder
+class cbtMeshBuilder
 {
 private:
     /**
         \brief Private Constructor. All functions should be static. No objects of this class should be created.
     */
-    CBTMeshBuilder() {}
+    cbtMeshBuilder() {}
     /**
         \brief Private Destructor. All functions should be static. No objects of this class should be created.
     */
-    ~CBTMeshBuilder() {}
+    ~cbtMeshBuilder() {}
 
 public:
-    static CBTMesh* CreateScreenQuad(const cbtStr& _name);
-    static CBTMesh* CreateSkybox(const cbtStr& _name);
+    static cbtMesh* CreateScreenQuad(const cbtStr& _name);
+    static cbtMesh* CreateSkybox(const cbtStr& _name);
 
-    static CBTMesh* CreateQuad(const cbtStr& _name);
-    static CBTMesh* LoadAsset(const cbtStr& _name, const cbtStr& _filePath);
+    static cbtMesh* CreateQuad(const cbtStr& _name);
+    static cbtMesh* LoadAsset(const cbtStr& _name, const cbtStr& _filePath);
 };
 
 NS_CBT_END

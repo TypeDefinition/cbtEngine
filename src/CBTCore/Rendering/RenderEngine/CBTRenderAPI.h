@@ -1,11 +1,11 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
-enum class CBTCompareFunc
+enum class cbtCompareFunc
 {
     NEVER,
     LESS,
@@ -17,7 +17,7 @@ enum class CBTCompareFunc
     ALWAYS,
 };
 
-enum class CBTStencilOp
+enum class cbtStencilOp
 {
     KEEP,
     ZERO,
@@ -29,16 +29,16 @@ enum class CBTStencilOp
     INVERT,
 };
 
-class CBTRenderAPI
+class cbtRenderAPI
 {
 private:
-    CBTRenderAPI() {}
-    ~CBTRenderAPI() {}
+    cbtRenderAPI() {}
+    ~cbtRenderAPI() {}
 
 public:
     static void SetCulling(cbtBool _enable);
 
-    static void SetDepthFunc(CBTCompareFunc _func);
+    static void SetDepthFunc(cbtCompareFunc _func);
     static void SetDepthWrite(cbtBool _enable);
     static void SetDepthTest(cbtBool _enable); // If Depth Test is false, Clear Depth Buffer does not work.
 
@@ -52,8 +52,8 @@ public:
     static void SetScissorTest(cbtBool _enable);
 
     static void SetStencilTest(cbtBool _enable); // If Stencil Test is false, Clear Stencil Buffer does not work.
-    static void SetStencilFunc(CBTCompareFunc _func, cbtU8 _referenceValue, cbtU8 _mask = (cbtU8)0xFF);
-    static void SetStencilOp(CBTStencilOp _stencilFail, CBTStencilOp _stencilPassDepthFail, CBTStencilOp _stencilPassDepthPass);
+    static void SetStencilFunc(cbtCompareFunc _func, cbtU8 _referenceValue, cbtU8 _mask = (cbtU8)0xFF);
+    static void SetStencilOp(cbtStencilOp _stencilFail, cbtStencilOp _stencilPassDepthFail, cbtStencilOp _stencilPassDepthPass);
 };
 
 NS_CBT_END

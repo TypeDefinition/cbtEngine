@@ -1,11 +1,11 @@
 // Include CBT
-#include "GL_CBTBufferLayout.h"
+#include "GL_cbtBufferLayout.h"
 
 #ifdef CBT_OPENGL
 
 NS_CBT_BEGIN
 
-GLenum ToGLBufferUsage(CBTBufferUsage _usage)
+GLenum ToGLBufferUsage(cbtBufferUsage _usage)
 {
     switch (_usage)
     {
@@ -22,7 +22,7 @@ GLenum ToGLBufferUsage(CBTBufferUsage _usage)
     }
 }
 
-GLenum ToGLDataType(CBTBufferDataType _dataType)
+GLenum ToGLDataType(cbtBufferDataType _dataType)
 {
     switch (_dataType)
     {

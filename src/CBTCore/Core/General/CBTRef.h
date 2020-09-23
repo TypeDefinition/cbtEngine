@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Debug/CBTDebug.h"
+#include "cbtMacros.h"
+#include "Debug/cbtDebug.h"
 
 // Include STD
 #include <vector>
@@ -20,13 +20,13 @@ NS_CBT_BEGIN
         You can also delay the deletion of the object using AutoRelease(). When AutoRelease() is called, the object reference count
         of the object is decreased, but it will only be checked for deletion when ClearReleasePool() is called.
  */
-class CBTManaged
+class cbtManaged
 {
 private:
     /// The maximum size of the auto release pool.
     static constexpr cbtU32 MAX_POOL_SIZE = 65536;
     /// The buffer containing the CBTMananged objects that have called AutoRelease().
-    static CBTManaged* s_Buffer[MAX_POOL_SIZE * 2];
+    static cbtManaged* s_Buffer[MAX_POOL_SIZE * 2];
     /// The index in s_Buffer where the array of pointers of CBTManaged pointer to be checked for deletion starts.
     static cbtU32 s_ReleaseStart;
     /// The number of CBTManaged objects to be checked for deletion.
@@ -46,11 +46,11 @@ protected:
 
         \return A CBTManaged.
     */
-    CBTManaged() { AutoRelease(); }
+    cbtManaged() { AutoRelease(); }
     /**
         \brief Destructor
     */
-    virtual ~CBTManaged() {}
+    virtual ~cbtManaged() {}
 
 public:
     /**
@@ -130,11 +130,11 @@ public:
         When no longer pointing to the CBTManaged object, the reference count of the object is decreased by 1.
 */
 template <class T>
-struct CBTRef
+struct cbtRef
 {
 private:
     /// A pointer to the object.
-    CBT_ENABLE_IF_DERIVED_1(T*, CBTManaged, T) m_Managed;
+    CBT_ENABLE_IF_DERIVED_1(T*, cbtManaged, T) m_Managed;
 
 public:
     /**
@@ -144,7 +144,7 @@ public:
 
         \return A CBTRef pointing to the same CBTManaged object as _other.
     */
-    CBTRef(const CBTRef& _other)
+    cbtRef(const cbtRef& _other)
         : m_Managed(_other.m_Managed)
     {
         if (m_Managed) { m_Managed->Retain(); }
@@ -157,7 +157,7 @@ public:
 
         \return A CBTRef pointing to CBTManaged object _managed.
     */
-    CBTRef(T& _managed)
+    cbtRef(T& _managed)
         : m_Managed((&_managed))
     {
         m_Managed->Retain();
@@ -170,7 +170,7 @@ public:
 
         \return A CBTRef pointing to CBTManaged object _managed.
     */
-    CBTRef(void* _managed = nullptr)
+    cbtRef(void* _managed = nullptr)
         : m_Managed(static_cast<T*>(_managed))
     {
         if (m_Managed) { m_Managed->Retain(); }
@@ -179,7 +179,7 @@ public:
     /**
         \brief Destructor. The pointed object's reference count is decreased by 1.
     */
-    ~CBTRef()
+    ~cbtRef()
     {
         if (m_Managed) { m_Managed->AutoRelease(); }
     }
@@ -212,7 +212,7 @@ public:
 
         \return The current CBTRef object.
     */
-    CBTRef<T>& operator=(const CBTRef& _other)
+    cbtRef<T>& operator=(const cbtRef& _other)
     {
         if (_other.m_Managed) { _other.m_Managed->Retain(); }
         if (m_Managed) { m_Managed->AutoRelease(); }
@@ -227,7 +227,7 @@ public:
 
         \return The current CBTRef object.
     */
-    CBTRef<T>& operator=(T& _managed)
+    cbtRef<T>& operator=(T& _managed)
     {
         _managed.Retain();
         if (m_Managed) { m_Managed->AutoRelease(); }
@@ -241,7 +241,7 @@ public:
 
         \return The current CBTRef object.
     */
-    CBTRef<T>& operator=(void* _managed)
+    cbtRef<T>& operator=(void* _managed)
     {
         if (_managed) { static_cast<T*>(_managed)->Retain(); }
         if (m_Managed) { m_Managed->AutoRelease(); }
@@ -257,7 +257,7 @@ public:
 
         \return Returns true if pointing to the same object. Otherwise, returns false.
     */
-    cbtBool operator==(const CBTRef& _other) const { return m_Managed == _other.m_Managed; }
+    cbtBool operator==(const cbtRef& _other) const { return m_Managed == _other.m_Managed; }
     /**
         \brief Checks if this CBTRef is pointing to _managed.
 
@@ -282,7 +282,7 @@ public:
 
         \return Returns false if pointing to the same object. Otherwise, returns true.
     */
-    cbtBool operator!=(const CBTRef& _other) const { return m_Managed != _other.m_Managed; }
+    cbtBool operator!=(const cbtRef& _other) const { return m_Managed != _other.m_Managed; }
     /**
         \brief Checks if this CBTRef is not pointing to _managed.
 

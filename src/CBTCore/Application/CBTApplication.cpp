@@ -1,13 +1,13 @@
 ﻿// Include CBT
-#include "CBTApplication.h"
-#include "Core/General/CBTRef.h"
+#include "cbtApplication.h"
+#include "Core/General/cbtRef.h"
 
 // SDL
 #include <SDL.h>
 
 NS_CBT_BEGIN
 
-void CBTApplication::Run()
+void cbtApplication::Run()
 {
     Init();
     PostInit();
@@ -33,33 +33,31 @@ void CBTApplication::Run()
     Exit();
 }
 
-void CBTApplication::Init()
+void cbtApplication::Init()
 {
-    CBTGameEngine::GetInstance()->Init();
-    CBTWindowProperties winProp;
-    winProp.m_Title = CBTApplication::GetInstance()->GetName();
+    cbtGameEngine::GetInstance()->Init();
+    cbtWindowProperties winProp;
+    winProp.m_Title = cbtApplication::GetInstance()->GetName();
     winProp.m_Flags |= CBT_WINDOW_BORDERLESS;
-    CBTRenderEngine::GetInstance()->Init(winProp);
-    CBTInputEngine::GetInstance()->Init();
-    // CBTAudioEngine::GetInstance()->Init();
+    cbtRenderEngine::GetInstance()->Init(winProp);
+    cbtInputEngine::GetInstance()->Init();
 }
 
-void CBTApplication::Update()
+void cbtApplication::Update()
 {
-    CBTGameEngine::GetInstance()->Update();
-    CBTRenderEngine::GetInstance()->Update();
-    CBTInputEngine::GetInstance()->Update();
-    CBTManaged::ClearReleasePool();
+    cbtGameEngine::GetInstance()->Update();
+    cbtRenderEngine::GetInstance()->Update();
+    cbtInputEngine::GetInstance()->Update();
+    cbtManaged::ClearReleasePool();
 }
 
-void CBTApplication::Exit()
+void cbtApplication::Exit()
 {
-    CBTGameEngine::GetInstance()->Exit(); CBTGameEngine::Destroy();
-    CBTRenderEngine::GetInstance()->Exit(); CBTRenderEngine::Destroy();
-    CBTInputEngine::GetInstance()->Exit(); CBTInputEngine::Destroy();
-    // CBTAudioEngine::GetInstance()->Exit(); CBTAudioEngine::Destroy();
+    cbtGameEngine::GetInstance()->Exit(); cbtGameEngine::Destroy();
+    cbtRenderEngine::GetInstance()->Exit(); cbtRenderEngine::Destroy();
+    cbtInputEngine::GetInstance()->Exit(); cbtInputEngine::Destroy();
 
-    CBTManaged::ClearReleasePool();
+    cbtManaged::ClearReleasePool();
 }
 
 NS_CBT_END

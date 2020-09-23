@@ -1,34 +1,34 @@
 #pragma once
 
 // Include CBT
-#include "CBTMatrix.h"
-#include "CBTVector3.h"
+#include "cbtMatrix.h"
+#include "cbtVector3.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief Matrix Utility Class
 */
-class CBTMatrixUtil
+class cbtMatrixUtil
 {
 private:
     // Constructor(s) & Destructor
     /**
-        \brief Constructor of MatrixUtil.
-               It is private to prevent the creation and destruction of a MatrixUtil object.
-               MatrixUtil is purely an interface class.
+        \brief Constructor of cbtMatrixUtil.
+               It is private to prevent the creation and destruction of a cbtMatrixUtil object.
+               cbtMatrixUtil is purely an interface class.
 
-        \sa ~MatrixUtil().
+        \sa ~cbtMatrixUtil().
     */
-    CBTMatrixUtil() {}
+    cbtMatrixUtil() {}
     /**
-        \brief Destructor of MatrixUtil.
-               It is private to prevent the creation and destruction of a MatrixUtil object.
-               MatrixUtil is purely an interface class.
+        \brief Destructor of cbtMatrixUtil.
+               It is private to prevent the creation and destruction of a cbtMatrixUtil object.
+               cbtMatrixUtil is purely an interface class.
 
-        \sa MatrixUtil().
+        \sa cbtMatrixUtil().
     */
-    ~CBTMatrixUtil() {}
+    ~cbtMatrixUtil() {}
 
 public:
     // Interface Function(s)
@@ -40,9 +40,9 @@ public:
         \return Returns the transpose of _matrix.
     */
     template<typename T, cbtU32 ROW_COUNT, cbtU32 COLUMN_COUNT>
-    static CBTMatrix<T, ROW_COUNT, COLUMN_COUNT> GetTransposeMatrix(const CBTMatrix<T, COLUMN_COUNT, ROW_COUNT>& _matrix)
+    static cbtMatrix<T, ROW_COUNT, COLUMN_COUNT> GetTransposeMatrix(const cbtMatrix<T, COLUMN_COUNT, ROW_COUNT>& _matrix)
     {
-        CBTMatrix<T, ROW_COUNT, COLUMN_COUNT> transposeMatrix;
+        cbtMatrix<T, ROW_COUNT, COLUMN_COUNT> transposeMatrix;
         for (cbtU32 column = 0; column < COLUMN_COUNT; ++column)
         {
             for (cbtU32 row = 0; row < ROW_COUNT; ++row)
@@ -63,9 +63,9 @@ public:
         \return Returns the minor Matrix of _matrix with _cofactorRow and _cofactorColumn.
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBTMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> GetMinorMatrix(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix, cbtU32 cofactorColumn, cbtU32 cofactorRow)
+    static cbtMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> GetMinorMatrix(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix, cbtU32 cofactorColumn, cbtU32 cofactorRow)
     {
-        CBTMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> minorMatrix;
+        cbtMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> minorMatrix;
         for (cbtU32 majorColumn = 0, minorColumn = 0; majorColumn < MATRIX_SIZE; ++majorColumn)
         {
             if (majorColumn == cofactorColumn) { continue; }
@@ -93,7 +93,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
         T determinant = static_cast<T>(0);
 
@@ -105,7 +105,7 @@ public:
             if ((column & 1) == 1) { cofactor = -cofactor; }
 
             // Get the minor Matrix.
-            CBTMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> minorMatrix = GetMinorMatrix(_matrix, column, 0);
+            cbtMatrix<T, MATRIX_SIZE - 1, MATRIX_SIZE - 1> minorMatrix = GetMinorMatrix(_matrix, column, 0);
             
             // Add to the determinant.
             determinant += GetDeterminant(minorMatrix) * cofactor;
@@ -125,7 +125,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template <typename T>
-    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const CBTMatrix<T, 2, 2>& _matrix) { return (_matrix[0][0] * _matrix[1][1]) - (_matrix[1][0] * _matrix[0][1]); }
+    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const cbtMatrix<T, 2, 2>& _matrix) { return (_matrix[0][0] * _matrix[1][1]) - (_matrix[1][0] * _matrix[0][1]); }
 
     /**
         \brief Get the determinant of a Matrix.
@@ -138,7 +138,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template <typename T>
-    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const CBTMatrix<T, 1, 1>& _matrix) { return _matrix[0][0]; }
+    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const cbtMatrix<T, 1, 1>& _matrix) { return _matrix[0][0]; }
 
     /**
         \brief Get the determinant of a Matrix.
@@ -151,7 +151,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template <typename T>
-    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const CBTMatrix<T, 0, 0>& _matrix) { return static_cast<T>(1); }
+    static CBT_ENABLE_IF_FLOAT(T, T) GetDeterminant(const cbtMatrix<T, 0, 0>& _matrix) { return static_cast<T>(1); }
     
     /**
         \brief Get the cofactor Matrix of a Matrix.
@@ -164,9 +164,9 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetCofactorMatrix(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetCofactorMatrix(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
-        CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE> cofactorMatrix;
+        cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE> cofactorMatrix;
 
         for (cbtU32 column = 0; column < MATRIX_SIZE; ++column)
         {
@@ -201,7 +201,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template<typename T>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), 1, 1> GetCofactorMatrix(const CBTMatrix<T, 1, 1>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), 1, 1> GetCofactorMatrix(const cbtMatrix<T, 1, 1>& _matrix)
     {
         return _matrix;
     }
@@ -217,7 +217,7 @@ public:
         \see Template Function Recursion: [https://msdn.microsoft.com/en-us/library/cdfz33t0.aspx]
     */
     template<typename T>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), 0, 0> GetCofactorMatrix(const CBTMatrix<T, 0, 0>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), 0, 0> GetCofactorMatrix(const cbtMatrix<T, 0, 0>& _matrix)
     {
         return _matrix;
     }
@@ -232,7 +232,7 @@ public:
         \warning GetAdjugateMatrix(const Matrix<T, MATRIX_SIZE, MATRIX_SIZE>&) can only be used on a square Matrix of floating point types.
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetAdjugateMatrix(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetAdjugateMatrix(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
         return GetTransposeMatrix(GetCofactorMatrix(_matrix));
     }
@@ -247,7 +247,7 @@ public:
         \warning GetInverseMatrix(const Matrix<T, MATRIX_SIZE, MATRIX_SIZE>&) can only be used on a square Matrix of floating point types.
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetInverseMatrix(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), MATRIX_SIZE, MATRIX_SIZE> GetInverseMatrix(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
         CBT_ASSERT(IsInvertible(_matrix));
 
@@ -264,13 +264,13 @@ public:
         \warning GetInverseMatrix(const Matrix<T, 4, 4>&) can only be used on a square Matrix of floating point types.
     */
     template<typename T>
-    static CBTMatrix<CBT_ENABLE_IF_FLOAT(T, T), 4, 4> GetInverseMatrix(const CBTMatrix<T, 4, 4>& _matrix)
+    static cbtMatrix<CBT_ENABLE_IF_FLOAT(T, T), 4, 4> GetInverseMatrix(const cbtMatrix<T, 4, 4>& _matrix)
     {
         /* Previously, m_Value of CBTMatrix was public, so these equations was something like inverse.m_Value[5] = ...
         Since m_Value is not longer public, and I don't feel like manually counting which index in m_Value corresponds to which column and row,
         I simply replace .m_Value with [0] and it returns the same thing. This is why you see things like _matrix[0][15] for a 4 by 4 matrix. */
 
-        CBTMatrix<T, 4, 4> inverse;
+        cbtMatrix<T, 4, 4> inverse;
 
         inverse[0][0] =
             _matrix[0][5] * _matrix[0][10] * _matrix[0][15] -
@@ -401,7 +401,7 @@ public:
             _matrix[0][8] * _matrix[0][2] * _matrix[0][5];
 
         T determinant = _matrix[0][0] * inverse[0][0] + _matrix[0][1] * inverse[0][4] + _matrix[0][2] * inverse[0][8] + _matrix[0][3] * inverse[0][12];
-        CBT_ASSERT(!CBTMathUtil::IsApproxEqual(determinant, static_cast<T>(0)));
+        CBT_ASSERT(!cbtMathUtil::IsApproxEqual(determinant, static_cast<T>(0)));
         determinant = static_cast<T>(1) / determinant;
 
         for (cbtU32 i = 0; i < 16; ++i)
@@ -422,9 +422,9 @@ public:
         \warning IsInvertible(const Matrix<T, MATRIX_SIZE, MATRIX_SIZE>&) can only be used on a square Matrix of floating point types.
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBT_ENABLE_IF_FLOAT(T, cbtBool) IsInvertible(const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static CBT_ENABLE_IF_FLOAT(T, cbtBool) IsInvertible(const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
-        return !CBTMathUtil::IsApproxEqual(GetDeterminant(_matrix), static_cast<T>(0));
+        return !cbtMathUtil::IsApproxEqual(GetDeterminant(_matrix), static_cast<T>(0));
     }
 
     /**
@@ -437,7 +437,7 @@ public:
         \warning SetToIdentity(Matrix<T, MATRIX_SIZE, MATRIX_SIZE>&) can only be used on square matrices.
     */
     template<typename T, cbtU32 MATRIX_SIZE>
-    static void SetToIdentity(CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
+    static void SetToIdentity(cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _matrix)
     {
         _matrix.SetToZero();
         for (cbtU32 i = 0; i < MATRIX_SIZE; ++i)
@@ -447,9 +447,9 @@ public:
     }
 
     template<typename T, cbtU32 MATRIX_SIZE>
-    static CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE> GetIdentityMatrix()
+    static cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE> GetIdentityMatrix()
     {
-        CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE> identityMatrix;
+        cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE> identityMatrix;
         SetToIdentity(identityMatrix);
         return identityMatrix;
     }
@@ -469,9 +469,9 @@ public:
                  So a FOV of 35° actually has a total viewing angle 70°.
         \see Perspective Matrix [http://ogldev.atspace.co.uk/www/tutorial12/tutorial12.html]
     */
-    static CBTMatrix4F GetPerspectiveMatrix(cbtF32 _aspectRatio, cbtF32 _fov, cbtF32 _nearPlane, cbtF32 _farPlane)
+    static cbtMatrix4F GetPerspectiveMatrix(cbtF32 _aspectRatio, cbtF32 _fov, cbtF32 _nearPlane, cbtF32 _farPlane)
     {
-        CBTMatrix4F perspectiveMatrix;
+        cbtMatrix4F perspectiveMatrix;
 
         /*
         AR = Aspect Ratio
@@ -486,8 +486,8 @@ public:
         |          0                  0              1              0       |
         */
 
-        perspectiveMatrix[0][0] = 1.0f / (std::tan(_fov * CBTMathUtil::DEG2RAD) * _aspectRatio);
-        perspectiveMatrix[1][1] = 1.0f / std::tan(_fov * CBTMathUtil::DEG2RAD);
+        perspectiveMatrix[0][0] = 1.0f / (std::tan(_fov * cbtMathUtil::DEG2RAD) * _aspectRatio);
+        perspectiveMatrix[1][1] = 1.0f / std::tan(_fov * cbtMathUtil::DEG2RAD);
         perspectiveMatrix[2][2] = (-_nearPlane - _farPlane) / (_nearPlane - _farPlane);
         perspectiveMatrix[3][2] = (2.0f * _farPlane * _nearPlane) / (_nearPlane - _farPlane);
         perspectiveMatrix[2][3] = 1.0f;
@@ -506,7 +506,7 @@ public:
 
         \return Returns a perspective Matrix based on the specified parameters.
     */
-    static CBTMatrix4F GetOrthographicMatrix(cbtF32 _aspectRatio, cbtF32 _orthoSize, cbtF32 _nearPlane, cbtF32 _farPlane)
+    static cbtMatrix4F GetOrthographicMatrix(cbtF32 _aspectRatio, cbtF32 _orthoSize, cbtF32 _nearPlane, cbtF32 _farPlane)
     {
         // [https://en.wikipedia.org/wiki/Orthographic_projection]
         // Most tutorial take the absolute position of the viewing box in the world as the input.
@@ -518,7 +518,7 @@ public:
         cbtF32 right = top * _aspectRatio;
         cbtF32 left = bottom * _aspectRatio;
 
-        CBTMatrix4F orthoMatrix;
+        cbtMatrix4F orthoMatrix;
         SetToIdentity(orthoMatrix);
 
         orthoMatrix[0][0] = 2.0f / (right - left);
@@ -538,13 +538,13 @@ public:
 
         \return Returns a view Matrix based on specified values.
     */
-    static CBTMatrix4F GetViewMatrix(const CBTVector3F& _forward, const CBTVector3F& _up, const CBTVector3F& _position)
+    static cbtMatrix4F GetViewMatrix(const CBTVector3F& _forward, const CBTVector3F& _up, const CBTVector3F& _position)
     {
         /* Even though OpenGL uses right handed coordinates, when converting to Camera Space, we negate the X-Axis because NDC uses left-handed coordinates
         system. In NDC, the Z-Axis points into the screen, The Y-Axis points upwards and the X-Axis points to the right. */
         CBTVector3F right = Cross(_forward, _up);
 
-        CBTMatrix4F viewMatrix;
+        cbtMatrix4F viewMatrix;
         viewMatrix[3][3] = 1.0f;
 
         // Column 0
@@ -577,9 +577,9 @@ public:
 
         \return Returns a translation Matrix based on a Vector3 translation.
     */
-    static CBTMatrix4F GetTranslationMatrix(const CBTVector3F& _translation)
+    static cbtMatrix4F GetTranslationMatrix(const CBTVector3F& _translation)
     {
-        CBTMatrix4F translationMatrix;
+        cbtMatrix4F translationMatrix;
         SetToIdentity(translationMatrix);
 
         translationMatrix[3][0] = _translation.GetX();
@@ -596,9 +596,9 @@ public:
 
         \return Returns a scale Matrix based on a Vector3 scale.
     */
-    static CBTMatrix4F GetScaleMatrix(const CBTVector3F& _scale)
+    static cbtMatrix4F GetScaleMatrix(const CBTVector3F& _scale)
     {
-        CBTMatrix4F scaleMatrix;
+        cbtMatrix4F scaleMatrix;
 
         scaleMatrix[0][0] = _scale.GetX();
         scaleMatrix[1][1] = _scale.GetY();

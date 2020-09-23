@@ -1,15 +1,15 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Debug/CBTDebug.h"
+#include "cbtMacros.h"
+#include "Debug/cbtDebug.h"
 
 // Include STD
 #include <vector>
 
 NS_CBT_BEGIN
 
-enum CBTBufferUsage
+enum cbtBufferUsage
 {
     CBT_STREAM_DRAW,
     CBT_STREAM_READ,
@@ -22,7 +22,7 @@ enum CBTBufferUsage
     CBT_DYNAMIC_COPY,
 };
 
-enum CBTBufferDataType
+enum cbtBufferDataType
 {
     // 1 BYTE
     CBT_S8,
@@ -42,46 +42,46 @@ enum CBTBufferDataType
     CBT_F64,
 };
 
-cbtU32 GetByteSize(CBTBufferDataType _dataType);
+cbtU32 GetByteSize(cbtBufferDataType _dataType);
 
-class CBTBufferLayout;
+class cbtBufferLayout;
 
-class CBTBufferElement
+class cbtBufferElement
 {
-    friend class CBTBufferLayout;
+    friend class cbtBufferLayout;
 
 private:
-    const CBTBufferDataType m_DataType;
+    const cbtBufferDataType m_DataType;
     const cbtU32 m_ComponentCount;
     const cbtBool m_Normalized;
     const cbtU32 m_ByteSize;
     cbtU32 m_Offset;
 
 public:
-    inline CBTBufferDataType GetDataType() const { return m_DataType; }
+    inline cbtBufferDataType GetDataType() const { return m_DataType; }
     inline cbtU32 GetComponentCount() const { return m_ComponentCount; }
     inline cbtBool IsNormalized() const { return m_Normalized; }
     inline cbtU32 GetByteSize() const { return m_ByteSize; }
     inline cbtU32 GetOffset() const { return m_Offset; }
 
-    CBTBufferElement(CBTBufferDataType _dataType, cbtU32 _componentCount, cbtBool _normalized)
+    cbtBufferElement(cbtBufferDataType _dataType, cbtU32 _componentCount, cbtBool _normalized)
         : m_DataType(_dataType)
         , m_ComponentCount(_componentCount)
         , m_Normalized(_normalized)
         , m_Offset(0)
         , m_ByteSize(m_ComponentCount * NS_CBT::GetByteSize(_dataType))
     {}
-    ~CBTBufferElement() {}
+    ~cbtBufferElement() {}
 };
 
-class CBTBufferLayout
+class cbtBufferLayout
 {
 private:
     cbtU32 m_ByteSize;
-    std::vector<CBTBufferElement> m_Elements;
+    std::vector<cbtBufferElement> m_Elements;
 
 public:
-    CBTBufferLayout(const std::initializer_list<CBTBufferElement>& _elements)
+    cbtBufferLayout(const std::initializer_list<cbtBufferElement>& _elements)
         : m_ByteSize(0)
         , m_Elements(_elements)
     {
@@ -91,11 +91,11 @@ public:
             m_ByteSize += m_Elements[i].m_ByteSize;
         }
     }
-    ~CBTBufferLayout() {}
+    ~cbtBufferLayout() {}
 
     inline cbtU32 GetElementCount() const { return static_cast<cbtU32>(m_Elements.size()); }
     inline cbtU32 GetByteSize() const { return m_ByteSize; }
-    inline const CBTBufferElement* GetElements() const { return m_Elements.empty() ? nullptr : &m_Elements[0]; }
+    inline const cbtBufferElement* GetElements() const { return m_Elements.empty() ? nullptr : &m_Elements[0]; }
 };
 
 NS_CBT_END

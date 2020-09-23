@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Texture/CBTTexture.h"
-#include "GL_CBTTexture.h"
+#include "Rendering/Texture/cbtTexture.h"
+#include "GL_cbtTexture.h"
 
 #ifdef CBT_OPENGL
 
@@ -13,27 +13,27 @@
 NS_CBT_BEGIN
 
 GLenum ToGLBaseFormat(GLenum _sizedFormat);
-GLenum ToGLBaseFormat(CBTPixelFormat _sizedFormat);
-GLenum ToGLSizedFormat(CBTPixelFormat _sizedFormat);
-CBTPixelFormat ToCBTSizedFormat(GLenum _sizedFormat);
+GLenum ToGLBaseFormat(cbtPixelFormat _sizedFormat);
+GLenum ToGLSizedFormat(cbtPixelFormat _sizedFormat);
+cbtPixelFormat ToCBTSizedFormat(GLenum _sizedFormat);
 cbtS32 GetMipmapLevels(cbtS32 _width, cbtS32 _height);
 
-class GL_CBTTexture : public CBTTexture
+class GL_cbtTexture : public cbtTexture
 {
 protected:
     // Variable(s)
     GLuint m_TextureName;
-    CBTTextureWrap m_WrapMode;
+    cbtTextureWrap m_WrapMode;
 
-    virtual ~GL_CBTTexture() { glDeleteTextures(1, &m_TextureName); }
+    virtual ~GL_cbtTexture() { glDeleteTextures(1, &m_TextureName); }
 
 public:
-    GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, const cbtU8* _data);
-    GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data);
-    GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat);
+    GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, const cbtU8* _data);
+    GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data);
+    GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat);
 
-    virtual void SetWrapMode(CBTTextureWrap _wrapMode);
-    virtual CBTTextureWrap GetWrapMode() const { return m_WrapMode; }
+    virtual void SetWrapMode(cbtTextureWrap _wrapMode);
+    virtual cbtTextureWrap GetWrapMode() const { return m_WrapMode; }
     virtual void Bind(cbtU32 _textureSlot) { glBindTextureUnit(_textureSlot, m_TextureName); }
 
     inline GLuint GetGLTextureName() const { return m_TextureName; }

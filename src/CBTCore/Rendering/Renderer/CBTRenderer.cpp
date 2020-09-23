@@ -1,17 +1,17 @@
 // Include CBT
-#include "CBTRenderer.h"
-#include "Core/Math/CBTPlane.h"
-#include "Game/GameEngine/CBTGameEngine.h"
-#include "Rendering/RenderEngine/CBTRenderEngine.h"
-#include "Rendering/Mesh/CBTMeshBuilder.h"
+#include "cbtRenderer.h"
+#include "Core/Math/cbtPlane.h"
+#include "Game/GameEngine/cbtGameEngine.h"
+#include "Rendering/RenderEngine/cbtRenderEngine.h"
+#include "Rendering/Mesh/cbtMeshBuilder.h"
 
 NS_CBT_BEGIN
 
 // http://www.lighthouse3d.com/tutorials/view-frustum-culling/clip-space-approach-extracting-the-planes/
-cbtBool CBTRenderer::InViewFrustum(const CBTMatrix4F& _viewProjectionMatrix, const CBTMatrix4F& _modelMatrix, const CBTBoundingBox& _boundingBox)
+cbtBool cbtRenderer::InViewFrustum(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix, const cbtBoundingBox& _boundingBox)
 {
     // The planes of the frustum.
-    CBTPlane frustumPlanes[6];
+    cbtPlane frustumPlanes[6];
     // Left Plane
     frustumPlanes[0].Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][0], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][0], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][0]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][0]);
     // Right Plane
@@ -29,15 +29,15 @@ cbtBool CBTRenderer::InViewFrustum(const CBTMatrix4F& _viewProjectionMatrix, con
     for (cbtU32 i = 0; i < 6; ++i)
     {
         cbtBool inside = false;
-        for (cbtU32 j = 0; j < CBTBoundingBox::NUM_POINTS; ++j)
+        for (cbtU32 j = 0; j < cbtBoundingBox::NUM_POINTS; ++j)
         {
-            CBTMatrix<cbtF32, 1, 4> pointModelSpace;
+            cbtMatrix<cbtF32, 1, 4> pointModelSpace;
             pointModelSpace[0][0] = _boundingBox[j].m_X;
             pointModelSpace[0][1] = _boundingBox[j].m_Y;
             pointModelSpace[0][2] = _boundingBox[j].m_Z;
             pointModelSpace[0][3] = 1.0f;
 
-            CBTMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
+            cbtMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
             CBTVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
 
             cbtF32 distance = frustumPlanes[i].DistanceToPoint(testPoint);
@@ -59,22 +59,22 @@ cbtBool CBTRenderer::InViewFrustum(const CBTMatrix4F& _viewProjectionMatrix, con
     return true;
 }
 
-cbtF32 CBTRenderer::GetObjectDistanceToCamera(const CBTMatrix4F& _viewProjectionMatrix, const CBTMatrix4F& _modelMatrix, const CBTBoundingBox& _boundingBox)
+cbtF32 cbtRenderer::GetObjectDistanceToCamera(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix, const cbtBoundingBox& _boundingBox)
 {
     // Near Plane
-    CBTPlane nearPlane;
+    cbtPlane nearPlane;
     nearPlane.Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][2]);
 
-    cbtF32 longestDistance = CBTMathUtil::F32_LOWEST;
-    for (cbtU32 i = 0; i < CBTBoundingBox::NUM_POINTS; ++i)
+    cbtF32 longestDistance = cbtMathUtil::F32_LOWEST;
+    for (cbtU32 i = 0; i < cbtBoundingBox::NUM_POINTS; ++i)
     {
-        CBTMatrix<cbtF32, 1, 4> pointModelSpace;
+        cbtMatrix<cbtF32, 1, 4> pointModelSpace;
         pointModelSpace[0][0] = _boundingBox[i].m_X;
         pointModelSpace[0][1] = _boundingBox[i].m_Y;
         pointModelSpace[0][2] = _boundingBox[i].m_Z;
         pointModelSpace[0][3] = 1.0f;
 
-        CBTMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
+        cbtMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
         CBTVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
 
         cbtF32 distance = nearPlane.DistanceToPoint(testPoint);
@@ -84,36 +84,36 @@ cbtF32 CBTRenderer::GetObjectDistanceToCamera(const CBTMatrix4F& _viewProjection
     return longestDistance;
 }
 
-CBTRenderer::CBTRenderer()
+cbtRenderer::cbtRenderer()
 {
     m_RenderScale = 1.0f;
-    m_WindowWidth = CBTRenderEngine::GetInstance()->GetWindow()->GetProperties().m_Width;
-    m_WindowHeight = CBTRenderEngine::GetInstance()->GetWindow()->GetProperties().m_Height;
+    m_WindowWidth = cbtRenderEngine::GetInstance()->GetWindow()->GetProperties().m_Width;
+    m_WindowHeight = cbtRenderEngine::GetInstance()->GetWindow()->GetProperties().m_Height;
     m_BufferWidth = (cbtS32)(m_RenderScale * (cbtF32)m_WindowWidth);
     m_BufferHeight = (cbtS32)(m_RenderScale * (cbtF32)m_WindowHeight);
 
     // Face Culling
-    CBTRenderAPI::SetCulling(true);
+    cbtRenderAPI::SetCulling(true);
     // Depth Test
-    CBTRenderAPI::SetDepthTest(true);
-    CBTRenderAPI::SetDepthFunc(CBTCompareFunc::LESS);
-    CBTRenderAPI::SetDepthWrite(true);
+    cbtRenderAPI::SetDepthTest(true);
+    cbtRenderAPI::SetDepthFunc(cbtCompareFunc::LESS);
+    cbtRenderAPI::SetDepthWrite(true);
     // Alpha Blending
-    CBTRenderAPI::SetBlendTest(false);
+    cbtRenderAPI::SetBlendTest(false);
     // Viewport
-    CBTRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
+    cbtRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
     // Scissor does not affect NDC, but acts like a mask preventing writes to the framebuffer outside of the specified area. Does not affect the textures passed in as uniforms.
     // CBTRenderAPI::SetScissor(0, 0, m_WindowWidth, m_WindowHeight);
     // CBTRenderAPI::SetScissorTest(false);
     // Alpha Blending
-    CBTRenderAPI::SetBlendTest(true);
+    cbtRenderAPI::SetBlendTest(true);
     // Stencil Test
-    CBTRenderAPI::SetStencilTest(false);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, 0, 0xFF);
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::KEEP);
+    cbtRenderAPI::SetStencilTest(false);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, 0, 0xFF);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::KEEP);
 
-    m_ScreenQuad = CBTMeshBuilder::CreateScreenQuad("Screen Quad"); m_ScreenQuad->Retain();
-    m_SkyboxMesh = CBTMeshBuilder::CreateSkybox("Skybox"); m_SkyboxMesh->Retain();
+    m_ScreenQuad = cbtMeshBuilder::CreateScreenQuad("Screen Quad"); m_ScreenQuad->Retain();
+    m_SkyboxMesh = cbtMeshBuilder::CreateSkybox("Skybox"); m_SkyboxMesh->Retain();
 
     m_GBuffer = CreateGBuffer(m_BufferWidth, m_BufferHeight); m_GBuffer->Retain();
     m_LBuffer = CreateLBuffer(m_BufferWidth, m_BufferHeight); m_LBuffer->Retain();
@@ -121,7 +121,7 @@ CBTRenderer::CBTRenderer()
     m_PBuffer = CreatePBuffer(m_BufferWidth, m_BufferHeight); m_PBuffer->Retain();
 }
 
-CBTRenderer::~CBTRenderer()
+cbtRenderer::~cbtRenderer()
 {
     m_ScreenQuad->Release();
     m_SkyboxMesh->Release();
@@ -132,30 +132,30 @@ CBTRenderer::~CBTRenderer()
     m_PBuffer->Release();
 }
 
-void CBTRenderer::Update()
+void cbtRenderer::Update()
 {
-    CBTFrameBuffer::ClearAttachmentsAll(m_GBuffer);
-    CBTFrameBuffer::ClearAttachmentsAll(m_LBuffer);
-    CBTFrameBuffer::ClearAttachmentsAll(m_FBuffer);
-    CBTFrameBuffer::ClearAttachmentsAll(m_PBuffer);
-    CBTFrameBuffer::ClearAttachmentsAll(nullptr);
+    cbtFrameBuffer::ClearAttachmentsAll(m_GBuffer);
+    cbtFrameBuffer::ClearAttachmentsAll(m_LBuffer);
+    cbtFrameBuffer::ClearAttachmentsAll(m_FBuffer);
+    cbtFrameBuffer::ClearAttachmentsAll(m_PBuffer);
+    cbtFrameBuffer::ClearAttachmentsAll(nullptr);
 
-    CBTScene* activeScene = CBTGameEngine::GetInstance()->GetSceneManager()->GetActiveScene();
+    cbtScene* activeScene = cbtGameEngine::GetInstance()->GetSceneManager()->GetActiveScene();
     if (activeScene == nullptr) { return; }
-    activeScene->GetComponentGroup<CBTLight, CBTTransform>(m_Lights);
-    activeScene->GetComponentGroup<CBTCamera, CBTTransform>(m_Cameras);
-    activeScene->GetComponentGroup<CBTGraphics, CBTTransform>(m_Objects);
+    activeScene->GetComponentGroup<cbtLight, cbtTransform>(m_Lights);
+    activeScene->GetComponentGroup<cbtCamera, cbtTransform>(m_Cameras);
+    activeScene->GetComponentGroup<cbtGraphics, cbtTransform>(m_Objects);
 
     Render();
 }
 
-void CBTRenderer::SortRenderObjects()
+void cbtRenderer::SortRenderObjects()
 {
     // Sort the entities into 3 sorting orders, CBT_RENDER_MODE_DEFERRED, CBT_RENDER_MODE_FORWARD and CBT_RENDER_MODE_FORWARD_TRANSPARENT.
-    CBTGraphics** graphicArray = m_Objects.GetArray<CBTGraphics>();
+    cbtGraphics** graphicArray = m_Objects.GetArray<cbtGraphics>();
     for (cbtU32 i = 0; i < m_Objects.GetArraySize(); ++i)
     {
-        CBTMaterial* material = graphicArray[i]->GetMaterial();
+        cbtMaterial* material = graphicArray[i]->GetMaterial();
         if (!material->IsComplete()) { continue; }
 
         /* Further sort them according to their materials to reduce the number of times we need to swap out the shader and textures and uniforms.
@@ -177,14 +177,14 @@ void CBTRenderer::SortRenderObjects()
     }
 }
 
-void CBTRenderer::ClearRenderObjects()
+void cbtRenderer::ClearRenderObjects()
 {
     m_Deferred.clear();
     m_Forward.clear();
     m_Transparent.clear();
 }
 
-void CBTRenderer::DistanceMergeSort(cbtF32* _distanceArray, cbtU32* _indexArray, cbtU32 _numElements)
+void cbtRenderer::DistanceMergeSort(cbtF32* _distanceArray, cbtU32* _indexArray, cbtU32 _numElements)
 {
     if (_numElements <= 1)
     {
@@ -238,19 +238,19 @@ void CBTRenderer::DistanceMergeSort(cbtF32* _distanceArray, cbtU32* _indexArray,
     delete[] tempIndexBuffer;
 }
 
-std::vector<cbtU32> CBTRenderer::SortTransparentObjects(const CBTMatrix4F& _viewProjectionMatrix)
+std::vector<cbtU32> cbtRenderer::SortTransparentObjects(const cbtMatrix4F& _viewProjectionMatrix)
 {
-    CBTTransform** objectTransformArray = m_Objects.GetArray<CBTTransform>();
-    CBTGraphics** objectGraphicsArray = m_Objects.GetArray<CBTGraphics>();
+    cbtTransform** objectTransformArray = m_Objects.GetArray<cbtTransform>();
+    cbtGraphics** objectGraphicsArray = m_Objects.GetArray<cbtGraphics>();
 
     std::vector<cbtF32> distance;
     std::vector<cbtU32> objects;
     for (cbtU32 i = 0; i < m_Transparent.size(); ++i)
     {
-        CBTTransform* transform = objectTransformArray[m_Transparent[i]];
-        CBTGraphics* graphics = objectGraphicsArray[m_Transparent[i]];
-        CBTMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
-        const CBTBoundingBox& boundingBox = graphics->GetMaterial()->GetMesh()->GetBoundingBox();
+        cbtTransform* transform = objectTransformArray[m_Transparent[i]];
+        cbtGraphics* graphics = objectGraphicsArray[m_Transparent[i]];
+        cbtMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
+        const cbtBoundingBox& boundingBox = graphics->GetMaterial()->GetMesh()->GetBoundingBox();
 
         if (InViewFrustum(_viewProjectionMatrix, modelMatrix, boundingBox))
         {
@@ -263,22 +263,22 @@ std::vector<cbtU32> CBTRenderer::SortTransparentObjects(const CBTMatrix4F& _view
     return objects;
 }
 
-void CBTRenderer::RenderGPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F& _projectionMatrix, const CBTMatrix4F& _viewProjectionMatrix, CBTCamera* _camCamera)
+void cbtRenderer::RenderGPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera)
 {
-    CBTFrameBuffer::Bind(m_GBuffer);
+    cbtFrameBuffer::Bind(m_GBuffer);
 
-    CBTRenderAPI::SetStencilTest(true);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, CBT_STENCIL_OPAQUE);
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::REPLACE);
+    cbtRenderAPI::SetStencilTest(true);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, CBT_STENCIL_OPAQUE);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::REPLACE);
 
-    CBTTransform** transformArray = m_Objects.GetArray<CBTTransform>();
-    for (std::unordered_map<CBTMaterial*, std::vector<cbtU32>>::iterator iter = m_Deferred.begin(); iter != m_Deferred.end(); ++iter)
+    cbtTransform** transformArray = m_Objects.GetArray<cbtTransform>();
+    for (std::unordered_map<cbtMaterial*, std::vector<cbtU32>>::iterator iter = m_Deferred.begin(); iter != m_Deferred.end(); ++iter)
     {
-        CBTMaterial* material = iter->first;
+        cbtMaterial* material = iter->first;
         std::vector<cbtU32>& arrayIndices = iter->second;
 
         // Use the shader.
-        CBTShaderProgram* shader = material->GetShader();
+        cbtShaderProgram* shader = material->GetShader();
         shader->UseProgram();
 
         // Set textures
@@ -314,18 +314,18 @@ void CBTRenderer::RenderGPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
         shader->SetUniform(CBT_U_FAR_PLANE, _camCamera->GetFarPlane());
 
         // Bind the mesh.
-        CBTMesh* mesh = material->GetMesh();
+        cbtMesh* mesh = material->GetMesh();
         mesh->Bind();
 
         // Set the mesh instance data.
-        CBTMeshInstance* meshInstances = cbtNew CBTMeshInstance[arrayIndices.size()];
+        cbtMeshInstance* meshInstances = cbtNew cbtMeshInstance[arrayIndices.size()];
         cbtU32 numVisible = 0;
         for (cbtU32 n = 0; n < (cbtU32)arrayIndices.size(); ++n)
         {
-            CBTTransform* transform = transformArray[arrayIndices[n]];
-            CBTMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
-            CBTMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
-            CBTMatrix3F normalMatrix = CBTMatrixUtil::GetTransposeMatrix(CBTMatrixUtil::GetInverseMatrix(CBTMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
+            cbtTransform* transform = transformArray[arrayIndices[n]];
+            cbtMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
+            cbtMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
+            cbtMatrix3F normalMatrix = cbtMatrixUtil::GetTransposeMatrix(cbtMatrixUtil::GetInverseMatrix(cbtMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
 
             // Frustum Culling
             if (InViewFrustum(_viewProjectionMatrix, modelMatrix, mesh->GetBoundingBox()))
@@ -339,35 +339,35 @@ void CBTRenderer::RenderGPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
         delete[] meshInstances;
 
         // Draw Mesh
-        CBTRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), numVisible);
+        cbtRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), numVisible);
     }
 
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::KEEP);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, 0, 0xFF);
-    CBTRenderAPI::SetStencilTest(false);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::KEEP);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, 0, 0xFF);
+    cbtRenderAPI::SetStencilTest(false);
 }
 
-void CBTRenderer::RenderLPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F& _projectionMatrix, CBTCamera* _camCamera, CBTTransform* _camTransform)
+void cbtRenderer::RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform)
 {
-    CBTFrameBuffer::Bind(m_LBuffer);
+    cbtFrameBuffer::Bind(m_LBuffer);
 
-    CBTRenderAPI::SetDepthTest(false);
-    CBTRenderAPI::SetDepthWrite(false);
+    cbtRenderAPI::SetDepthTest(false);
+    cbtRenderAPI::SetDepthWrite(false);
 
     // Render Lights
-    CBTShaderProgram* shader = _camCamera->GetLightingShader();
+    cbtShaderProgram* shader = _camCamera->GetLightingShader();
     shader->UseProgram();
 
     // Set Texture(s)
-    shader->SetTexture(CBT_GBUFFER_POSITION_CAMERA_SPACE, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::POSITION_CAMERA_SPACE));
-    shader->SetTexture(CBT_GBUFFER_NORMAL_CAMERA_SPACE, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::NORMAL_CAMERA_SPACE));
-    shader->SetTexture(CBT_GBUFFER_AMBIENT_COLOR, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::AMBIENT_COLOR));
-    shader->SetTexture(CBT_GBUFFER_ALBEDO_COLOR, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::ALBEDO_COLOR));
-    shader->SetTexture(CBT_GBUFFER_SPECULAR_COLOR, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::SPECULAR_COLOR));
-    shader->SetTexture(CBT_GBUFFER_GLOSS, m_GBuffer->GetColorAttachment((cbtU32)CBTGBuffer::GLOSS));
+    shader->SetTexture(CBT_GBUFFER_POSITION_CAMERA_SPACE, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::POSITION_CAMERA_SPACE));
+    shader->SetTexture(CBT_GBUFFER_NORMAL_CAMERA_SPACE, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::NORMAL_CAMERA_SPACE));
+    shader->SetTexture(CBT_GBUFFER_AMBIENT_COLOR, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::AMBIENT_COLOR));
+    shader->SetTexture(CBT_GBUFFER_ALBEDO_COLOR, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::ALBEDO_COLOR));
+    shader->SetTexture(CBT_GBUFFER_SPECULAR_COLOR, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::SPECULAR_COLOR));
+    shader->SetTexture(CBT_GBUFFER_GLOSS, m_GBuffer->GetColorAttachment((cbtU32)cbtGBuffer::GLOSS));
 
     // Set Uniform(s)
-    shader->SetUniform(CBT_U_LIGHTING_ENABLED, CBTLight::IsLightingEnabled());
+    shader->SetUniform(CBT_U_LIGHTING_ENABLED, cbtLight::IsLightingEnabled());
 
     shader->SetUniform(CBT_U_BUFFER_WIDTH, m_BufferWidth); // Ensure that this is a signed int, same as in the shader.
     shader->SetUniform(CBT_U_BUFFER_HEIGHT, m_BufferHeight); // Ensure that this is a signed int, same as in the shader.
@@ -379,8 +379,8 @@ void CBTRenderer::RenderLPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
     CBTVector3F camForward = _camTransform->GetForward();
     cbtU32 numLights = m_Lights.GetArraySize();
     cbtU32 numPasses = numLights / CBT_MAX_LIGHTS + 1;
-    CBTLight** lightLightArray = m_Lights.GetArray<CBTLight>();
-    CBTTransform** lightTransformArray = m_Lights.GetArray<CBTTransform>();
+    cbtLight** lightLightArray = m_Lights.GetArray<cbtLight>();
+    cbtTransform** lightTransformArray = m_Lights.GetArray<cbtTransform>();
     for (cbtU32 i = 0; i < numPasses; ++i)
     {
         cbtS32 activeLights = 0; // Make sure that is an int and not an unsigned int since in the shader it is an int.
@@ -389,9 +389,9 @@ void CBTRenderer::RenderLPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
             cbtU32 k = i * CBT_MAX_LIGHTS + j;
             if (k == numLights) { break; }
 
-            CBTLight* light = lightLightArray[k];
-            CBTTransform* transform = lightTransformArray[k];
-            CBTMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
+            cbtLight* light = lightLightArray[k];
+            cbtTransform* transform = lightTransformArray[k];
+            cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
             CBTVector3F directionVector;
             directionVector.m_X = Dot(camRight, transform->GetForward());
             directionVector.m_Y = Dot(camUp, transform->GetForward());
@@ -412,44 +412,44 @@ void CBTRenderer::RenderLPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
             ++activeLights;
         }
 
-        shader->SetTexture(CBT_LBUFFER_LIGHT_DIFFUSE, m_LBuffer->GetColorAttachment((cbtU32)CBTLBuffer::LIGHT_DIFFUSE));
-        shader->SetTexture(CBT_LBUFFER_LIGHT_SPECULAR, m_LBuffer->GetColorAttachment((cbtU32)CBTLBuffer::LIGHT_SPECULAR));
+        shader->SetTexture(CBT_LBUFFER_LIGHT_DIFFUSE, m_LBuffer->GetColorAttachment((cbtU32)cbtLBuffer::LIGHT_DIFFUSE));
+        shader->SetTexture(CBT_LBUFFER_LIGHT_SPECULAR, m_LBuffer->GetColorAttachment((cbtU32)cbtLBuffer::LIGHT_SPECULAR));
         shader->SetUniform(CBT_U_ACTIVE_LIGHTS, activeLights);
 
         m_ScreenQuad->Bind();
         m_ScreenQuad->SetInstanceData(0, nullptr);
 
         // Draw Mesh
-        CBTRenderAPI::DrawElementsInstanced(m_ScreenQuad->GetIndexCount(), 1);
+        cbtRenderAPI::DrawElementsInstanced(m_ScreenQuad->GetIndexCount(), 1);
     }
 
-    CBTRenderAPI::SetDepthTest(true);
-    CBTRenderAPI::SetDepthWrite(true);
+    cbtRenderAPI::SetDepthTest(true);
+    cbtRenderAPI::SetDepthWrite(true);
 }
 
-void CBTRenderer::RenderFPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F& _projectionMatrix, const CBTMatrix4F& _viewProjectionMatrix, CBTCamera* _camCamera, CBTTransform* _camTransform)
+void cbtRenderer::RenderFPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform)
 {
-    CBTFrameBuffer::Bind(m_FBuffer);
+    cbtFrameBuffer::Bind(m_FBuffer);
 
     CBTVector3F camRight = _camTransform->GetRight();
     CBTVector3F camUp = _camTransform->GetUp();
     CBTVector3F camForward = _camTransform->GetForward();
-    CBTTransform** lightTransformArray = m_Lights.GetArray<CBTTransform>();
-    CBTLight** lightLightArray = m_Lights.GetArray<CBTLight>();
-    CBTTransform** objectTransformArray = m_Objects.GetArray<CBTTransform>();
-    CBTGraphics** objectGraphicsArray = m_Objects.GetArray<CBTGraphics>();
+    cbtTransform** lightTransformArray = m_Lights.GetArray<cbtTransform>();
+    cbtLight** lightLightArray = m_Lights.GetArray<cbtLight>();
+    cbtTransform** objectTransformArray = m_Objects.GetArray<cbtTransform>();
+    cbtGraphics** objectGraphicsArray = m_Objects.GetArray<cbtGraphics>();
 
 CBT_REGION(RENDER_OPAQUE)
     // Opaque
-    CBTRenderAPI::SetStencilTest(true);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, CBT_STENCIL_OPAQUE);
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::REPLACE);
+    cbtRenderAPI::SetStencilTest(true);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, CBT_STENCIL_OPAQUE);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::REPLACE);
 
-    CBTMaterial* previousMaterial = nullptr;
-    for (std::unordered_map<CBTMaterial*, std::vector<cbtU32>>::iterator iter = m_Forward.begin(); iter != m_Forward.end(); ++iter)
+    cbtMaterial* previousMaterial = nullptr;
+    for (std::unordered_map<cbtMaterial*, std::vector<cbtU32>>::iterator iter = m_Forward.begin(); iter != m_Forward.end(); ++iter)
     {
-        CBTMaterial* material = iter->first;
-        CBTShaderProgram* shader = material->GetShader();
+        cbtMaterial* material = iter->first;
+        cbtShaderProgram* shader = material->GetShader();
 
         if (previousMaterial != material)
         {
@@ -483,7 +483,7 @@ CBT_REGION(RENDER_OPAQUE)
             shader->SetUniform(CBT_U_MIN_DISPLACEMENT_SAMPLE, material->GetMinDisplacementSamples());
             shader->SetUniform(CBT_U_MAX_DISPLACEMENT_SAMPLE, material->GetMaxDisplacementSamples());
 
-            shader->SetUniform(CBT_U_LIGHTING_ENABLED, CBTLight::IsLightingEnabled());
+            shader->SetUniform(CBT_U_LIGHTING_ENABLED, cbtLight::IsLightingEnabled());
 
             shader->SetUniform(CBT_U_BUFFER_WIDTH, m_BufferWidth); // Ensure that this is a signed int, same as in the shader.
             shader->SetUniform(CBT_U_BUFFER_HEIGHT, m_BufferHeight); // Ensure that this is a signed int, same as in the shader.
@@ -495,9 +495,9 @@ CBT_REGION(RENDER_OPAQUE)
             {
                 if (i == m_Lights.GetArraySize()) { break; }
 
-                CBTLight* light = lightLightArray[i];
-                CBTTransform* transform = lightTransformArray[i];
-                CBTMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
+                cbtLight* light = lightLightArray[i];
+                cbtTransform* transform = lightTransformArray[i];
+                cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
                 CBTVector3F directionVector;
                 directionVector.m_X = Dot(camRight, transform->GetForward());
                 directionVector.m_Y = Dot(camUp, transform->GetForward());
@@ -521,19 +521,19 @@ CBT_REGION(RENDER_OPAQUE)
         }
 
         // Bind the mesh.
-        CBTMesh* mesh = material->GetMesh();
+        cbtMesh* mesh = material->GetMesh();
         mesh->Bind();
 
         // Set the mesh instance data.
         std::vector<cbtU32>& arrayIndices = iter->second;
-        CBTMeshInstance* meshInstances = cbtNew CBTMeshInstance[arrayIndices.size()];
+        cbtMeshInstance* meshInstances = cbtNew cbtMeshInstance[arrayIndices.size()];
         cbtU32 numVisible = 0;
         for (cbtU32 n = 0; n < (cbtU32)arrayIndices.size(); ++n)
         {
-            CBTTransform* transform = objectTransformArray[arrayIndices[n]];
-            CBTMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
-            CBTMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
-            CBTMatrix3F normalMatrix = CBTMatrixUtil::GetTransposeMatrix(CBTMatrixUtil::GetInverseMatrix(CBTMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
+            cbtTransform* transform = objectTransformArray[arrayIndices[n]];
+            cbtMatrix4F modelMatrix = transform->GetGlobalModelMatrix();
+            cbtMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
+            cbtMatrix3F normalMatrix = cbtMatrixUtil::GetTransposeMatrix(cbtMatrixUtil::GetInverseMatrix(cbtMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
 
             if (InViewFrustum(_viewProjectionMatrix, modelMatrix, mesh->GetBoundingBox()))
             {
@@ -546,62 +546,62 @@ CBT_REGION(RENDER_OPAQUE)
         delete[] meshInstances;
 
         // Draw Mesh
-        CBTRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), numVisible);
+        cbtRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), numVisible);
     }
 
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::KEEP);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, 0, 0xFF);
-    CBTRenderAPI::SetStencilTest(false);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::KEEP);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, 0, 0xFF);
+    cbtRenderAPI::SetStencilTest(false);
 CBT_END_REGION(RENDER_OPAQUE)
 
 CBT_REGION(RENDER_SKYBOX)
-    CBTRenderAPI::SetDepthTest(false);
-    CBTRenderAPI::SetDepthWrite(false);
+    cbtRenderAPI::SetDepthTest(false);
+    cbtRenderAPI::SetDepthWrite(false);
 
-    CBTRenderAPI::SetStencilTest(true);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::NOTEQUAL, CBT_STENCIL_OPAQUE);
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::KEEP);
+    cbtRenderAPI::SetStencilTest(true);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::NOTEQUAL, CBT_STENCIL_OPAQUE);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::KEEP);
 
     // Render Skybox
-    CBTShaderProgram* skyboxShader = _camCamera->GetSkyboxShader();
+    cbtShaderProgram* skyboxShader = _camCamera->GetSkyboxShader();
     skyboxShader->UseProgram();
     skyboxShader->SetTexture(CBT_TEXTURE_SKYBOX, _camCamera->GetSkyboxTexture());
     skyboxShader->SetUniform(CBT_U_MATRIX_PROJECTION, false, _projectionMatrix);
     skyboxShader->SetUniform(CBT_U_SKYBOX_COLOR, _camCamera->GetSkyboxColor());
     skyboxShader->SetUniform(CBT_U_TEXTURE_SKYBOX_ENABLED, _camCamera->GetSkyboxTexture() != nullptr);
 
-    CBTMatrix4F modelMatrix = CBTMatrixUtil::GetTranslationMatrix(_camTransform->GetGlobalPosition());
-    CBTMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
-    CBTMatrix3F normalMatrix = CBTMatrixUtil::GetTransposeMatrix(CBTMatrixUtil::GetInverseMatrix(CBTMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
+    cbtMatrix4F modelMatrix = cbtMatrixUtil::GetTranslationMatrix(_camTransform->GetGlobalPosition());
+    cbtMatrix4F modelViewMatrix = _viewMatrix * modelMatrix;
+    cbtMatrix3F normalMatrix = cbtMatrixUtil::GetTransposeMatrix(cbtMatrixUtil::GetInverseMatrix(cbtMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
 
     m_SkyboxMesh->Bind();
-    CBTMeshInstance meshInstance;
+    cbtMeshInstance meshInstance;
     meshInstance.SetModelViewMatrix(modelViewMatrix);
     meshInstance.SetNormalMatrix(normalMatrix);
     m_SkyboxMesh->SetInstanceData(1, &meshInstance);
 
     // Draw Mesh
-    CBTRenderAPI::DrawElementsInstanced(m_SkyboxMesh->GetIndexCount(), 1);
+    cbtRenderAPI::DrawElementsInstanced(m_SkyboxMesh->GetIndexCount(), 1);
 
-    CBTRenderAPI::SetStencilOp(CBTStencilOp::KEEP, CBTStencilOp::KEEP, CBTStencilOp::KEEP);
-    CBTRenderAPI::SetStencilFunc(CBTCompareFunc::ALWAYS, 0, 0xFF);
-    CBTRenderAPI::SetStencilTest(false);
+    cbtRenderAPI::SetStencilOp(cbtStencilOp::KEEP, cbtStencilOp::KEEP, cbtStencilOp::KEEP);
+    cbtRenderAPI::SetStencilFunc(cbtCompareFunc::ALWAYS, 0, 0xFF);
+    cbtRenderAPI::SetStencilTest(false);
 
-    CBTRenderAPI::SetDepthTest(true);
-    CBTRenderAPI::SetDepthWrite(true);
+    cbtRenderAPI::SetDepthTest(true);
+    cbtRenderAPI::SetDepthWrite(true);
 CBT_END_REGION(RENDER_SKYBOX)
 
 CBT_REGION(RENDER_TRANSPARENT)
-    CBTRenderAPI::SetBlendTest(true);
+    cbtRenderAPI::SetBlendTest(true);
 
     std::vector<cbtU32> sorted = SortTransparentObjects(_viewProjectionMatrix);
-    CBTMaterial* previousMaterial = nullptr;
+    cbtMaterial* previousMaterial = nullptr;
     for (cbtU32 i = 0; i < sorted.size(); ++i)
     {
-        CBTTransform* transform = objectTransformArray[sorted[i]];
-        CBTGraphics* graphics = objectGraphicsArray[sorted[i]];
-        CBTMaterial* material = graphics->GetMaterial();
-        CBTShaderProgram* shader = material->GetShader();
+        cbtTransform* transform = objectTransformArray[sorted[i]];
+        cbtGraphics* graphics = objectGraphicsArray[sorted[i]];
+        cbtMaterial* material = graphics->GetMaterial();
+        cbtShaderProgram* shader = material->GetShader();
 
         if (previousMaterial != material)
         {
@@ -635,7 +635,7 @@ CBT_REGION(RENDER_TRANSPARENT)
             shader->SetUniform(CBT_U_MIN_DISPLACEMENT_SAMPLE, material->GetMinDisplacementSamples());
             shader->SetUniform(CBT_U_MAX_DISPLACEMENT_SAMPLE, material->GetMaxDisplacementSamples());
 
-            shader->SetUniform(CBT_U_LIGHTING_ENABLED, CBTLight::IsLightingEnabled());
+            shader->SetUniform(CBT_U_LIGHTING_ENABLED, cbtLight::IsLightingEnabled());
 
             shader->SetUniform(CBT_U_BUFFER_WIDTH, m_BufferWidth); // Ensure that this is a signed int, same as in the shader.
             shader->SetUniform(CBT_U_BUFFER_HEIGHT, m_BufferHeight); // Ensure that this is a signed int, same as in the shader.
@@ -647,9 +647,9 @@ CBT_REGION(RENDER_TRANSPARENT)
             {
                 if (i == m_Lights.GetArraySize()) { break; }
 
-                CBTLight* light = lightLightArray[i];
-                CBTTransform* transform = lightTransformArray[i];
-                CBTMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
+                cbtLight* light = lightLightArray[i];
+                cbtTransform* transform = lightTransformArray[i];
+                cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
                 CBTVector3F directionVector;
                 directionVector.m_X = Dot(camRight, transform->GetForward());
                 directionVector.m_Y = Dot(camUp, transform->GetForward());
@@ -673,44 +673,44 @@ CBT_REGION(RENDER_TRANSPARENT)
         }
 
         // Bind the mesh.
-        CBTMesh* mesh = material->GetMesh();
+        cbtMesh* mesh = material->GetMesh();
         mesh->Bind();
 
-        CBTMatrix4F modelViewMatrix = _viewMatrix * transform->GetGlobalModelMatrix();
-        CBTMatrix3F normalMatrix = CBTMatrixUtil::GetTransposeMatrix(CBTMatrixUtil::GetInverseMatrix(CBTMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
-        CBTMeshInstance meshInstance;
+        cbtMatrix4F modelViewMatrix = _viewMatrix * transform->GetGlobalModelMatrix();
+        cbtMatrix3F normalMatrix = cbtMatrixUtil::GetTransposeMatrix(cbtMatrixUtil::GetInverseMatrix(cbtMatrixUtil::GetMinorMatrix(modelViewMatrix, 3, 3)));
+        cbtMeshInstance meshInstance;
         meshInstance.SetModelViewMatrix(modelViewMatrix);
         meshInstance.SetNormalMatrix(normalMatrix);
         mesh->SetInstanceData(1, &meshInstance);
 
         // Draw Mesh
-        CBTRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), 1);
+        cbtRenderAPI::DrawElementsInstanced(mesh->GetIndexCount(), 1);
     }
 
-    CBTRenderAPI::SetBlendTest(false);
+    cbtRenderAPI::SetBlendTest(false);
 CBT_END_REGION(RENDER_TRANSPARENT)
 }
 
-void CBTRenderer::RenderPPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F& _projectionMatrix, const CBTMatrix4F& _viewProjectionMatrix, CBTCamera* _camCamera, CBTTransform* _camTransform)
+void cbtRenderer::RenderPPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform)
 {
-    CBTFrameBuffer::Bind(m_PBuffer);
+    cbtFrameBuffer::Bind(m_PBuffer);
 
-    CBTRenderAPI::SetDepthTest(false);
-    CBTRenderAPI::SetDepthWrite(false);
+    cbtRenderAPI::SetDepthTest(false);
+    cbtRenderAPI::SetDepthWrite(false);
 
     // Render Lights
-    CBTShaderProgram** shaders = _camCamera->GetPostProcessShaders();
+    cbtShaderProgram** shaders = _camCamera->GetPostProcessShaders();
     cbtU32 numShaders = _camCamera->GetPostProcessShaderCount();
     for (cbtU32 i = 0; i < numShaders; ++i)
     {
-        CBTShaderProgram* shader = shaders[i];
+        cbtShaderProgram* shader = shaders[i];
         shader->UseProgram();
 
         // Set Texture(s)
-        shader->SetTexture(CBT_FBUFFER_POSITION_CAMERA_SPACE, m_FBuffer->GetColorAttachment((cbtU32)CBTFBuffer::POSITION_CAMERA_SPACE));
-        shader->SetTexture(CBT_FBUFFER_NORMAL_CAMERA_SPACE, m_FBuffer->GetColorAttachment((cbtU32)CBTFBuffer::NORMAL_CAMERA_SPACE));
+        shader->SetTexture(CBT_FBUFFER_POSITION_CAMERA_SPACE, m_FBuffer->GetColorAttachment((cbtU32)cbtFBuffer::POSITION_CAMERA_SPACE));
+        shader->SetTexture(CBT_FBUFFER_NORMAL_CAMERA_SPACE, m_FBuffer->GetColorAttachment((cbtU32)cbtFBuffer::NORMAL_CAMERA_SPACE));
         shader->SetTexture(CBT_FBUFFER_DEPTH_STENCIL, m_FBuffer->GetDepthStencilAttachment());
-        shader->SetTexture(CBT_PBUFFER_COMPOSITE, m_PBuffer->GetColorAttachment((cbtU32)CBTPBuffer::COMPOSITE));
+        shader->SetTexture(CBT_PBUFFER_COMPOSITE, m_PBuffer->GetColorAttachment((cbtU32)cbtPBuffer::COMPOSITE));
 
         // Set Uniform(s)
         shader->SetUniform(CBT_U_BUFFER_WIDTH, m_BufferWidth); // Ensure that this is a signed int, same as in the shader.
@@ -722,28 +722,28 @@ void CBTRenderer::RenderPPass(const CBTMatrix4F& _viewMatrix, const CBTMatrix4F&
         m_ScreenQuad->SetInstanceData(0, nullptr);
 
         // Draw Mesh
-        CBTRenderAPI::DrawElementsInstanced(m_ScreenQuad->GetIndexCount(), 1);
+        cbtRenderAPI::DrawElementsInstanced(m_ScreenQuad->GetIndexCount(), 1);
     }
 
-    CBTRenderAPI::SetDepthTest(true);
-    CBTRenderAPI::SetDepthWrite(true);
+    cbtRenderAPI::SetDepthTest(true);
+    cbtRenderAPI::SetDepthWrite(true);
 }
 
-void CBTRenderer::Render()
+void cbtRenderer::Render()
 {
     SortRenderObjects();
 
-    CBTCamera** cameraArray = m_Cameras.GetArray<CBTCamera>();
-    CBTTransform** transformArray = m_Cameras.GetArray<CBTTransform>();
+    cbtCamera** cameraArray = m_Cameras.GetArray<cbtCamera>();
+    cbtTransform** transformArray = m_Cameras.GetArray<cbtTransform>();
     for (cbtU32 i = 0; i < m_Cameras.GetArraySize(); ++i)
     {
-        CBTCamera* camCamera = cameraArray[i];
-        CBTTransform* camTransform = transformArray[i];
+        cbtCamera* camCamera = cameraArray[i];
+        cbtTransform* camTransform = transformArray[i];
 
-        CBTMatrix4F viewMatrix = CBTMatrixUtil::GetViewMatrix(camTransform->GetForward(), camTransform->GetUp(), camTransform->GetGlobalPosition());
-        CBTMatrix4F projectionMatrix = camCamera->GetProjectionMatrix();
-        CBTMatrix4F viewProjectionMatrix = projectionMatrix * viewMatrix;
-        const CBTViewport& viewport = camCamera->GetViewport();
+        cbtMatrix4F viewMatrix = cbtMatrixUtil::GetViewMatrix(camTransform->GetForward(), camTransform->GetUp(), camTransform->GetGlobalPosition());
+        cbtMatrix4F projectionMatrix = camCamera->GetProjectionMatrix();
+        cbtMatrix4F viewProjectionMatrix = projectionMatrix * viewMatrix;
+        const cbtViewport& viewport = camCamera->GetViewport();
 
         cbtS32 bufferBottomX = (cbtS32)(viewport.m_BottomX * (cbtF32)m_BufferWidth);
         cbtS32 bufferBottomY = (cbtS32)(viewport.m_BottomY * (cbtF32)m_BufferHeight);
@@ -755,65 +755,65 @@ void CBTRenderer::Render()
         cbtS32 windowTopX = (cbtS32)(viewport.m_TopX * (cbtF32)m_WindowWidth);
         cbtS32 windowTopY = (cbtS32)(viewport.m_TopY * (cbtF32)m_WindowHeight);
 
-        CBTRenderAPI::SetScissorTest(true);
-        CBTRenderAPI::SetScissor(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
-        CBTFrameBuffer::ClearAttachmentsAll(m_GBuffer);
-        CBTFrameBuffer::ClearAttachmentsAll(m_LBuffer);
-        CBTFrameBuffer::ClearAttachmentsAll(m_FBuffer);
-        CBTFrameBuffer::ClearAttachmentsAll(m_PBuffer);
-        CBTRenderAPI::SetScissorTest(false);
+        cbtRenderAPI::SetScissorTest(true);
+        cbtRenderAPI::SetScissor(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
+        cbtFrameBuffer::ClearAttachmentsAll(m_GBuffer);
+        cbtFrameBuffer::ClearAttachmentsAll(m_LBuffer);
+        cbtFrameBuffer::ClearAttachmentsAll(m_FBuffer);
+        cbtFrameBuffer::ClearAttachmentsAll(m_PBuffer);
+        cbtRenderAPI::SetScissorTest(false);
 
         // Geometry Pass
-        CBTRenderAPI::SetViewPort(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
+        cbtRenderAPI::SetViewPort(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
         m_GBuffer->SetDrawColorBuffersAll();
         RenderGPass(viewMatrix, projectionMatrix, viewProjectionMatrix, camCamera);
 
         // Light Pass
-        CBTRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
-        CBTFrameBuffer::Blit(m_GBuffer, m_LBuffer, false, true, true, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer DEPTH_STENCIL
+        cbtRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
+        cbtFrameBuffer::Blit(m_GBuffer, m_LBuffer, false, true, true, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer DEPTH_STENCIL
         m_LBuffer->SetDrawColorBuffersAll();
         RenderLPass(viewMatrix, projectionMatrix, camCamera, camTransform);
 
         // Forward Pass
-        CBTRenderAPI::SetViewPort(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
+        cbtRenderAPI::SetViewPort(bufferBottomX, bufferBottomY, bufferTopX - bufferBottomX, bufferTopY - bufferBottomY);
 
-        CBTFrameBuffer::Blit(m_GBuffer, m_FBuffer, false, true, true, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer DEPTH_STENCIL
+        cbtFrameBuffer::Blit(m_GBuffer, m_FBuffer, false, true, true, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer DEPTH_STENCIL
 
-        m_GBuffer->SetReadColorBuffer((cbtU32)CBTGBuffer::POSITION_CAMERA_SPACE);
-        m_FBuffer->SetDrawColorBuffer((cbtU32)CBTFBuffer::POSITION_CAMERA_SPACE);
-        CBTFrameBuffer::Blit(m_GBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer POSITION_CAMERA_SPACE
+        m_GBuffer->SetReadColorBuffer((cbtU32)cbtGBuffer::POSITION_CAMERA_SPACE);
+        m_FBuffer->SetDrawColorBuffer((cbtU32)cbtFBuffer::POSITION_CAMERA_SPACE);
+        cbtFrameBuffer::Blit(m_GBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer POSITION_CAMERA_SPACE
 
-        m_GBuffer->SetReadColorBuffer((cbtU32)CBTGBuffer::NORMAL_CAMERA_SPACE);
-        m_FBuffer->SetDrawColorBuffer((cbtU32)CBTFBuffer::NORMAL_CAMERA_SPACE);
-        CBTFrameBuffer::Blit(m_GBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer NORMAL_CAMERA_SPACE
+        m_GBuffer->SetReadColorBuffer((cbtU32)cbtGBuffer::NORMAL_CAMERA_SPACE);
+        m_FBuffer->SetDrawColorBuffer((cbtU32)cbtFBuffer::NORMAL_CAMERA_SPACE);
+        cbtFrameBuffer::Blit(m_GBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy GBuffer NORMAL_CAMERA_SPACE
 
-        m_LBuffer->SetReadColorBuffer((cbtU32)CBTLBuffer::COMPOSITE);
-        m_FBuffer->SetDrawColorBuffer((cbtU32)CBTFBuffer::COMPOSITE);
-        CBTFrameBuffer::Blit(m_LBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy LBuffer COMPOSITE
+        m_LBuffer->SetReadColorBuffer((cbtU32)cbtLBuffer::COMPOSITE);
+        m_FBuffer->SetDrawColorBuffer((cbtU32)cbtFBuffer::COMPOSITE);
+        cbtFrameBuffer::Blit(m_LBuffer, m_FBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy LBuffer COMPOSITE
 
         m_FBuffer->SetDrawColorBuffersAll();
         RenderFPass(viewMatrix, projectionMatrix, viewProjectionMatrix, camCamera, camTransform);
 
         // Post Process Pass
-        CBTRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
+        cbtRenderAPI::SetViewPort(0, 0, m_BufferWidth, m_BufferHeight);
 
-        m_FBuffer->SetReadColorBuffer((cbtU32)CBTFBuffer::COMPOSITE);
-        m_PBuffer->SetDrawColorBuffer((cbtU32)CBTPBuffer::COMPOSITE);
-        CBTFrameBuffer::Blit(m_FBuffer, m_PBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy LBuffer COMPOSITE
+        m_FBuffer->SetReadColorBuffer((cbtU32)cbtFBuffer::COMPOSITE);
+        m_PBuffer->SetDrawColorBuffer((cbtU32)cbtPBuffer::COMPOSITE);
+        cbtFrameBuffer::Blit(m_FBuffer, m_PBuffer, true, false, false, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY, bufferBottomX, bufferBottomY, bufferTopX, bufferTopY); // Copy LBuffer COMPOSITE
 
         m_PBuffer->SetDrawColorBuffersAll();
         RenderPPass(viewMatrix, projectionMatrix, viewProjectionMatrix, camCamera, camTransform);
     }
 
     // Render To Screen
-    m_PBuffer->SetReadColorBuffer((cbtU32)CBTPBuffer::COMPOSITE);
-    CBTFrameBuffer::Blit(m_PBuffer, nullptr, true, false, false, 0, 0, m_BufferWidth, m_BufferHeight, 0, 0, m_WindowWidth, m_WindowHeight);
+    m_PBuffer->SetReadColorBuffer((cbtU32)cbtPBuffer::COMPOSITE);
+    cbtFrameBuffer::Blit(m_PBuffer, nullptr, true, false, false, 0, 0, m_BufferWidth, m_BufferHeight, 0, 0, m_WindowWidth, m_WindowHeight);
 
     ClearRenderObjects();
 
-    CBTRenderEngine::GetInstance()->GetWindow()->SwapBuffers();
+    cbtRenderEngine::GetInstance()->GetWindow()->SwapBuffers();
 
-    CBTRenderAPI::SetScissorTest(false);
+    cbtRenderAPI::SetScissorTest(false);
 }
 
 NS_CBT_END

@@ -1,9 +1,9 @@
 // Include CBT
-#include "CBTInput.h"
+#include "cbtInput.h"
 
 NS_CBT_BEGIN
 
-CBTInputMask CBTInput::GenerateInputMask(CBTInputContext _context, CBTControllerIndex _controllerIndex, CBTKeycode _keyCode)
+cbtInputMask cbtInput::GenerateInputMask(cbtInputContext _context, cbtControllerIndex _controllerIndex, cbtKeycode _keyCode)
 {
     cbtU64 inputMask = 0;
 
@@ -27,7 +27,7 @@ CBTInputMask CBTInput::GenerateInputMask(CBTInputContext _context, CBTController
     return inputMask;
 }
 
-CBTInputContext CBTInput::GetContext(CBTInputMask _inputMask)
+cbtInputContext cbtInput::GetContext(cbtInputMask _inputMask)
 {
     _inputMask >>= 48;
     _inputMask &= 0x000000000000FFFF;
@@ -35,7 +35,7 @@ CBTInputContext CBTInput::GetContext(CBTInputMask _inputMask)
     return static_cast<cbtU16>(_inputMask);
 }
 
-CBTControllerIndex CBTInput::GetControllerIndex(CBTInputMask _inputMask)
+cbtControllerIndex cbtInput::GetControllerIndex(cbtInputMask _inputMask)
 {
     _inputMask >>= 32;
     _inputMask &= 0x000000000000FFFF;
@@ -43,29 +43,29 @@ CBTControllerIndex CBTInput::GetControllerIndex(CBTInputMask _inputMask)
     return static_cast<cbtU16>(_inputMask);
 }
 
-CBTKeycode CBTInput::GetKeycode(CBTInputMask _inputMask)
+cbtKeycode cbtInput::GetKeycode(cbtInputMask _inputMask)
 {
     _inputMask &= 0x00000000FFFFFFFF;
 
-    return static_cast<CBTKeycode>(_inputMask);
+    return static_cast<cbtKeycode>(_inputMask);
 }
 
-cbtBool CBTInput::CompareContext(CBTInputContext _contextA, CBTInputContext _contextB)
+cbtBool cbtInput::CompareContext(cbtInputContext _contextA, cbtInputContext _contextB)
 {
     return (_contextA & _contextB) != 0;
 }
 
-cbtBool CBTInput::CompareControllerIndex(CBTControllerIndex _controllerIndexA, CBTControllerIndex _controllerIndexB)
+cbtBool cbtInput::CompareControllerIndex(cbtControllerIndex _controllerIndexA, cbtControllerIndex _controllerIndexB)
 {
     return (_controllerIndexA & _controllerIndexB) != 0;
 }
 
-cbtBool CBTInput::CompareKeyCode(CBTKeycode _keyCodeA, CBTKeycode _keyCodeB)
+cbtBool cbtInput::CompareKeyCode(cbtKeycode _keyCodeA, cbtKeycode _keyCodeB)
 {
     return _keyCodeA == _keyCodeB;
 }
 
-cbtBool CBTInput::CompareMask(CBTInputMask _maskA, CBTInputMask _maskB)
+cbtBool cbtInput::CompareMask(cbtInputMask _maskA, cbtInputMask _maskB)
 {
     cbtU16 contextA = GetContext(_maskA);
     cbtU16 contextB = GetContext(_maskB);
@@ -73,8 +73,8 @@ cbtBool CBTInput::CompareMask(CBTInputMask _maskA, CBTInputMask _maskB)
     cbtU16 controllerIndexA = GetControllerIndex(_maskA);
     cbtU16 controllerIndexB = GetControllerIndex(_maskB);
 
-    CBTKeycode keyCodeA = GetKeycode(_maskA);
-    CBTKeycode keyCodeB = GetKeycode(_maskB);
+    cbtKeycode keyCodeA = GetKeycode(_maskA);
+    cbtKeycode keyCodeB = GetKeycode(_maskB);
 
     return CompareContext(contextA, contextB) && CompareControllerIndex(controllerIndexA, controllerIndexB) && CompareKeyCode(keyCodeA, keyCodeB);
 }

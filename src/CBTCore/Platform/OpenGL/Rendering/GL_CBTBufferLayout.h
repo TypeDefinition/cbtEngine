@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Buffer/CBTBufferLayout.h"
+#include "Rendering/Buffer/cbtBufferLayout.h"
 
 #ifdef CBT_OPENGL
 
@@ -10,8 +10,8 @@
 
 NS_CBT_BEGIN
 
-GLenum ToGLBufferUsage(CBTBufferUsage _usage);
-GLenum ToGLDataType(CBTBufferDataType _dataType);
+GLenum ToGLBufferUsage(cbtBufferUsage _usage);
+GLenum ToGLDataType(cbtBufferDataType _dataType);
 
 NS_CBT_END
 

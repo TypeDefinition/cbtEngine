@@ -1,14 +1,14 @@
 // Include CBT
-#include "SDL_CBTInputEngine.h"
-#include "Debug/CBTDebug.h"
+#include "SDL_cbtInputEngine.h"
+#include "Debug/cbtDebug.h"
 
 #ifdef CBT_SDL
 
 NS_CBT_BEGIN
 
-CBTInputEngine* CBTInputEngine::CreateInstance() { return cbtNew SDL_CBTInputEngine(); }
+cbtInputEngine* cbtInputEngine::CreateInstance() { return cbtNew SDL_cbtInputEngine(); }
 
-void SDL_CBTInputEngine::Init()
+void SDL_cbtInputEngine::Init()
 {
     if (SDL_InitSubSystem(SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC) != 0)
     {
@@ -28,10 +28,10 @@ void SDL_CBTInputEngine::Init()
         }
     };
     SDLEventPoller::AddListener(&m_SDLEventListener);
-    m_KeyboardHandler = cbtNew CBTKeyboardHandler();
+    m_KeyboardHandler = cbtNew cbtKeyboardHandler();
 }
 
-void SDL_CBTInputEngine::Update()
+void SDL_cbtInputEngine::Update()
 {
     SDLEventPoller::PollEvents();
     while (!m_SDLEventListener.m_EventQueue.empty())
@@ -56,7 +56,7 @@ void SDL_CBTInputEngine::Update()
     m_KeyboardHandler->DispatchEvents(m_EventDispatcher);
 }
 
-void SDL_CBTInputEngine::Exit()
+void SDL_cbtInputEngine::Exit()
 {
     SDLEventPoller::RemoveListener(&m_SDLEventListener);
     delete m_KeyboardHandler;

@@ -1,33 +1,33 @@
 // Include CBT
-#include "GL_CBTVertexArray.h"
-#include "GL_CBTVertexBuffer.h"
+#include "GL_cbtVertexArray.h"
+#include "GL_cbtVertexBuffer.h"
 
 #ifdef CBT_OPENGL
 
 NS_CBT_BEGIN
 
-CBTVertexArray* CBTVertexArray::CreateVAO() { return new GL_CBTVertexArray(); }
+cbtVertexArray* cbtVertexArray::CreateVAO() { return new GL_cbtVertexArray(); }
 
-GL_CBTVertexArray::GL_CBTVertexArray()
+GL_cbtVertexArray::GL_cbtVertexArray()
     : m_AttributeCounter(0)
     , m_VBOCounter(0)
 {
     glCreateVertexArrays(1, &this->m_VAOName);
 }
 
-GL_CBTVertexArray::~GL_CBTVertexArray()
+GL_cbtVertexArray::~GL_cbtVertexArray()
 {
     glDeleteVertexArrays(1, &this->m_VAOName); // Delete VAO
     for (cbtU32 i = 0; i < m_VBOs.size(); ++i) { m_VBOs[i]->AutoRelease(); } // Delete VBOs
     if (m_EBO) { m_EBO->AutoRelease(); } // Delete EBO
 }
 
-void GL_CBTVertexArray::Bind()
+void GL_cbtVertexArray::Bind()
 {
     glBindVertexArray(this->m_VAOName);
 }
 
-void GL_CBTVertexArray::AddVBO(CBTVertexBuffer* _vbo)
+void GL_cbtVertexArray::AddVBO(cbtVertexBuffer* _vbo)
 {
     m_VBOs.push_back(_vbo);
     _vbo->Retain();
@@ -37,9 +37,9 @@ void GL_CBTVertexArray::AddVBO(CBTVertexBuffer* _vbo)
     // Both the VAO and VBO needs to be binded before this function is called.
     // The reason that the offset (last parameter) needs to be a void pointer is due to legacy support. In the past, it used to mean a different thing.
     // For Learning - [https://stackoverflow.com/questions/37972229/glvertexattribpointer-and-glvertexattribformat-whats-the-difference]
-    GLuint vboName = static_cast<GL_CBTVertexBuffer*>(_vbo)->GetVBOName();
-    const CBTBufferLayout& layout = _vbo->GetLayout();
-    const CBTBufferElement* elements = layout.GetElements();
+    GLuint vboName = static_cast<GL_cbtVertexBuffer*>(_vbo)->GetVBOName();
+    const cbtBufferLayout& layout = _vbo->GetLayout();
+    const cbtBufferElement* elements = layout.GetElements();
     cbtU32 elementCount = layout.GetElementCount();
 
     glVertexArrayVertexBuffer(m_VAOName, m_VBOCounter, vboName, 0, layout.GetByteSize());
@@ -75,12 +75,12 @@ void GL_CBTVertexArray::AddVBO(CBTVertexBuffer* _vbo)
     ++m_VBOCounter;
 }
 
-void GL_CBTVertexArray::SetEBO(CBTElementBuffer* _ebo)
+void GL_cbtVertexArray::SetEBO(cbtElementBuffer* _ebo)
 {
     _ebo->Retain();
     if (m_EBO != nullptr) { m_EBO->AutoRelease(); }
     m_EBO = _ebo;
-    glVertexArrayElementBuffer(m_VAOName, m_EBO ? static_cast<GL_CBTElementBuffer*>(_ebo)->GetEBOName() : 0);
+    glVertexArrayElementBuffer(m_VAOName, m_EBO ? static_cast<GL_cbtElementBuffer*>(_ebo)->GetEBOName() : 0);
 }
 
 NS_CBT_END

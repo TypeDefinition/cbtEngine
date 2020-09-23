@@ -1,14 +1,14 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief This is a 32bit unsigned integer that represents the physical key being pressed.
 */
-enum CBTKeycode : cbtU32
+enum cbtKeycode : cbtU32
 {
     CBTK_UNKNOWN,
 

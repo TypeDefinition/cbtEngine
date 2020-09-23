@@ -1,46 +1,46 @@
 #pragma once
 
 // Include CBT
-#include "Core/Math/CBTVector3.h"
-#include "Core/Math/CBTQuaternion.h"
-#include "Game/Component/CBTComponent.h"
+#include "Core/Math/cbtVector3.h"
+#include "Core/Math/cbtQuaternion.h"
+#include "Game/Component/cbtComponent.h"
 
 // Include STD
 #include <list>
 
 NS_CBT_BEGIN
 
-class CBTTransform : public CBTComponent
+class cbtTransform : public cbtComponent
 {
 private:
     // Scene Graph
-    CBTTransform* m_Parent;
-    CBTTransform* m_Child;
-    CBTTransform* m_SiblingPrev;
-    CBTTransform* m_SiblingNext;
+    cbtTransform* m_Parent;
+    cbtTransform* m_Child;
+    cbtTransform* m_SiblingPrev;
+    cbtTransform* m_SiblingNext;
 
     // Local Data
     CBTVector3F m_LocalPosition;
     CBTVector3F m_LocalScale;
-    CBTQuaternion m_LocalRotation;
+    cbtQuaternion m_LocalRotation;
 
 public:
-    CBTTransform(); ///< Constructor(s)
-    virtual ~CBTTransform(); ///< Protected Destructor. Use Ref::Release instead.
+    cbtTransform(); ///< Constructor(s)
+    virtual ~cbtTransform(); ///< Protected Destructor. Use Ref::Release instead.
 
     // Hierarchy
-    CBTTransform* GetParent() { return m_Parent; }
-    const CBTTransform* GetParent() const { return m_Parent; }
-    CBTTransform* GetSiblingPrev() { return m_SiblingPrev; }
-    const CBTTransform* GetSiblingPrev() const { return m_SiblingPrev; }
-    CBTTransform* GetSiblingNext() { return m_SiblingNext; }
-    const CBTTransform* GetSiblingNext() const { return m_SiblingNext; }
-    CBTTransform* GetChild() { return m_Child; }
-    const CBTTransform* GetChild() const { return m_Child; }
+    cbtTransform* GetParent() { return m_Parent; }
+    const cbtTransform* GetParent() const { return m_Parent; }
+    cbtTransform* GetSiblingPrev() { return m_SiblingPrev; }
+    const cbtTransform* GetSiblingPrev() const { return m_SiblingPrev; }
+    cbtTransform* GetSiblingNext() { return m_SiblingNext; }
+    const cbtTransform* GetSiblingNext() const { return m_SiblingNext; }
+    cbtTransform* GetChild() { return m_Child; }
+    const cbtTransform* GetChild() const { return m_Child; }
 
-    cbtBool IsAncestor(const CBTTransform* _transform) const;
+    cbtBool IsAncestor(const cbtTransform* _transform) const;
     void RemoveParent();
-    void SetParent(CBTTransform* _parent);
+    void SetParent(cbtTransform* _parent);
 
     // Local Translation
     inline const CBTVector3F& GetLocalPosition() const { return m_LocalPosition; }
@@ -49,9 +49,9 @@ public:
 
     // Rotation
     inline const CBTVector3F& GetLocalScale() const { return m_LocalScale; }
-    inline const CBTQuaternion& GetLocalRotation() const { return m_LocalRotation; }
+    inline const cbtQuaternion& GetLocalRotation() const { return m_LocalRotation; }
     void SetLocalRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis) { m_LocalRotation.SetToRotation(_angle, _rotationAxis); }
-    void LocalRotate(cbtF32 _angle, const CBTVector3F& _rotationAxis) { m_LocalRotation = (CBTQuaternion(_angle, _rotationAxis) * m_LocalRotation).Normalized(); }
+    void LocalRotate(cbtF32 _angle, const CBTVector3F& _rotationAxis) { m_LocalRotation = (cbtQuaternion(_angle, _rotationAxis) * m_LocalRotation).Normalized(); }
 
     // LocalScale
     void SetLocalScale(const CBTVector3F& _scale) { m_LocalScale = _scale; }
@@ -65,15 +65,15 @@ public:
         We also do not want to update it with the m_IsDirty flag as we are trying to keep getting local transformations
         be able to be done on a const Transform.
     */
-    CBTMatrix4F GetLocalTranslationMatrix() const { return CBTMatrixUtil::GetTranslationMatrix(m_LocalPosition); }
-    CBTMatrix4F GetLocalRotationMatrix() const { return m_LocalRotation.ToRotationMatrix(); }
-    CBTMatrix4F GetLocalScaleMatrix() const { return CBTMatrixUtil::GetScaleMatrix(m_LocalScale); }
-    CBTMatrix4F GetLocalModelMatrix() const { return GetLocalTranslationMatrix() * GetLocalRotationMatrix() * GetLocalScaleMatrix(); }
+    cbtMatrix4F GetLocalTranslationMatrix() const { return cbtMatrixUtil::GetTranslationMatrix(m_LocalPosition); }
+    cbtMatrix4F GetLocalRotationMatrix() const { return m_LocalRotation.ToRotationMatrix(); }
+    cbtMatrix4F GetLocalScaleMatrix() const { return cbtMatrixUtil::GetScaleMatrix(m_LocalScale); }
+    cbtMatrix4F GetLocalModelMatrix() const { return GetLocalTranslationMatrix() * GetLocalRotationMatrix() * GetLocalScaleMatrix(); }
 
     // Any rotation is done relative to the object's parent orientation.
-    CBTMatrix4F GetGlobalRotationMatrix() const { return m_Parent ? GetLocalRotationMatrix() * m_Parent->GetGlobalRotationMatrix() : GetLocalRotationMatrix(); }
+    cbtMatrix4F GetGlobalRotationMatrix() const { return m_Parent ? GetLocalRotationMatrix() * m_Parent->GetGlobalRotationMatrix() : GetLocalRotationMatrix(); }
     // This function will give the model matrix relative to the WORLD.
-    CBTMatrix4F GetGlobalModelMatrix() const { return m_Parent ? GetLocalModelMatrix() * m_Parent->GetGlobalModelMatrix() : GetLocalModelMatrix(); }
+    cbtMatrix4F GetGlobalModelMatrix() const { return m_Parent ? GetLocalModelMatrix() * m_Parent->GetGlobalModelMatrix() : GetLocalModelMatrix(); }
 
     // These functions will give the vector relative to the WORLD.
     CBTVector3F GetGlobalPosition() const;

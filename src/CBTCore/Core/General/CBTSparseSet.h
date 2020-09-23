@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "Debug/CBTDebug.h"
+#include "Debug/cbtDebug.h"
 
 // Include STD
 #include <vector>
@@ -33,7 +33,7 @@ NS_CBT_BEGIN
         If a page does not need to store any indices, we can delete it to save memory. Each element of a "page" is referred to as a "paragraph".
 */
 template <class T, cbtU32 PAGE_COUNT, cbtU32 PARAGRAPH_COUNT>
-class CBTSparseSet
+class cbtSparseSet
 {
     /// Dense Item Array
     std::vector<T> m_Items;
@@ -68,13 +68,13 @@ public:
     /**
         \brief Constructor
 
-        \return A CBTSparseSet
+        \return A cbtSparseSet
     */
-    CBTSparseSet() {}
+    cbtSparseSet() {}
     /**
         \brief Destructor. All items are destroyed.
     */
-    ~CBTSparseSet() { Clear(); }
+    ~cbtSparseSet() { Clear(); }
 
     /**
         \brief Clear the sparse set. All items are destroyed.

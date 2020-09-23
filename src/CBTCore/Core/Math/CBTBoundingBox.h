@@ -1,14 +1,14 @@
 ﻿#pragma once
 
 // Include CBT
-#include "CBTVector3.h"
+#include "cbtVector3.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief Stores the 8 points of a bounding box.
 */
-class CBTBoundingBox
+class cbtBoundingBox
 {
 public:
     /// The number of points in a bounding box. Value is 8.
@@ -33,9 +33,9 @@ public:
         \param _maxY The maximum Y bound of the bounding box.
         \param _maxZ The maximum Z bound of the bounding box.
 
-        \return A CBTBoundingBox
+        \return A cbtBoundingBox
     */
-    CBTBoundingBox(cbtF32 _minX = 0.0f, cbtF32 _minY = 0.0f, cbtF32 _minZ = 0.0f, cbtF32 _maxX = 0.0f, cbtF32 _maxY = 0.0f, cbtF32 _maxZ = 0.0f)
+    cbtBoundingBox(cbtF32 _minX = 0.0f, cbtF32 _minY = 0.0f, cbtF32 _minZ = 0.0f, cbtF32 _maxX = 0.0f, cbtF32 _maxY = 0.0f, cbtF32 _maxZ = 0.0f)
     {
         Set(_minX, _minY, _minZ, _maxX, _maxY, _maxZ);
     }
@@ -46,23 +46,23 @@ public:
         \param _min The minimum bounds of the bounding box.
         \param _max The maximum bounds of the bounding box.
 
-        \return A CBTBoundingBox
+        \return A cbtBoundingBox
     */
-    CBTBoundingBox(const CBTVector3F& _min, const CBTVector3F& _max) { Set(_min, _max); }
+    cbtBoundingBox(const CBTVector3F& _min, const CBTVector3F& _max) { Set(_min, _max); }
 
     /**
         \brief Copy Constructor
 
-        \param _other The CBTBoundingBox to copy.
+        \param _other The cbtBoundingBox to copy.
 
-        \return A CBTBoundingBox with the same bounds as _other.
+        \return A cbtBoundingBox with the same bounds as _other.
     */
-    CBTBoundingBox(const CBTBoundingBox& _other) { *this = _other; }
+    cbtBoundingBox(const cbtBoundingBox& _other) { *this = _other; }
 
     /**
         \brief Destructor
     */
-    ~CBTBoundingBox() {}
+    ~cbtBoundingBox() {}
 
     /**
         \brief Setter function taking in the minimum and maximum bounds of the bounding box.
@@ -204,7 +204,7 @@ public:
 
         \return Returns true if this bounding box is the same as the other bounding box. Otherwise, return false.
     */
-    cbtBool operator==(const CBTBoundingBox& _rhs) const { return (m_Max == _rhs.m_Max) && (m_Min == _rhs.m_Min); }
+    cbtBool operator==(const cbtBoundingBox& _rhs) const { return (m_Max == _rhs.m_Max) && (m_Min == _rhs.m_Min); }
 
     /**
         \brief Check if this bounding box is not the same as another bounding box.
@@ -213,7 +213,7 @@ public:
 
         \return Returns false if this bounding box is the same as the other bounding box. Otherwise, return true.
     */
-    cbtBool operator!=(const CBTBoundingBox& _rhs) const { return !(*this == _rhs); }
+    cbtBool operator!=(const cbtBoundingBox& _rhs) const { return !(*this == _rhs); }
 
     /**
         \brief Set this bounding box to be equal to another bounding box.
@@ -222,7 +222,7 @@ public:
 
         \return This bounding box after copying _rhs.
     */
-    CBTBoundingBox& operator=(const CBTBoundingBox& _rhs)
+    cbtBoundingBox& operator=(const cbtBoundingBox& _rhs)
     {
         m_Min = _rhs.m_Min; m_Max = _rhs.m_Max;
         for (cbtU32 i = 0; i < 8; ++i) { this->m_Vertices[i] = _rhs.m_Vertices[i]; }

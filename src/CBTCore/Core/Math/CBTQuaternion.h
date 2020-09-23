@@ -1,10 +1,10 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Debug/CBTDebug.h"
-#include "CBTMatrixUtil.h"
-#include "CBTVector3.h"
+#include "cbtMacros.h"
+#include "Debug/cbtDebug.h"
+#include "cbtMatrixUtil.h"
+#include "cbtVector3.h"
 
 NS_CBT_BEGIN
 
@@ -84,7 +84,7 @@ NS_CBT_BEGIN
                   | z  -y   x   w |\n
         </pre>
 */
-class CBTQuaternion
+class cbtQuaternion
 {
 private:
     /// The scalar component of the quaternion, represented by W.
@@ -94,10 +94,10 @@ private:
 
 public:
     // Constructor(s) & Destructor
-    CBTQuaternion(cbtF32 _w = 1.0f, cbtF32 _x = 0.0f, cbtF32 _y = 0.0f, cbtF32 _z = 0.0f);
-    CBTQuaternion(const CBTQuaternion& _other);
-    CBTQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis);
-    ~CBTQuaternion();
+    cbtQuaternion(cbtF32 _w = 1.0f, cbtF32 _x = 0.0f, cbtF32 _y = 0.0f, cbtF32 _z = 0.0f);
+    cbtQuaternion(const cbtQuaternion& _other);
+    cbtQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis);
+    ~cbtQuaternion();
 
     // Interface Function(s)
     /**
@@ -193,7 +193,7 @@ public:
 
         \return The normalised version of this quaternion.
     */
-    CBTQuaternion Normalized();
+    cbtQuaternion Normalized();
 
     /**
         \brief Inverse this quaternion.
@@ -204,7 +204,7 @@ public:
 
         \return The inverse version of this quaternion.
     */
-    CBTQuaternion Inversed() const;
+    cbtQuaternion Inversed() const;
 
     /**
         \brief Get the dot product of this quaternion and another quaternion.
@@ -213,7 +213,7 @@ public:
 
         \return The dot product of this quaternion and the other quaternion.
     */
-    cbtF32 Dot(const CBTQuaternion& _other) const;
+    cbtF32 Dot(const cbtQuaternion& _other) const;
 
     // Rotation Function(s)
     /**
@@ -230,7 +230,7 @@ public:
 
         \warning A rotation quaternion must be a unit quaternion.
     */
-    CBTMatrix4F ToRotationMatrix() const;
+    cbtMatrix4F ToRotationMatrix() const;
     /**
         \brief Set this quaternion to a rotation given an angle in degrees and an axis.
 
@@ -247,7 +247,7 @@ public:
 
         \return Returns this quaternion after setting its W, X, Y and Z components.
     */
-    CBTQuaternion& operator=(const CBTQuaternion& _rhs);
+    cbtQuaternion& operator=(const cbtQuaternion& _rhs);
     /**
         \brief Returns true if this quaternion and another quaternion are approximately equal.
 
@@ -255,7 +255,7 @@ public:
 
         \return Returns true if this quaternion and another quaternion are approximately equal. Otherwise, return false.
     */
-    cbtBool operator==(const CBTQuaternion& _rhs) const;
+    cbtBool operator==(const cbtQuaternion& _rhs) const;
     /**
         \brief Returns true if this quaternion and another quaternion are NOT approximately equal.
 
@@ -263,7 +263,7 @@ public:
 
         \return Returns true if this quaternion and another quaternion are NOT approximately equal. Otherwise, return false.
     */
-    cbtBool operator!=(const CBTQuaternion& _rhs) const;
+    cbtBool operator!=(const cbtQuaternion& _rhs) const;
 
     /**
         \brief Multiply this quaternion with another quaternion. This original quaternion is not changed.
@@ -272,7 +272,7 @@ public:
 
         \return Returns the result as a new CBTQuaternion.
     */
-    CBTQuaternion operator*(const CBTQuaternion& _rhs) const;
+    cbtQuaternion operator*(const cbtQuaternion& _rhs) const;
     /**
         \brief Multiply this quaternion with another quaternion. This vector will become the resultant vector.
 
@@ -280,7 +280,7 @@ public:
 
         \return Returns the result as a new CBTQuaternion.
     */
-    CBTQuaternion& operator*=(const CBTQuaternion& _rhs);
+    cbtQuaternion& operator*=(const cbtQuaternion& _rhs);
 
     // Static Function(s)
     /**
@@ -302,13 +302,13 @@ public:
         \_param _ratio The ratio to interpolate between _start and _end. A value of 0 will return _start, and a value of 1 will return _end.
         \_param _clampRatio If set to true, the _ratio is clamped to between 0 and 1. The default value is false.
     */
-    static CBTQuaternion Slerp(const CBTQuaternion& _start, const CBTQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio = false);
+    static cbtQuaternion Slerp(const cbtQuaternion& _start, const cbtQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio = false);
 
     // Static Constant Variable(s)
     /// Equivalent to CBTQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
-    static const CBTQuaternion IDENTITY;
+    static const cbtQuaternion IDENTITY;
     /// Equivalent to CBTQuaternion(0.0f, 0.0f, 0.0f, 0.0f);
-    static const CBTQuaternion ZERO;
+    static const cbtQuaternion ZERO;
 };
 
 NS_CBT_END

@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "CBTMathUtil.h"
+#include "cbtMacros.h"
+#include "cbtMathUtil.h"
 
 NS_CBT_BEGIN
 
@@ -15,9 +15,9 @@ NS_CBT_BEGIN
     Certain matrix functions such as finding the inverse or determinant of a matrix, can only be done on matrices of floating point type.
 */
 template <typename T, cbtU32 COLUMN_COUNT, cbtU32 ROW_COUNT>
-class CBTMatrix
+class cbtMatrix
 {
-    typedef CBTMatrix<T, COLUMN_COUNT, ROW_COUNT> Matrix; /// The current CBTMaatrix type.
+    typedef cbtMatrix<T, COLUMN_COUNT, ROW_COUNT> Matrix; /// The current CBTMaatrix type.
 
 private:
     // Variable(s)
@@ -34,7 +34,7 @@ public:
 
         \sa ~Matrix
     */
-    CBTMatrix() { SetToZero(); }
+    cbtMatrix() { SetToZero(); }
     /**
     \brief Copy Constructor for Matrix. Create a new Matrix which is a copy of _other.
 
@@ -44,9 +44,9 @@ public:
 
     \sa ~Matrix
     */
-    CBTMatrix(const CBTMatrix& _other) { *this = _other; }
+    cbtMatrix(const cbtMatrix& _other) { *this = _other; }
     /// Destructor.
-    virtual ~CBTMatrix() {}
+    virtual ~cbtMatrix() {}
 
     // Interface Function(s)
     /**
@@ -249,9 +249,9 @@ public:
             operator[](cbtU32)
     */
     template<cbtU32 RHS_COLUMN_COUNT>
-    CBTMatrix<T, RHS_COLUMN_COUNT, ROW_COUNT> operator*(const CBTMatrix<T, RHS_COLUMN_COUNT, COLUMN_COUNT>& _rhs) const
+    cbtMatrix<T, RHS_COLUMN_COUNT, ROW_COUNT> operator*(const cbtMatrix<T, RHS_COLUMN_COUNT, COLUMN_COUNT>& _rhs) const
     {
-        CBTMatrix<T, RHS_COLUMN_COUNT, ROW_COUNT> result;
+        cbtMatrix<T, RHS_COLUMN_COUNT, ROW_COUNT> result;
 
         for (cbtU32 column = 0; column < RHS_COLUMN_COUNT; ++column)
         {
@@ -424,16 +424,16 @@ public:
             operator[](cbtU32)
     */
 template<typename T, cbtU32 MATRIX_SIZE>
-CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& operator*=(CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _lhs, const CBTMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _rhs)
+cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& operator*=(cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _lhs, const cbtMatrix<T, MATRIX_SIZE, MATRIX_SIZE>& _rhs)
 {
     _lhs = _lhs * _rhs;
     return _lhs;
 }
 
 // Type Definition(s)
-typedef CBTMatrix<cbtF32, 2, 2> CBTMatrix2F;
-typedef CBTMatrix<cbtF32, 3, 3> CBTMatrix3F;
-typedef CBTMatrix<cbtF32, 4, 4> CBTMatrix4F;
-typedef CBTMatrix<cbtF32, 5, 5> CBTMatrix5F;
+typedef cbtMatrix<cbtF32, 2, 2> cbtMatrix2F;
+typedef cbtMatrix<cbtF32, 3, 3> cbtMatrix3F;
+typedef cbtMatrix<cbtF32, 4, 4> cbtMatrix4F;
+typedef cbtMatrix<cbtF32, 5, 5> cbtMatrix5F;
 
 NS_CBT_END

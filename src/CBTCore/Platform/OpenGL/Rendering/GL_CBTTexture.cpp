@@ -1,6 +1,6 @@
 // Include CBT
-#include "GL_CBTTexture.h"
-#include "Core/Math/CBTMathUtil.h"
+#include "GL_cbtTexture.h"
+#include "Core/Math/cbtMathUtil.h"
 
 #ifdef CBT_OPENGL
 
@@ -75,7 +75,7 @@ GLenum ToGLBaseFormat(GLenum _sizedFormat)
     }
 }
 
-GLenum ToGLBaseFormat(CBTPixelFormat _sizedFormat)
+GLenum ToGLBaseFormat(cbtPixelFormat _sizedFormat)
 {
     switch (_sizedFormat)
     {
@@ -144,7 +144,7 @@ GLenum ToGLBaseFormat(CBTPixelFormat _sizedFormat)
     }
 }
 
-GLenum ToGLSizedFormat(CBTPixelFormat _format)
+GLenum ToGLSizedFormat(cbtPixelFormat _format)
 {
     switch (_format)
     {
@@ -228,7 +228,7 @@ GLenum ToGLSizedFormat(CBTPixelFormat _format)
     }
 }
 
-CBTPixelFormat ToCBTSizedFormat(GLenum _sizedFormat)
+cbtPixelFormat ToCBTSizedFormat(GLenum _sizedFormat)
 {
     switch (_sizedFormat)
     {
@@ -314,28 +314,28 @@ CBTPixelFormat ToCBTSizedFormat(GLenum _sizedFormat)
 
 cbtS32 GetMipmapLevels(cbtS32 _width, cbtS32 _height)
 {
-    cbtS32 log2Width = (cbtS32)CBTMathUtil::Log2((cbtF32)_width);
-    cbtS32 log2Height = (cbtS32)CBTMathUtil::Log2((cbtF32)_height);
-    return CBTMathUtil::Clamp<cbtS32>(CBTMathUtil::Min<cbtS32>(log2Width, log2Height), 1, GL_TEXTURE_MAX_LEVEL);
+    cbtS32 log2Width = (cbtS32)cbtMathUtil::Log2((cbtF32)_width);
+    cbtS32 log2Height = (cbtS32)cbtMathUtil::Log2((cbtF32)_height);
+    return cbtMathUtil::Clamp<cbtS32>(cbtMathUtil::Min<cbtS32>(log2Width, log2Height), 1, GL_TEXTURE_MAX_LEVEL);
 }
 
-CBTTexture* CBTTexture::Create2DTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, const cbtU8* _data)
+cbtTexture* cbtTexture::Create2DTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, const cbtU8* _data)
 {
-    return cbtNew GL_CBTTexture(_name, _width, _height, _pixelFormat, _data);
+    return cbtNew GL_cbtTexture(_name, _width, _height, _pixelFormat, _data);
 }
 
-CBTTexture* CBTTexture::CreateCubeMap(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data)
+cbtTexture* cbtTexture::CreateCubeMap(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data)
 {
-    return cbtNew GL_CBTTexture(_name, _width, _height, _pixelFormat, _data);
+    return cbtNew GL_cbtTexture(_name, _width, _height, _pixelFormat, _data);
 }
 
-CBTTexture* CBTTexture::CreateFrameBufferAttachment(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat)
+cbtTexture* cbtTexture::CreateFrameBufferAttachment(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat)
 {
-    return cbtNew GL_CBTTexture(_name, _width, _height, _pixelFormat);
+    return cbtNew GL_cbtTexture(_name, _width, _height, _pixelFormat);
 }
 
-GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, const cbtU8* _data)
-    : CBTTexture(_name, CBT_TEXTURE_SHAPE_2D, _width, _height, _pixelFormat)
+GL_cbtTexture::GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, const cbtU8* _data)
+    : cbtTexture(_name, CBT_TEXTURE_SHAPE_2D, _width, _height, _pixelFormat)
     , m_WrapMode(CBT_TEXTURE_WRAP_REPEAT)
 {
     /* IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
@@ -364,8 +364,8 @@ GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height,
     glGenerateTextureMipmap(m_TextureName);
 }
 
-GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data)
-    : CBTTexture(_name, CBT_TEXTURE_SHAPE_CUBE, _width, _height, _pixelFormat)
+GL_cbtTexture::GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data)
+    : cbtTexture(_name, CBT_TEXTURE_SHAPE_CUBE, _width, _height, _pixelFormat)
     , m_WrapMode(CBT_TEXTURE_WRAP_CLAMP_TO_EDGE)
 {
     /* IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
@@ -401,8 +401,8 @@ GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height,
     glGenerateTextureMipmap(m_TextureName);
 }
 
-GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat)
-    : CBTTexture(_name, CBT_TEXTURE_SHAPE_2D, _width, _height, _pixelFormat)
+GL_cbtTexture::GL_cbtTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat)
+    : cbtTexture(_name, CBT_TEXTURE_SHAPE_2D, _width, _height, _pixelFormat)
     , m_WrapMode(CBT_TEXTURE_WRAP_REPEAT)
 {
     glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureName);
@@ -413,7 +413,7 @@ GL_CBTTexture::GL_CBTTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height,
     glTextureParameteri(m_TextureName, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
-void GL_CBTTexture::SetWrapMode(CBTTextureWrap _wrapMode)
+void GL_cbtTexture::SetWrapMode(cbtTextureWrap _wrapMode)
 {
     CBT_ASSERT(m_Shape != CBT_TEXTURE_SHAPE_CUBE);
     if (m_Shape == CBT_TEXTURE_SHAPE_CUBE) { return; }

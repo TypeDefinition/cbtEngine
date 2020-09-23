@@ -1,5 +1,5 @@
 // Include CBT
-#include "Rendering/Texture/CBTTextureBuilder.h"
+#include "Rendering/Texture/cbtTextureBuilder.h"
 
 #ifdef CBT_SDL
 
@@ -9,7 +9,7 @@
 NS_CBT_BEGIN
 
 // Image Loading
-CBTTexture* CBTTextureBuilder::Create2DTexture(const cbtStr& _name, const cbtStr& _filePath, cbtBool _flipVertical, cbtBool _flipHorizontal)
+cbtTexture* cbtTextureBuilder::Create2DTexture(const cbtStr& _name, const cbtStr& _filePath, cbtBool _flipVertical, cbtBool _flipHorizontal)
 {
     SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
     SDL_Surface* rawSurface = IMG_Load(_filePath.c_str());
@@ -22,7 +22,7 @@ CBTTexture* CBTTextureBuilder::Create2DTexture(const cbtStr& _name, const cbtStr
     if (_flipHorizontal) { FlipImageHorizontally(pixelData, width, height, pixelFormat->BytesPerPixel); }
     if (_flipVertical) { FlipImageVertically(pixelData, width, height, pixelFormat->BytesPerPixel); }
 
-    CBTTexture* texture = CBTTexture::Create2DTexture(_name, width, height, CBT_RGBA8, pixelData);
+    cbtTexture* texture = cbtTexture::Create2DTexture(_name, width, height, CBT_RGBA8, pixelData);
 
     SDL_FreeFormat(pixelFormat);
     SDL_FreeSurface(rawSurface);
@@ -31,7 +31,7 @@ CBTTexture* CBTTextureBuilder::Create2DTexture(const cbtStr& _name, const cbtStr
     return texture;
 }
 
-CBTTexture* CBTTextureBuilder::CreateCubeMap(const cbtStr& _name, std::array<cbtStr, CBT_CUBEMAP_MAX_SIDES> _filePath, cbtBool _flipVertical, cbtBool _flipHorizontal)
+cbtTexture* cbtTextureBuilder::CreateCubeMap(const cbtStr& _name, std::array<cbtStr, CBT_CUBEMAP_MAX_SIDES> _filePath, cbtBool _flipVertical, cbtBool _flipHorizontal)
 {
     SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
     SDL_Surface* rawSurface[CBT_CUBEMAP_MAX_SIDES];
@@ -50,7 +50,7 @@ CBTTexture* CBTTextureBuilder::CreateCubeMap(const cbtStr& _name, std::array<cbt
         if (_flipVertical) { FlipImageVertically(pixelData, width, height, pixelFormat->BytesPerPixel); }
     }
 
-    CBTTexture* texture = CBTTexture::CreateCubeMap(_name, convertedSurface[0]->w, convertedSurface[0]->h, CBT_RGBA8, {
+    cbtTexture* texture = cbtTexture::CreateCubeMap(_name, convertedSurface[0]->w, convertedSurface[0]->h, CBT_RGBA8, {
         static_cast<cbtU8*>(convertedSurface[0]->pixels),
         static_cast<cbtU8*>(convertedSurface[1]->pixels),
         static_cast<cbtU8*>(convertedSurface[2]->pixels),

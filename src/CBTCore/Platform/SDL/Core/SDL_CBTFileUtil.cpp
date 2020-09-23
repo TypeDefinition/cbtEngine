@@ -1,6 +1,6 @@
 // Include CBT
-#include "Core/FileUtil/CBTFileUtil.h"
-#include "Debug/CBTDebug.h"
+#include "Core/FileUtil/cbtFileUtil.h"
+#include "Debug/cbtDebug.h"
 
 #ifdef CBT_SDL
 
@@ -8,7 +8,7 @@
 
 NS_CBT_BEGIN
 
-cbtStr CBTFileUtil::FileToString(const cbtStr& _filePath)
+cbtStr cbtFileUtil::FileToString(const cbtStr& _filePath)
 {
     SDL_RWops* file = SDL_RWFromFile(_filePath.c_str(), "r");
     CBT_ASSERT(file);
@@ -25,7 +25,7 @@ cbtStr CBTFileUtil::FileToString(const cbtStr& _filePath)
     return fileString;
 }
 
-void CBTFileUtil::StringToFile(const cbtStr& _filePath, const cbtStr& _string)
+void cbtFileUtil::StringToFile(const cbtStr& _filePath, const cbtStr& _string)
 {
     SDL_RWops* file = SDL_RWFromFile(_filePath.c_str(), "w");
     CBT_ASSERT(file);

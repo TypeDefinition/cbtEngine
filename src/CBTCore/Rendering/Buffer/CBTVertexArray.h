@@ -1,41 +1,41 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Core/General/CBTRef.h"
+#include "cbtMacros.h"
+#include "Core/General/cbtRef.h"
 
 // Include STD
 #include <vector>
 
 NS_CBT_BEGIN
 
-class CBTVertexBuffer;
-class CBTElementBuffer;
+class cbtVertexBuffer;
+class cbtElementBuffer;
 
 // Vertex Array Object
-class CBTVertexArray : public CBTManaged
+class cbtVertexArray : public cbtManaged
 {
 protected:
-    std::vector<CBTVertexBuffer*> m_VBOs;
-    CBTElementBuffer* m_EBO;
+    std::vector<cbtVertexBuffer*> m_VBOs;
+    cbtElementBuffer* m_EBO;
 
-    virtual ~CBTVertexArray() {}
+    virtual ~cbtVertexArray() {}
 
 public:
-    CBTVertexArray()
+    cbtVertexArray()
         : m_EBO(nullptr)
     {}
 
     virtual void Bind() = 0;
-    virtual void AddVBO(CBTVertexBuffer* _vbo) = 0;
-    virtual void SetEBO(CBTElementBuffer* _ebo) = 0;
+    virtual void AddVBO(cbtVertexBuffer* _vbo) = 0;
+    virtual void SetEBO(cbtElementBuffer* _ebo) = 0;
 
     inline cbtU32 GetVBOCount() const { return (cbtU32)m_VBOs.size(); }
-    const CBTVertexBuffer* const* GetVBOs() const { return m_VBOs.empty() ? nullptr : &m_VBOs[0]; }
-    CBTVertexBuffer** GetVBOs() { return m_VBOs.empty() ? nullptr : &m_VBOs[0]; }
-    const CBTElementBuffer& GetEBO() const { return *m_EBO; }
+    const cbtVertexBuffer* const* GetVBOs() const { return m_VBOs.empty() ? nullptr : &m_VBOs[0]; }
+    cbtVertexBuffer** GetVBOs() { return m_VBOs.empty() ? nullptr : &m_VBOs[0]; }
+    const cbtElementBuffer& GetEBO() const { return *m_EBO; }
 
-    static CBTVertexArray* CreateVAO();
+    static cbtVertexArray* CreateVAO();
 };
 
 NS_CBT_END

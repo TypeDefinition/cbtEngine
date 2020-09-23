@@ -1,24 +1,24 @@
 #pragma once
 
 // Include CBT
-#include "Core/General/CBTRef.h"
-#include "CBTBufferLayout.h"
+#include "Core/General/cbtRef.h"
+#include "cbtBufferLayout.h"
 
 NS_CBT_BEGIN
 
-class CBTUniformBuffer : public CBTManaged
+class cbtUniformBuffer : public cbtManaged
 {
 protected:
-    virtual ~CBTUniformBuffer() {}
+    virtual ~cbtUniformBuffer() {}
 
 public:
-    CBTUniformBuffer() {}
+    cbtUniformBuffer() {}
 
     virtual void Bind(cbtU32 _bufferIndex) = 0;
     virtual void SetData(cbtU32 _dataSize, void* _data) = 0;
     virtual void SetSubData(cbtU32 _offset, cbtU32 _dataSize, void* _data) = 0;
 
-    static CBTUniformBuffer* CreateUniformBuffer();
+    static cbtUniformBuffer* CreateUniformBuffer();
 };
 
 NS_CBT_END

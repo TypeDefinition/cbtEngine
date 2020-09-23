@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Buffer/CBTUniformBuffer.h"
+#include "Rendering/Buffer/cbtUniformBuffer.h"
 
 #ifdef CBT_OPENGL
 
@@ -10,15 +10,15 @@
 
 NS_CBT_BEGIN
 
-class GL_CBTUniformBuffer : public CBTUniformBuffer
+class GL_cbtUniformBuffer : public cbtUniformBuffer
 {
 protected:
     GLuint m_UBOName;
 
-    virtual ~GL_CBTUniformBuffer() { glDeleteBuffers(1, &m_UBOName); }
+    virtual ~GL_cbtUniformBuffer() { glDeleteBuffers(1, &m_UBOName); }
 
 public:
-    GL_CBTUniformBuffer() { glCreateBuffers(1, &m_UBOName); glNamedBufferData(m_UBOName, 0, NULL, GL_DYNAMIC_DRAW); }
+    GL_cbtUniformBuffer() { glCreateBuffers(1, &m_UBOName); glNamedBufferData(m_UBOName, 0, NULL, GL_DYNAMIC_DRAW); }
 
     GLuint GetUBOName() const { return m_UBOName; }
 

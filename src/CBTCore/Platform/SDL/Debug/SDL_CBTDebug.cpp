@@ -1,12 +1,12 @@
 // Include CBT
-#include "Debug/CBTDebug.h"
+#include "Debug/cbtDebug.h"
 
 // Include SDL
 #include <SDL.h>
 
 NS_CBT_BEGIN
 
-SDL_LogPriority ToSDLLogPriority(CBTLogPriority _priority)
+SDL_LogPriority ToSDLLogPriority(cbtLogPriority _priority)
 {
     switch (_priority)
     {
@@ -27,11 +27,11 @@ SDL_LogPriority ToSDLLogPriority(CBTLogPriority _priority)
     }
 }
 
-void CBTDebug::Log(CBTLogCategory _category, CBTLogPriority _priority, const cbtS8* _format, ...)
+void cbtDebug::Log(cbtLogCategory _category, cbtLogPriority _priority, const cbtS8* _format, ...)
 {
     va_list args;
     va_start(args, _format);
-    cbtStr format = "[" + CBTDebug::ToString(_category) + "] " + cbtStr(_format);
+    cbtStr format = "[" + cbtDebug::ToString(_category) + "] " + cbtStr(_format);
     SDL_LogMessageV(SDL_LOG_CATEGORY_APPLICATION, ToSDLLogPriority(_priority), format.c_str(), args);
 }
 

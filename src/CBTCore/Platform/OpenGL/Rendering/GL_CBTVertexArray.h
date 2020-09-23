@@ -1,7 +1,7 @@
 // Include
-#include "Rendering/Buffer/CBTVertexArray.h"
-#include "GL_CBTVertexBuffer.h"
-#include "GL_CBTElementBuffer.h"
+#include "Rendering/Buffer/cbtVertexArray.h"
+#include "GL_cbtVertexBuffer.h"
+#include "GL_cbtElementBuffer.h"
 
 #ifdef CBT_OPENGL
 
@@ -10,7 +10,7 @@
 
 NS_CBT_BEGIN
 
-class GL_CBTVertexArray : public CBTVertexArray
+class GL_cbtVertexArray : public cbtVertexArray
 {
 protected:
     /** m_VAOName stores the handle of a Vertex Array Object(VAO).
@@ -22,15 +22,15 @@ protected:
     cbtU32 m_AttributeCounter;
     cbtU32 m_VBOCounter;
 
-    virtual ~GL_CBTVertexArray();
+    virtual ~GL_cbtVertexArray();
 
 public:
-    GL_CBTVertexArray();
+    GL_cbtVertexArray();
 
     virtual void Bind();
 
-    virtual void AddVBO(CBTVertexBuffer* _vbo);
-    virtual void SetEBO(CBTElementBuffer* _ebo);
+    virtual void AddVBO(cbtVertexBuffer* _vbo);
+    virtual void SetEBO(cbtElementBuffer* _ebo);
 };
 
 NS_CBT_END

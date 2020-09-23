@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Core/General/CBTRef.h"
+#include "cbtMacros.h"
+#include "Core/General/cbtRef.h"
 
 // Include STD
 #include <unordered_map>
@@ -13,24 +13,24 @@
         When items are stored, they are given a unique name. They are also retrieved using that name.
 */
 template <typename T>
-class CBTLibrary
+class cbtLibrary
 {
 protected:
-    /// The items in the CBTLibrary.
+    /// The items in the cbtLibrary.
     std::unordered_map<cbtStr, T*> m_Items;
 
 public:
     /**
         \brief Constructor
 
-        \return A CBTLibrary
+        \return A cbtLibrary
     */
-    CBTLibrary() {}
+    cbtLibrary() {}
 
     /**
         \brief Destructor
     */
-    virtual ~CBTLibrary() { RemoveAllItems(); }
+    virtual ~cbtLibrary() { RemoveAllItems(); }
 
     /**
         \brief Checks if an item of a given name exists.
@@ -225,7 +225,7 @@ public:
     }
 
     /**
-        \brief Remove all items in the CBTLibrary.
+        \brief Remove all items in the cbtLibrary.
     */
     void RemoveAllItems()
     {

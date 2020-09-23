@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 // Include STD
 #include <type_traits>
@@ -15,10 +15,10 @@ NS_CBT_BEGIN
 /** 
     \brief
         Assigns an TypeID ID to a type during runtime. Can only generate an ID for classes of type BaseClass and classes inheriting BaseClass.
-        Example: CBTFamily<Component> can only generate IDs for Component and classes inheriting Component, such as Camera, Transform, Light etc.
+        Example: cbtFamily<Component> can only generate IDs for Component and classes inheriting Component, such as Camera, Transform, Light etc.
 */
 template <typename BaseClass>
-class CBTFamily
+class cbtFamily
 {
 private:
     /// This value is increased each time GetID is called with a new typename DerivedClass. This ensures that each class is assigned a different ID.
@@ -27,11 +27,11 @@ private:
     /**
         \brief Private Constructor. All functions should be static. No objects of this class should be created.
     */
-    CBTFamily() {}
+    cbtFamily() {}
     /**
         \brief Private Destructor. All functions should be static. No objects of this class should be created.
     */
-    virtual ~CBTFamily() {}
+    virtual ~cbtFamily() {}
 
 public:
     /**
@@ -63,6 +63,6 @@ public:
 };
 
 template <typename BaseClass>
-cbtS32 CBTFamily<BaseClass>::s_CurrentID = 0;
+cbtS32 cbtFamily<BaseClass>::s_CurrentID = 0;
 
 NS_CBT_END

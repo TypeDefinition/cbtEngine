@@ -1,19 +1,19 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Mesh/CBTVertex.h"
-#include "Rendering/Texture/CBTTexture.h"
-#include "Core/Math/CBTMatrix.h"
-#include "Core/Math/CBTVector2.h"
-#include "Core/Math/CBTVector3.h"
-#include "Rendering/Color/CBTColor.h"
+#include "Rendering/Mesh/cbtVertex.h"
+#include "Rendering/Texture/cbtTexture.h"
+#include "Core/Math/cbtMatrix.h"
+#include "Core/Math/cbtVector2.h"
+#include "Core/Math/cbtVector3.h"
+#include "Rendering/Color/cbtColor.h"
 
 NS_CBT_BEGIN
 
 #define CBT_MAX_LIGHTS 8
 
 // Must use cbtS32. Binding a sampler2D uniform to an unsigned int texture index will result in failure.
-enum CBTTextureSlot
+enum cbtTextureSlot
 {
     CBT_TEXTURE_SKYBOX,
 
@@ -43,7 +43,7 @@ enum CBTTextureSlot
     CBT_NUM_TEXTURE_SLOT,
 };
 
-enum CBTUniformID
+enum cbtUniformID
 {
     CBT_U_MATRIX_PROJECTION,
     CBT_U_TEXTURE_SCALE,
@@ -90,15 +90,15 @@ enum CBTUniformID
     CBT_NUM_SHADER_UNIFORM = CBT_MAX_LIGHTS + CBT_U_LIGHT_SPOTLIGHT_OUTER_COSINE0,
 };
 
-class CBTShaderProgram : public CBTManaged
+class cbtShaderProgram : public cbtManaged
 {
 protected:
     const cbtStr m_Name;
 
-    virtual ~CBTShaderProgram() {}
+    virtual ~cbtShaderProgram() {}
 
 public:
-    CBTShaderProgram(const cbtStr& _name)
+    cbtShaderProgram(const cbtStr& _name)
         : m_Name(_name)
     {}
 
@@ -108,7 +108,7 @@ public:
     virtual void UseProgram() = 0;
 
     // Texture
-    virtual void SetTexture(cbtU32 _textureSlot, CBTTexture* _texture) = 0;
+    virtual void SetTexture(cbtU32 _textureSlot, cbtTexture* _texture) = 0;
 
     // Float
     virtual void SetUniform(const cbtStr& _uniformName, cbtF32 _value0) = 0;
@@ -135,21 +135,21 @@ public:
     virtual void SetUniform(const cbtStr& _uniformName, cbtBool _value0, cbtBool _value1, cbtBool _value2, cbtBool _value3) = 0;
 
     // Matrix
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix2F& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix3F& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix4F& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix2F& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix3F& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix4F& _value) = 0;
 
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 3, 2>& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 2, 3>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 3, 2>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 2, 3>& _value) = 0;
 
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 2, 4>& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 4, 2>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 2, 4>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 4, 2>& _value) = 0;
 
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 4, 3>& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const CBTMatrix<cbtF32, 3, 4>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 4, 3>& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, cbtBool _transpose, const cbtMatrix<cbtF32, 3, 4>& _value) = 0;
 
     // Color
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTColor& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtColor& _value) = 0;
 
     // Vector2
     virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2F& _value) = 0;
@@ -186,21 +186,21 @@ public:
     virtual void SetUniform(cbtU32 _uniformID, cbtBool _value0, cbtBool _value1, cbtBool _value2, cbtBool _value3) = 0;
 
     // Matrix
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix2F& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix3F& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix4F& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix2F& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix3F& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix4F& _value) = 0;
 
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 3, 2>& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 2, 3>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 3, 2>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 2, 3>& _value) = 0;
 
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 2, 4>& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 4, 2>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 2, 4>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 4, 2>& _value) = 0;
 
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 4, 3>& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const CBTMatrix<cbtF32, 3, 4>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 4, 3>& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, cbtBool _transpose, const cbtMatrix<cbtF32, 3, 4>& _value) = 0;
 
     // Color
-    virtual void SetUniform(cbtU32 _uniformID, const CBTColor& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtColor& _value) = 0;
 
     // Vector2
     virtual void SetUniform(cbtU32 _uniformID, const CBTVector2F& _value) = 0;
@@ -212,7 +212,7 @@ public:
     virtual void SetUniform(cbtU32 _uniformID, const CBTVector3U& _value) = 0;
     virtual void SetUniform(cbtU32 _uniformID, const CBTVector3S& _value) = 0;
 
-    static CBTShaderProgram* CreateShaderProgram(const cbtStr& _name, const std::vector<cbtStr>& _vertexShaderSources, const std::vector<cbtStr>& _fragmentShaderSources);
+    static cbtShaderProgram* CreateShaderProgram(const cbtStr& _name, const std::vector<cbtStr>& _vertexShaderSources, const std::vector<cbtStr>& _fragmentShaderSources);
 };
 
 NS_CBT_END

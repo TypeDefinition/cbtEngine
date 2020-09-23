@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Debug/Log/CBTLog.h"
+#include "cbtMacros.h"
+#include "Debug/cbtDebug.h"
 
 // Include STD
 #include <mutex>
@@ -12,7 +12,7 @@ NS_CBT_BEGIN
 /**
     \brief A queue of function pointers (commands) to be executed.
 */
-class CBTCommandQueue
+class cbtCommandQueue
 {
 private:
     typedef std::function<void(void)> CommandFunc;
@@ -37,9 +37,9 @@ public:
     /**
         \brief Constructor
 
-        \return A CBTCommandQueue.
+        \return A cbtCommandQueue.
     */
-    CBTCommandQueue()
+    cbtCommandQueue()
     {
         // Create a 20MB buffer. Allocate 10MB to m_ExecuteBuffer and 10MB to m_QueueBuffer.
         // The first 4 bytes of the buffer is used to store the number of commands stored in the buffer.
@@ -50,7 +50,7 @@ public:
     /**
         \brief Destructor
     */
-    ~CBTCommandQueue()
+    ~cbtCommandQueue()
     {
         std::lock_guard<std::mutex> executeLock(m_ExecuteBufferMutex);
         std::lock_guard<std::mutex> queueLock(m_QueueBufferMutex);
@@ -74,7 +74,7 @@ public:
         // Check if the max number of commands has already been reached.
         if (commandCount == s_MaxCommands)
         {
-            CBT_LOG_WARN(LOGGER_CORE, "Insufficient Buffer Size In Command Queue!");
+            CBT_LOG_WARN(CBT_LOG_CATEGORY_APPLICATION, "Insufficient Buffer Size In Command Queue!");
             CBT_ASSERT(false);
         }
 

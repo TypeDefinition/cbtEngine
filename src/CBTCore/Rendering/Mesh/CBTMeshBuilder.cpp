@@ -1,7 +1,7 @@
 // Include CBT
-#include "CBTMeshBuilder.h"
-#include "Core/FileUtil/CBTFileUtil.h"
-#include "Core/Math/CBTMatrixUtil.h"
+#include "cbtMeshBuilder.h"
+#include "Core/FileUtil/cbtFileUtil.h"
+#include "Core/Math/cbtMatrixUtil.h"
 
 // Include STD
 #include <sstream>
@@ -9,11 +9,11 @@
 NS_CBT_BEGIN
 
 // Mesh Loading & Creation
-CBTMesh* CBTMeshBuilder::CreateScreenQuad(const cbtStr& _name)
+cbtMesh* cbtMeshBuilder::CreateScreenQuad(const cbtStr& _name)
 {
-    std::vector<CBTVertex> vertices;
+    std::vector<cbtVertex> vertices;
 
-    for (cbtU32 i = 0; i < 4; ++i) { vertices.push_back(CBTVertex()); }
+    for (cbtU32 i = 0; i < 4; ++i) { vertices.push_back(cbtVertex()); }
 
     vertices[0].m_Position.Set(-1.0f, -1.0f, 0.0f);
     vertices[1].m_Position.Set(1.0f, 1.0f, 0.0f);
@@ -45,14 +45,14 @@ CBTMesh* CBTMeshBuilder::CreateScreenQuad(const cbtStr& _name)
     indices.push_back(3);
     indices.push_back(1);
 
-    return cbtNew CBTMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
+    return cbtNew cbtMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
 }
 
-CBTMesh* CBTMeshBuilder::CreateSkybox(const cbtStr& _name)
+cbtMesh* cbtMeshBuilder::CreateSkybox(const cbtStr& _name)
 {
-    std::vector<CBTVertex> vertices;
+    std::vector<cbtVertex> vertices;
 
-    for (cbtU32 i = 0; i < 24; ++i) { vertices.push_back(CBTVertex()); }
+    for (cbtU32 i = 0; i < 24; ++i) { vertices.push_back(cbtVertex()); }
     std::vector<cbtU32> indices;
 
     // Front
@@ -229,12 +229,12 @@ CBTMesh* CBTMeshBuilder::CreateSkybox(const cbtStr& _name)
     indices.push_back(23);
     indices.push_back(21);
 
-    return cbtNew CBTMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
+    return cbtNew cbtMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
 }
 
-CBTMesh* CBTMeshBuilder::CreateQuad(const cbtStr& _name)
+cbtMesh* cbtMeshBuilder::CreateQuad(const cbtStr& _name)
 {
-    CBTVertex vertices[4];
+    cbtVertex vertices[4];
 
     vertices[0].m_Position.Set(-0.5f, -0.5f, 0.0f);
     vertices[1].m_Position.Set(0.5f, 0.5f, 0.0f);
@@ -266,13 +266,13 @@ CBTMesh* CBTMeshBuilder::CreateQuad(const cbtStr& _name)
     indices[4] = 3;
     indices[5] = 1;
 
-    return cbtNew CBTMesh(_name, &vertices[0], 4, &indices[0], 6);
+    return cbtNew cbtMesh(_name, &vertices[0], 4, &indices[0], 6);
 }
 
-CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
+cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
 {
     // Vertex Data and Index Data
-    std::vector<CBTVertex> vertices;
+    std::vector<cbtVertex> vertices;
     std::vector<cbtU32> indices;
 
     // Vertex Attribute(s)
@@ -281,7 +281,7 @@ CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
     std::vector<CBTVector2F> texCoords;
 
     // Read the file.
-    cbtStr fileString = CBTFileUtil::FileToString(_filePath);
+    cbtStr fileString = cbtFileUtil::FileToString(_filePath);
     std::stringstream ss(fileString.c_str());
     while (ss.good())
     {
@@ -338,7 +338,7 @@ CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
             // Add the Vertex.
             for (cbtU32 i = 0; i < 3; ++i)
             {
-                CBTVertex vertex;
+                cbtVertex vertex;
 
                 vertex.m_Position = positions[positionIndices[i] - 1]; // -1 because .OBJ starts their index at 1.
                 vertex.m_Normal = normals[normalIndices[i] - 1];
@@ -359,7 +359,7 @@ CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
     for (cbtU32 i = 0; i < indices.size(); i += 3)
     {
         // This gives us 2 of the 3 edges.
-        CBTMatrix<cbtF32, 3, 2> edges;
+        cbtMatrix<cbtF32, 3, 2> edges;
         edges[0][0] = vertices[indices[i + 1]].m_Position.GetX() - vertices[indices[i]].m_Position.GetX();
         edges[1][0] = vertices[indices[i + 1]].m_Position.GetY() - vertices[indices[i]].m_Position.GetY();
         edges[2][0] = vertices[indices[i + 1]].m_Position.GetZ() - vertices[indices[i]].m_Position.GetZ();
@@ -373,13 +373,13 @@ CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         // So for example, we know that for one of the edges,
         // the ratio of the edge along the tangent axis (also the same as the U axis for the texture coordinates) is U1 - U0 and.
         // the ratio of the edge along the bitangent axis (also the same as the U axis for the texture coordinates) is V1 - V0.
-        CBTMatrix<cbtF32, 2, 2> tangentToBitangentRatio;
+        cbtMatrix<cbtF32, 2, 2> tangentToBitangentRatio;
         tangentToBitangentRatio[0][0] = vertices[indices[i + 1]].m_TexCoord.GetX() - vertices[indices[i]].m_TexCoord.GetX();
         tangentToBitangentRatio[1][0] = vertices[indices[i + 1]].m_TexCoord.GetY() - vertices[indices[i]].m_TexCoord.GetY();
         tangentToBitangentRatio[0][1] = vertices[indices[i + 2]].m_TexCoord.GetX() - vertices[indices[i]].m_TexCoord.GetX();
         tangentToBitangentRatio[1][1] = vertices[indices[i + 2]].m_TexCoord.GetY() - vertices[indices[i]].m_TexCoord.GetY();
 
-        CBTMatrix<cbtF32, 3, 2> tangents = CBTMatrixUtil::GetInverseMatrix(tangentToBitangentRatio) * edges;
+        cbtMatrix<cbtF32, 3, 2> tangents = cbtMatrixUtil::GetInverseMatrix(tangentToBitangentRatio) * edges;
 
         vertices[indices[i + 0]].m_Tangent += CBTVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
         vertices[indices[i + 1]].m_Tangent += CBTVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
@@ -389,7 +389,7 @@ CBTMesh* CBTMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
     for (cbtU32 i = 0; i < vertices.size(); ++i) { Normalize(vertices[i].m_Tangent); }
 
     // Create the mesh.
-    return cbtNew CBTMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
+    return cbtNew cbtMesh(_name, &vertices[0], (cbtU32)vertices.size(), &indices[0], (cbtU32)indices.size());
 }
 
 NS_CBT_END

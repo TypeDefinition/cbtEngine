@@ -1,11 +1,11 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
-enum CBTPixelFormat : cbtU32
+enum cbtPixelFormat : cbtU32
 {
     // Invalid
     CBT_INVALID_PIXEL_FORMAT,
@@ -86,6 +86,6 @@ enum CBTPixelFormat : cbtU32
     CBT_STENCIL_INDEX8,
 };
 
-cbtU32 GetChannelCount(CBTPixelFormat _format);
+cbtU32 GetChannelCount(cbtPixelFormat _format);
 
 NS_CBT_END

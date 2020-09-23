@@ -1,32 +1,32 @@
 // Include CBT
-#include "CBTTransform.h"
+#include "cbtTransform.h"
 
 NS_CBT_BEGIN
 
-CBT_DEFINE_FLAGS(CBTTransform, CBT_COMPONENT_FLAG_NONE);
+CBT_DEFINE_FLAGS(cbtTransform, CBT_COMPONENT_FLAG_NONE);
 
 // Constructor(s) & Destructor
-CBTTransform::CBTTransform()
+cbtTransform::cbtTransform()
     : m_Parent(nullptr)
     , m_Child(nullptr)
     , m_SiblingPrev(nullptr)
     , m_SiblingNext(nullptr)
     , m_LocalPosition(CBTVector3F::ZERO)
     , m_LocalScale(1.0f, 1.0f, 1.0f)
-    , m_LocalRotation(CBTQuaternion::IDENTITY)
+    , m_LocalRotation(cbtQuaternion::IDENTITY)
 {
 }
 
-CBTTransform::~CBTTransform()
+cbtTransform::~cbtTransform()
 {
 }
 
 // Scene Graph
-cbtBool CBTTransform::IsAncestor(const CBTTransform* _transform) const
+cbtBool cbtTransform::IsAncestor(const cbtTransform* _transform) const
 {
     if (_transform == nullptr) { return false; }
 
-    const CBTTransform* ancestor = this;
+    const cbtTransform* ancestor = this;
     while (ancestor != nullptr)
     {
         if (_transform == ancestor) { return true; }
@@ -36,7 +36,7 @@ cbtBool CBTTransform::IsAncestor(const CBTTransform* _transform) const
     return false;
 }
 
-void CBTTransform::RemoveParent()
+void cbtTransform::RemoveParent()
 {
     // Check if this node has a parent.
     if (!m_Parent) { return; }
@@ -60,7 +60,7 @@ void CBTTransform::RemoveParent()
     m_Parent = m_SiblingNext = m_SiblingPrev = nullptr;
 }
 
-void CBTTransform::SetParent(CBTTransform* _parent)
+void cbtTransform::SetParent(cbtTransform* _parent)
 {
     // Check that _parent is not a descendant of this node.
     CBT_ASSERT(_parent && !IsAncestor(_parent));
@@ -81,27 +81,27 @@ void CBTTransform::SetParent(CBTTransform* _parent)
 }
 
 // These functions will give the vector relative to the WORLD.
-CBTVector3F CBTTransform::GetGlobalPosition() const
+CBTVector3F cbtTransform::GetGlobalPosition() const
 {
-    CBTMatrix4F globalModelMatrix = GetGlobalModelMatrix();
+    cbtMatrix4F globalModelMatrix = GetGlobalModelMatrix();
     return CBTVector3F(globalModelMatrix[3][0], globalModelMatrix[3][1], globalModelMatrix[3][2]);
 }
 
-CBTVector3F CBTTransform::GetForward() const
+CBTVector3F cbtTransform::GetForward() const
 {
-    CBTMatrix4F matrix = GetGlobalRotationMatrix() * CBTMatrixUtil::GetTranslationMatrix(CBTVector3F::FORWARDS);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::FORWARDS);
     return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 
-CBTVector3F CBTTransform::GetUp() const
+CBTVector3F cbtTransform::GetUp() const
 {
-    CBTMatrix4F matrix = GetGlobalRotationMatrix() * CBTMatrixUtil::GetTranslationMatrix(CBTVector3F::UP);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::UP);
     return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 
-CBTVector3F CBTTransform::GetLeft() const
+CBTVector3F cbtTransform::GetLeft() const
 {
-    CBTMatrix4F matrix = GetGlobalRotationMatrix() * CBTMatrixUtil::GetTranslationMatrix(CBTVector3F::LEFT);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::LEFT);
     return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 

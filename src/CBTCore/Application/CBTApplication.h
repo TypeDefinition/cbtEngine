@@ -1,14 +1,13 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 // Engine(s)
-#include "Core/General/CBTSingleton.h"
-#include "Game/GameEngine/CBTGameEngine.h"
-#include "Rendering/RenderEngine/CBTRenderEngine.h"
-#include "Input/InputEngine/CBTInputEngine.h"
-#include "Audio/AudioEngine/CBTAudioEngine.h"
+#include "Core/General/cbtSingleton.h"
+#include "Game/GameEngine/cbtGameEngine.h"
+#include "Rendering/RenderEngine/cbtRenderEngine.h"
+#include "Input/InputEngine/cbtInputEngine.h"
 
 NS_CBT_BEGIN
 
@@ -29,9 +28,9 @@ NS_CBT_BEGIN
         7. PreExit - This is a virtual interface function for the derived class. Any game specific systems should be destroyed here.
         8. Exit - This is where the core systems needed for the game to run (Rendering, Audio, Input, Physics etc.) are destroyed.
 */
-class CBTApplication : public CBTSingleton<CBTApplication>
+class cbtApplication : public cbtSingleton<cbtApplication>
 {
-    friend class CBTSingleton<CBTApplication>;
+    friend class cbtSingleton<cbtApplication>;
 
 protected:
     /// The name of the application.
@@ -46,36 +45,36 @@ protected:
 
 protected:
     /**
-        \brief Constructs a new CBTApplication with given name.
+        \brief Constructs a new cbtApplication with given name.
 
         \param _name The name of the application.
 
-        \return A CBTApplication of name _name.
+        \return A cbtApplication of name _name.
     */
-    CBTApplication(const cbtStr& _name) : m_Name(_name) {}
+    cbtApplication(const cbtStr& _name) : m_Name(_name) {}
     /**
         \brief Destructor
     */
-    virtual ~CBTApplication() {}
+    virtual ~cbtApplication() {}
 
     /**
-        \brief An undefined static function to create an CBTApplication object. Define it in your game to make it return the derived class application for your game.
+        \brief An undefined static function to create an cbtApplication object. Define it in your game to make it return the derived class application for your game.
 
         Example:\n
         \code{.cpp}
         // In Header File
-        class MyGame : public NS_CBT::CBTApplication
+        class MyGame : public NS_CBT::cbtApplication
         {
             // Implement Variable & Function(s)
         };
 
         // In CPP File
-        NS_CBT::CBTApplication* NS_CBT::CBTApplication::CreateInstance() { return new MyGame("My Game"); }
+        NS_CBT::cbtApplication* NS_CBT::cbtApplication::CreateInstance() { return new MyGame("My Game"); }
         \endcode
 
-        \return Returns a CBTAppliation pointer to a derived class of CBTApplication as implemented by the user.
+        \return Returns a CBTAppliation pointer to a derived class of cbtApplication as implemented by the user.
     */
-    static CBTApplication* CreateInstance();
+    static cbtApplication* CreateInstance();
 
 public:
     /**

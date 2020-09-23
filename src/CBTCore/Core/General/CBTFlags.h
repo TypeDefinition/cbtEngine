@@ -1,12 +1,12 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
 template <typename T>
-struct CBTFlags
+struct cbtFlags
 {
     static const cbtU32 FLAGS;
     static cbtBool HasFlags(cbtU32 _flags)
@@ -16,6 +16,6 @@ struct CBTFlags
 };
 
 // Macro(s)
-#define CBT_DEFINE_FLAGS(__TYPE__, __FLAGS__) template <> const cbtU32 CBTFlags<__TYPE__>::FLAGS = __FLAGS__
+#define CBT_DEFINE_FLAGS(__TYPE__, __FLAGS__) template <> const cbtU32 cbtFlags<__TYPE__>::FLAGS = __FLAGS__
 
 NS_CBT_END

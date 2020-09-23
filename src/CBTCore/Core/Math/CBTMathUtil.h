@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 /*!
-    \file CBTMathUtil.h
+    \file cbtMathUtil.h
 */
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 // Include STD
 #include <cmath>
@@ -14,7 +14,7 @@
 NS_CBT_BEGIN
 
 /// A maths utility class.
-class CBTMathUtil
+class cbtMathUtil
 {
 private:
     // Constructor(s) & Destructor
@@ -25,7 +25,7 @@ private:
 
         \sa ~MathUtil.
     */
-    CBTMathUtil() {}
+    cbtMathUtil() {}
     /**
         \brief Destructor of MathUtil.
         It is private to prevent the creation and destruction of a MathUtil object.
@@ -33,7 +33,7 @@ private:
 
         \sa MathUtil.
     */
-    ~CBTMathUtil() {}
+    ~cbtMathUtil() {}
 
 public:
     // Static Constant Variable(s)

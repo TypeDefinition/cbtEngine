@@ -1,31 +1,31 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
-enum CBTWindowFlags : cbtU32
+enum cbtWindowFlags : cbtU32
 {
     CBT_WINDOW_NONE = 0,
     CBT_WINDOW_FULLSCREEN = 1,
     CBT_WINDOW_BORDERLESS = 2,
 };
 
-struct CBTWindowProperties
+struct cbtWindowProperties
 {
 public:
     cbtU32 m_Width, m_Height;
     cbtU32 m_Flags;
     cbtStr m_Title;
 
-    CBTWindowProperties()
+    cbtWindowProperties()
         : m_Width(1280)
         , m_Height(720)
         , m_Flags(CBT_WINDOW_NONE)
         , m_Title("Unnamed Window")
     {}
-    ~CBTWindowProperties() {}
+    ~cbtWindowProperties() {}
 
     inline cbtBool IsFullscreen() const { return (m_Flags & CBT_WINDOW_FULLSCREEN); }
     inline cbtBool IsBorderless() const { return (m_Flags & CBT_WINDOW_BORDERLESS); }

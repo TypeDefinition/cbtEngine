@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 // Include STD
 #include <vector>
@@ -16,7 +16,7 @@ NS_CBT_BEGIN
         [32bit Handle] = [16bit Version] & [16bit Index]
 */
 template <typename T>
-class CBTHandleSet
+class cbtHandleSet
 {
 protected:
     /// \brief List of all handles, alive & dead.
@@ -39,16 +39,16 @@ public:
     /**
         \brief Constructor
 
-        \return A CBTHandleSet
+        \return A cbtHandleSet
     */
-    CBTHandleSet()
+    cbtHandleSet()
         : m_NextIndex(0)
         , m_Recycle(0)
     {}
     /**
         \brief Destructor
     */
-    virtual ~CBTHandleSet() {}
+    virtual ~cbtHandleSet() {}
 
     /**
         \brief Get a handle given a version and an index.
@@ -149,11 +149,11 @@ public:
     cbtU32 GetHandleCount() const { return static_cast<cbtU32>(m_Handles.size() - m_Recycle); }
 };
 
-/// \brief Equivalent to typing CBTHandleSet<__TYPE__>::GetHandle(__VERSION__, __INDEX__)
-#define CBT_HANDLE(__TYPE__, __VERSION__, __INDEX__) CBTHandleSet<__TYPE__>::GetHandle(__VERSION__, __INDEX__)
-/// \brief Equivalent to typing CBTHandleSet<__TYPE__>::GetIndex(__ENTITY__)
-#define CBT_HANDLE_INDEX(__TYPE__, __ENTITY__) CBTHandleSet<__TYPE__>::GetIndex(__ENTITY__)
-/// \brief Equivalent to typing CBTHandleSet<__TYPE__>::GetVersion(__ENTITY__)
-#define CBT_HANDLE_VERSION(__TYPE__, __ENTITY__) CBTHandleSet<__TYPE__>::GetVersion(__ENTITY__)
+/// \brief Equivalent to typing cbtHandleSet<__TYPE__>::GetHandle(__VERSION__, __INDEX__)
+#define CBT_HANDLE(__TYPE__, __VERSION__, __INDEX__) cbtHandleSet<__TYPE__>::GetHandle(__VERSION__, __INDEX__)
+/// \brief Equivalent to typing cbtHandleSet<__TYPE__>::GetIndex(__ENTITY__)
+#define CBT_HANDLE_INDEX(__TYPE__, __ENTITY__) cbtHandleSet<__TYPE__>::GetIndex(__ENTITY__)
+/// \brief Equivalent to typing cbtHandleSet<__TYPE__>::GetVersion(__ENTITY__)
+#define CBT_HANDLE_VERSION(__TYPE__, __ENTITY__) cbtHandleSet<__TYPE__>::GetVersion(__ENTITY__)
 
 NS_CBT_END

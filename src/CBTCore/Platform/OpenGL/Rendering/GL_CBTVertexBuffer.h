@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "GL_CBTBufferLayout.h"
-#include "Rendering/Buffer/CBTVertexBuffer.h"
+#include "GL_cbtBufferLayout.h"
+#include "Rendering/Buffer/cbtVertexBuffer.h"
 
 #ifdef CBT_OPENGL
 
@@ -15,15 +15,15 @@ NS_CBT_BEGIN
   * The actual data of a 3D Model is stored in a VBO.
   * A VAO simply points to the data in the VBO to get the vertex attributes.
   * glVertexAttribPointer is then used to specify how the VAO reads the data from the VBOs. */
-class GL_CBTVertexBuffer : public CBTVertexBuffer
+class GL_cbtVertexBuffer : public cbtVertexBuffer
 {
 protected:
     GLuint m_VBOName;
 
-    virtual ~GL_CBTVertexBuffer();
+    virtual ~GL_cbtVertexBuffer();
 
 public:
-    GL_CBTVertexBuffer(const CBTBufferLayout& _layout, CBTBufferUsage _usage, cbtU32 _divisor, cbtU32 _bufferSize, void* _data);
+    GL_cbtVertexBuffer(const cbtBufferLayout& _layout, cbtBufferUsage _usage, cbtU32 _divisor, cbtU32 _bufferSize, void* _data);
 
     GLuint GetVBOName() const { return m_VBOName; }
 

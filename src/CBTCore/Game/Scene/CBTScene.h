@@ -1,13 +1,12 @@
 #pragma once
 
 // Include CBT
-#include "Core/General/CBTRef.h"
-#include "Core/General/CBTSparseSet.h"
-#include "Core/General/CBTFamily.h"
-#include "Core/General/CBTHandleSet.h"
-#include "Core//General/CBTArray.h"
-#include "Core/Event/CBTEventDispatcher.h"
-#include "Game/Component/CBTComponent.h"
+#include "Core/General/cbtRef.h"
+#include "Core/General/cbtSparseSet.h"
+#include "Core/General/cbtFamily.h"
+#include "Core/General/cbtHandleSet.h"
+#include "Core/Event/cbtEventDispatcher.h"
+#include "Game/Component/cbtComponent.h"
 
 // Include STD
 #include <unordered_map>
@@ -15,16 +14,16 @@
 
 NS_CBT_BEGIN
 
-class CBTScene : public CBTManaged
+class cbtScene : public cbtManaged
 {
 private:
-    CBTEntityPool m_EntityPool;
-    std::unordered_map<cbtS32, CBTComponentPool*> m_ComponentPools;
+    cbtEntityPool m_EntityPool;
+    std::unordered_map<cbtS32, cbtComponentPool*> m_ComponentPools;
 
 protected:
-    virtual ~CBTScene()
+    virtual ~cbtScene()
     {
-        for (std::unordered_map<cbtS32, CBTComponentPool*>::iterator iter = m_ComponentPools.begin(); iter != m_ComponentPools.end(); ++iter)
+        for (std::unordered_map<cbtS32, cbtComponentPool*>::iterator iter = m_ComponentPools.begin(); iter != m_ComponentPools.end(); ++iter)
         {
             delete iter->second;
         }
@@ -54,7 +53,7 @@ protected:
     template <typename ComponentGroup, typename T>
     void PopulateComponentGroup(const std::vector<cbtECS>& _entities, ComponentGroup& _componentGroup)
     {
-        CBTComponentPool* componentPool = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>())->second;
+        cbtComponentPool* componentPool = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>())->second;
         T** groupArray = _componentGroup.GetArray<T>();
         for (cbtU32 i = 0; i < _entities.size(); ++i)
         {
@@ -65,7 +64,7 @@ protected:
     template <typename ComponentGroup, typename T, typename U, typename ...Args>
     void PopulateComponentGroup(const std::vector<cbtECS>& _entities, ComponentGroup& _componentGroup)
     {
-        CBTComponentPool* componentPool = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>())->second;
+        cbtComponentPool* componentPool = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>())->second;
         T** groupArray = _componentGroup.GetArray<T>();
         for (cbtU32 i = 0; i < _entities.size(); ++i)
         {
@@ -76,7 +75,7 @@ protected:
 
 public:
     // Constructor(s) & Destructor
-    CBTScene() {}
+    cbtScene() {}
 
     // Entity
     cbtECS AddEntity()
@@ -87,9 +86,9 @@ public:
     void RemoveEntity(cbtECS _entity)
     {
         CBT_ASSERT(m_EntityPool.IsValid(_entity));
-        for (std::unordered_map<cbtS32, CBTComponentPool*>::iterator iter = m_ComponentPools.begin(); iter != m_ComponentPools.end(); ++iter)
+        for (std::unordered_map<cbtS32, cbtComponentPool*>::iterator iter = m_ComponentPools.begin(); iter != m_ComponentPools.end(); ++iter)
         {
-            CBTComponentPool* componentPool = iter->second;
+            cbtComponentPool* componentPool = iter->second;
             if (componentPool->Has(_entity)) { componentPool->Remove(_entity); }
         }
         m_EntityPool.Remove(_entity);
@@ -100,7 +99,7 @@ public:
     cbtBool HasComponent(cbtECS _entity) const
     {
         CBT_ASSERT(m_EntityPool.IsValid(_entity));
-        std::unordered_map<cbtS32, CBTComponentPool*>::const_iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::const_iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? false : iter->second->Has(_entity);
     }
 
@@ -108,7 +107,7 @@ public:
     const T* GetComponent(cbtECS _entity) const
     {
         CBT_ASSERT(m_EntityPool.IsValid(_entity));
-        std::unordered_map<cbtS32, CBTComponentPool*>::const_iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::const_iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? nullptr : iter->second->Get<T>(_entity);
     }
 
@@ -116,28 +115,28 @@ public:
     T* GetComponent(cbtECS _entity)
     {
         CBT_ASSERT(m_EntityPool.IsValid(_entity));
-        std::unordered_map<cbtS32, CBTComponentPool*>::iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? nullptr : iter->second->Get<T>(_entity);
     }
 
     template <typename T>
     const T** GetComponentArray() const
     {
-        std::unordered_map<cbtS32, CBTComponentPool*>::const_iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::const_iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? nullptr : iter->second->GetArray<T>();
     }
 
     template <typename T>
     T** GetComponentArray()
     {
-        std::unordered_map<cbtS32, CBTComponentPool*>::iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? nullptr : iter->second->GetArray<T>();
     }
 
     template <typename T>
     cbtU32 GetComponentCount() const
     {
-        std::unordered_map<cbtS32, CBTComponentPool*>::const_iterator iter = m_ComponentPools.find(CBTFamily<CBTManaged>::GetID<T>());
+        std::unordered_map<cbtS32, cbtComponentPool*>::const_iterator iter = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>());
         return (iter == m_ComponentPools.end()) ? 0 : iter->second->GetCount();
     }
 
@@ -145,12 +144,12 @@ public:
     T* AddComponent(cbtECS _entity, Args&&... _args)
     {
         CBT_ASSERT(!HasComponent<T>(_entity));
-        cbtS32 familyID = CBTFamily<CBTManaged>::GetID<T>();
-        std::unordered_map<cbtS32, CBTComponentPool*>::iterator iter = m_ComponentPools.find(familyID);
+        cbtS32 familyID = cbtFamily<cbtManaged>::GetID<T>();
+        std::unordered_map<cbtS32, cbtComponentPool*>::iterator iter = m_ComponentPools.find(familyID);
         if (iter == m_ComponentPools.end())
         {
-            CBTComponentPool* componentPool = CBTComponentPool::CreateComponentPool<T>();
-            m_ComponentPools.insert(std::pair<cbtS32, CBTComponentPool*>(familyID, componentPool));
+            cbtComponentPool* componentPool = cbtComponentPool::CreateComponentPool<T>();
+            m_ComponentPools.insert(std::pair<cbtS32, cbtComponentPool*>(familyID, componentPool));
             iter = m_ComponentPools.find(familyID);
         }
         return iter->second->Add<T, Args...>(_entity, std::forward<Args>(_args)...);
@@ -160,21 +159,21 @@ public:
     void RemoveComponent(cbtECS _entity)
     {
         CBT_ASSERT(HasComponent<T>(_entity));
-        cbtS32 familyID = CBTFamily<CBTManaged>::GetID<T>();
+        cbtS32 familyID = cbtFamily<cbtManaged>::GetID<T>();
         m_ComponentPools[familyID]->Remove(_entity);
     }
 
     // Preferably put the component type with the least number of components as the first template type for best performance.
     template <typename T, typename U, typename ...Args>
-    void GetComponentGroup(CBTComponentGroup<T, U, Args...>& _componentGroup)
+    void GetComponentGroup(cbtComponentGroup<T, U, Args...>& _componentGroup)
     {
         T** componentArray = GetComponentArray<T>();
         cbtU32 componentCount = GetComponentCount<T>();
         std::vector<cbtECS> entities;
         for (cbtU32 i = 0; i < componentCount; ++i) { entities.push_back(componentArray[i]->GetEntity()); }
         FilterEntities<U, Args...>(entities);
-        _componentGroup = CBTComponentGroup<T, U, Args...>((cbtU32)entities.size());
-        PopulateComponentGroup<CBTComponentGroup<T, U, Args...>, T, U, Args...>(entities, _componentGroup);
+        _componentGroup = cbtComponentGroup<T, U, Args...>((cbtU32)entities.size());
+        PopulateComponentGroup<cbtComponentGroup<T, U, Args...>, T, U, Args...>(entities, _componentGroup);
     }
 };
 

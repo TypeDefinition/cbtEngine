@@ -1,27 +1,27 @@
 #pragma once
 
 // Include CBT
-#include "Core/Event/CBTEvent.h"
-#include "CBTWindowProperties.h"
+#include "Core/Event/cbtEvent.h"
+#include "cbtWindowProperties.h"
 
 NS_CBT_BEGIN
 
-class CBTWindowEvent : public CBTEvent
+class cbtWindowEvent : public cbtEvent
 {
 protected:
-    CBTWindowEvent() {}
+    cbtWindowEvent() {}
 
 public:
-    virtual ~CBTWindowEvent() {}
+    virtual ~cbtWindowEvent() {}
 };
 
-class CBTResizeWindowEvent : public CBTWindowEvent
+class cbtResizeWindowEvent : public cbtWindowEvent
 {
 public:
-    const CBTWindowProperties m_Properties;
+    const cbtWindowProperties m_Properties;
 
-    CBTResizeWindowEvent(const CBTWindowProperties& _properties) : m_Properties(_properties) {}
-    virtual ~CBTResizeWindowEvent() {}
+    cbtResizeWindowEvent(const cbtWindowProperties& _properties) : m_Properties(_properties) {}
+    virtual ~cbtResizeWindowEvent() {}
 };
 
 NS_CBT_END

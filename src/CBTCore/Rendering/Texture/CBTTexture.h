@@ -1,9 +1,9 @@
 #pragma once
 
 // Include CBT
-#include "CBTPixelFormat.h"
-#include "Debug/CBTDebug.h"
-#include "Core/General/CBTRef.h"
+#include "cbtPixelFormat.h"
+#include "Debug/cbtDebug.h"
+#include "Core/General/cbtRef.h"
 
 // Include STD
 #include <array>
@@ -28,13 +28,13 @@ NS_CBT_BEGIN
 
 #define CBT_CUBEMAP_MAX_SIDES 6
 
-enum CBTTextureShape
+enum cbtTextureShape
 {
     CBT_TEXTURE_SHAPE_2D,
     CBT_TEXTURE_SHAPE_CUBE,
 };
 
-enum CBTTextureWrap
+enum cbtTextureWrap
 {
     CBT_TEXTURE_WRAP_REPEAT,
     CBT_TEXTURE_WRAP_MIRRORED_REPEAT,
@@ -42,40 +42,40 @@ enum CBTTextureWrap
 };
 
 // Texture format of texture should be standardised to RGBA.
-class CBTTexture : public CBTManaged
+class cbtTexture : public cbtManaged
 {
 protected:
     // Variable(s)
     const cbtStr m_Name;
-    CBTTextureShape m_Shape;
+    cbtTextureShape m_Shape;
     cbtS32 m_Width, m_Height;
-    CBTPixelFormat m_PixelFormat;
+    cbtPixelFormat m_PixelFormat;
 
     // Constructor(s) & Destructor
-    CBTTexture(const cbtStr& _name, CBTTextureShape _shape, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat)
+    cbtTexture(const cbtStr& _name, cbtTextureShape _shape, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat)
         : m_Name(_name)
         , m_Shape(_shape)
         , m_Width(_width)
         , m_Height(_height)
         , m_PixelFormat(_pixelFormat)
     {}
-    virtual ~CBTTexture() {}
+    virtual ~cbtTexture() {}
 
 public:
     // Interface Function(s)
     inline const cbtStr& GetName() const { return m_Name; }
-    inline CBTTextureShape GetShape() const { return m_Shape; }
+    inline cbtTextureShape GetShape() const { return m_Shape; }
     inline cbtS32 GetWidth() const { return m_Width; }
     inline cbtS32 GetHeight() const { return m_Height; }
-    inline CBTPixelFormat GetPixelFormat() const { return m_PixelFormat; }
+    inline cbtPixelFormat GetPixelFormat() const { return m_PixelFormat; }
 
-    virtual void SetWrapMode(CBTTextureWrap _wrapMode) = 0;
-    virtual CBTTextureWrap GetWrapMode() const = 0;
+    virtual void SetWrapMode(cbtTextureWrap _wrapMode) = 0;
+    virtual cbtTextureWrap GetWrapMode() const = 0;
     virtual void Bind(cbtU32 _textureSlot) = 0;
 
-    static CBTTexture* Create2DTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, const cbtU8* _data);
-    static CBTTexture* CreateCubeMap(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data);
-    static CBTTexture* CreateFrameBufferAttachment(const cbtStr& _name, cbtS32 _width, cbtS32 _height, CBTPixelFormat _pixelFormat);
+    static cbtTexture* Create2DTexture(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, const cbtU8* _data);
+    static cbtTexture* CreateCubeMap(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat, std::array<const cbtU8*, CBT_CUBEMAP_MAX_SIDES> _data);
+    static cbtTexture* CreateFrameBufferAttachment(const cbtStr& _name, cbtS32 _width, cbtS32 _height, cbtPixelFormat _pixelFormat);
 };
 
 NS_CBT_END

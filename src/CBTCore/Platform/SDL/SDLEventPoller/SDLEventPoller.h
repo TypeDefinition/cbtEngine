@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 // Include STD
 #include <vector>

@@ -1,40 +1,40 @@
 // Include CBT
-#include "CBTSceneManager.h"
+#include "cbtSceneManager.h"
 
 NS_CBT_BEGIN
 
 // Constructor(s) & Destructor
-CBTSceneManager::CBTSceneManager()
+cbtSceneManager::cbtSceneManager()
     : m_ActiveScene(nullptr)
     , m_NextScene(nullptr)
 {
 }
 
-CBTSceneManager::~CBTSceneManager()
+cbtSceneManager::~cbtSceneManager()
 {
     if (m_ActiveScene) { m_ActiveScene->Release(); }
     while (!m_SceneStack.empty()) { PopScene(); }
 }
 
 // Interface Function(s)
-cbtBool CBTSceneManager::HasScene(const cbtStr& _sceneName) const
+cbtBool cbtSceneManager::HasScene(const cbtStr& _sceneName) const
 {
     return m_RegisteredScenes.find(_sceneName) != m_RegisteredScenes.end();
 }
 
-void CBTSceneManager::ReplaceScene(const cbtStr& _sceneName)
+void cbtSceneManager::ReplaceScene(const cbtStr& _sceneName)
 {
     CBT_ASSERT(HasScene(_sceneName));
     PopScene();
     PushScene(_sceneName);
 }
 
-void CBTSceneManager::PushScene(const cbtStr& _sceneName)
+void cbtSceneManager::PushScene(const cbtStr& _sceneName)
 {
     CBT_ASSERT(HasScene(_sceneName));
 
     // Create a new scene and push it onto the stack.
-    CBTScene* scene = m_RegisteredScenes.find(_sceneName)->second();
+    cbtScene* scene = m_RegisteredScenes.find(_sceneName)->second();
     scene->Retain();
     m_SceneStack.push(scene);
 
@@ -42,7 +42,7 @@ void CBTSceneManager::PushScene(const cbtStr& _sceneName)
     m_NextScene = scene;
 }
 
-void CBTSceneManager::PopScene()
+void cbtSceneManager::PopScene()
 {
     CBT_ASSERT(!m_SceneStack.empty());
 
@@ -54,7 +54,7 @@ void CBTSceneManager::PopScene()
     m_NextScene = m_SceneStack.empty() ? nullptr : m_SceneStack.top();
 }
 
-void CBTSceneManager::Update()
+void cbtSceneManager::Update()
 {
     // Check if there is a scene change.
     if (m_ActiveScene == m_NextScene) { return; }

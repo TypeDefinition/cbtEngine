@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-/*! \file CBTMain.h
+/*! \file cbtMain.h
     \brief The file containing the main function of the C++ application.
 */
 
@@ -21,7 +21,7 @@
 #define SDL_MAIN_HANDLED
 
 // Include CBT
-#include "Application/CBTApplication.h"
+#include "Application/cbtApplication.h"
 
 /**
     \brief The main function of the C++ application.
@@ -30,9 +30,9 @@ int main(int argc, char** argv)
 {
     _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
 
-    NS_CBT::CBTApplication* app = NS_CBT::CBTApplication::GetInstance();
+    NS_CBT::cbtApplication* app = NS_CBT::cbtApplication::GetInstance();
     app->Run();
-    NS_CBT::CBTApplication::Destroy();
+    NS_CBT::cbtApplication::Destroy();
 
     return 0;
 }

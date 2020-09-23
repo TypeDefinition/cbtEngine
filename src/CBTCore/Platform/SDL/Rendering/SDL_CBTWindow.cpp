@@ -1,16 +1,16 @@
 // Include CBT
-#include "SDL_CBTWindow.h"
-#include "Debug/CBTDebug.h"
-#include "Rendering/Window/CBTWindowEvent.h"
+#include "SDL_cbtWindow.h"
+#include "Debug/cbtDebug.h"
+#include "Rendering/Window/cbtWindowEvent.h"
 
 #ifdef CBT_SDL
 
 NS_CBT_BEGIN
 
-CBTWindow* CBTWindow::CreateCBTWindow(const CBTWindowProperties& _properties) { return cbtNew SDL_CBTWindow(_properties); }
+cbtWindow* cbtWindow::CreateCBTWindow(const cbtWindowProperties& _properties) { return cbtNew SDL_cbtWindow(_properties); }
 
-SDL_CBTWindow::SDL_CBTWindow(const CBTWindowProperties& _properties)
-    : CBTWindow(_properties)
+SDL_cbtWindow::SDL_cbtWindow(const cbtWindowProperties& _properties)
+    : cbtWindow(_properties)
 {
     if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0)
     {
@@ -57,7 +57,7 @@ SDL_CBTWindow::SDL_CBTWindow(const CBTWindowProperties& _properties)
     m_SDL_GLContext = SDL_GL_CreateContext(m_SDL_Window);
 }
 
-SDL_CBTWindow::~SDL_CBTWindow()
+SDL_cbtWindow::~SDL_cbtWindow()
 {
     SDL_DestroyWindow(m_SDL_Window);
     SDL_GL_DeleteContext(m_SDL_GLContext);
@@ -65,7 +65,7 @@ SDL_CBTWindow::~SDL_CBTWindow()
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-void SDL_CBTWindow::Resize(cbtU32 _width, cbtU32 _height)
+void SDL_cbtWindow::Resize(cbtU32 _width, cbtU32 _height)
 {
     // Set Window Size
     SDL_SetWindowSize(m_SDL_Window, _width, _height);
@@ -77,11 +77,11 @@ void SDL_CBTWindow::Resize(cbtU32 _width, cbtU32 _height)
     m_Properties.m_Height = (cbtU32)windowHeight;
 
     // Send Event
-    CBTEvent* windowEvent = new CBTResizeWindowEvent(m_Properties);
-    m_EventDispatcher.DispatchEvent<CBTResizeWindowEvent>(windowEvent, true);
+    cbtEvent* windowEvent = new cbtResizeWindowEvent(m_Properties);
+    m_EventDispatcher.DispatchEvent<cbtResizeWindowEvent>(windowEvent, true);
 }
 
-void SDL_CBTWindow::SwapBuffers() { SDL_GL_SwapWindow(m_SDL_Window); }
+void SDL_cbtWindow::SwapBuffers() { SDL_GL_SwapWindow(m_SDL_Window); }
 
 NS_CBT_END
 

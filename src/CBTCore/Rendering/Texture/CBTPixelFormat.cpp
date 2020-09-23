@@ -1,9 +1,9 @@
 // Include CBT
-#include "CBTPixelFormat.h"
+#include "cbtPixelFormat.h"
 
 NS_CBT_BEGIN
 
-cbtU32 GetChannelCount(CBTPixelFormat _format)
+cbtU32 GetChannelCount(cbtPixelFormat _format)
 {
     switch (_format)
     {

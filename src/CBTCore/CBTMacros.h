@@ -1,7 +1,7 @@
 #pragma once
 
 /**
-    \file CBTMacros.h
+    \file cbtMacros.h
     \brief A file containing generic macros used throughout CBTEngine.
 */
 

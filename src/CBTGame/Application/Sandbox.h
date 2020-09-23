@@ -5,7 +5,7 @@
 
 USING_NS_CBT;
 
-class Sandbox : public NS_CBT::CBTApplication
+class Sandbox : public NS_CBT::cbtApplication
 {
 protected:
     virtual ~Sandbox();

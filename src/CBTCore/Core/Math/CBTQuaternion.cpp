@@ -1,47 +1,47 @@
 // Include CBT
-#include "CBTQuaternion.h"
+#include "cbtQuaternion.h"
 
 NS_CBT_BEGIN
 
 // Static Constant Variable(s)
-const CBTQuaternion CBTQuaternion::IDENTITY = CBTQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
-const CBTQuaternion CBTQuaternion::ZERO = CBTQuaternion(0.0f, 0.0f, 0.0f, 0.0f);
+const cbtQuaternion cbtQuaternion::IDENTITY = cbtQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
+const cbtQuaternion cbtQuaternion::ZERO = cbtQuaternion(0.0f, 0.0f, 0.0f, 0.0f);
 
 // Constructor(s) & Destructor
-CBTQuaternion::CBTQuaternion(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z)
+cbtQuaternion::cbtQuaternion(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z)
 {
     Set(_w, _x, _y, _z);
 }
 
-CBTQuaternion::CBTQuaternion(const CBTQuaternion& _other)
+cbtQuaternion::cbtQuaternion(const cbtQuaternion& _other)
 {
     *this = _other;
 }
 
-CBTQuaternion::CBTQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis)
+cbtQuaternion::cbtQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis)
 {
     SetToRotation(_angle, _rotationAxis);
 }
 
-CBTQuaternion::~CBTQuaternion()
+cbtQuaternion::~cbtQuaternion()
 {
 }
 
 // Interface Function(s)
-cbtF32 CBTQuaternion::Length() const
+cbtF32 cbtQuaternion::Length() const
 {
     return std::sqrt(LengthSquared());
 }
 
-cbtF32 CBTQuaternion::LengthSquared() const
+cbtF32 cbtQuaternion::LengthSquared() const
 {
     return GetW() * GetW() + GetX() * GetX() + GetY() * GetY() + GetZ() * GetZ();
 }
 
 // Normalizes the quaternion. If the length of the quaternion is 0, it will become a zero quaternion.
-void CBTQuaternion::Normalize()
+void cbtQuaternion::Normalize()
 {
-    if (CBTMathUtil::IsApproxEqual(0.0f, LengthSquared()))
+    if (cbtMathUtil::IsApproxEqual(0.0f, LengthSquared()))
     {
         m_W = 0.0f;
         m_XYZ = CBTVector3F::ZERO;
@@ -55,48 +55,48 @@ void CBTQuaternion::Normalize()
 }
 
 // Normalizes the quaternion. If the length of the quaternion is 0, it will return a zero quaternion.
-CBTQuaternion CBTQuaternion::Normalized()
+cbtQuaternion cbtQuaternion::Normalized()
 {
-    if (CBTMathUtil::IsApproxEqual(0.0f, LengthSquared()))
+    if (cbtMathUtil::IsApproxEqual(0.0f, LengthSquared()))
     {
-        return CBTQuaternion::ZERO;
+        return cbtQuaternion::ZERO;
     }
     else
     {
         cbtF32 length = Length();
-        return CBTQuaternion(GetW() / length, GetX() / length, GetY() / length, GetZ() / length);
+        return cbtQuaternion(GetW() / length, GetX() / length, GetY() / length, GetZ() / length);
     }
 }
 
-void CBTQuaternion::Inverse()
+void cbtQuaternion::Inverse()
 {
     m_XYZ = -m_XYZ;
 }
 
-CBTQuaternion CBTQuaternion::Inversed() const
+cbtQuaternion cbtQuaternion::Inversed() const
 {
-    return CBTQuaternion(GetW(), -GetX(), -GetY(), -GetZ());
+    return cbtQuaternion(GetW(), -GetX(), -GetY(), -GetZ());
 }
 
-cbtF32 CBTQuaternion::Dot(const CBTQuaternion& _other) const
+cbtF32 cbtQuaternion::Dot(const cbtQuaternion& _other) const
 {
     return GetW() * _other.GetW() + GetX() * _other.GetX() + GetY() * _other.GetY() + GetZ() * _other.GetZ();
 }
 
 // Rotation Function(s)
-void CBTQuaternion::ToAxisAngle(cbtF32& _angle, CBTVector3F& _rotationAxis) const
+void cbtQuaternion::ToAxisAngle(cbtF32& _angle, CBTVector3F& _rotationAxis) const
 {
     // A rotational quaternion must be a unit quaternion.
-    CBT_ASSERT(CBTMathUtil::IsApproxEqual(1.0f, LengthSquared()));
+    CBT_ASSERT(cbtMathUtil::IsApproxEqual(1.0f, LengthSquared()));
 
-    _angle = std::acos(m_W) * 2.0f * CBTMathUtil::RAD2DEG;
+    _angle = std::acos(m_W) * 2.0f * cbtMathUtil::RAD2DEG;
     // We simply normalize m_XYZ since the direction of m_XYZ is the same as the rotation axis.
     _rotationAxis = NS_CBT::Normalized(m_XYZ);
 }
 
-CBTMatrix4F CBTQuaternion::ToRotationMatrix() const
+cbtMatrix4F cbtQuaternion::ToRotationMatrix() const
 {
-    CBTMatrix4F matrixA;
+    cbtMatrix4F matrixA;
 
     matrixA[0][0] = GetW();
     matrixA[1][1] = GetW();
@@ -118,7 +118,7 @@ CBTMatrix4F CBTQuaternion::ToRotationMatrix() const
     matrixA[2][3] = GetZ();
     matrixA[3][2] = -GetZ();
 
-    CBTMatrix4F matrixB;
+    cbtMatrix4F matrixB;
 
     matrixB[0][0] = GetW();
     matrixB[1][1] = GetW();
@@ -143,47 +143,47 @@ CBTMatrix4F CBTQuaternion::ToRotationMatrix() const
     return matrixA * matrixB;
 }
 
-void CBTQuaternion::SetToRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis)
+void cbtQuaternion::SetToRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis)
 {
     // If the rotation axis is invalid, set this to a identity quaternion.
-    if (CBTMathUtil::IsApproxEqual(NS_CBT::LengthSquared(_rotationAxis), 0.0f))
+    if (cbtMathUtil::IsApproxEqual(NS_CBT::LengthSquared(_rotationAxis), 0.0f))
     {
-        *this = CBTQuaternion::IDENTITY;
+        *this = cbtQuaternion::IDENTITY;
     }
     else
     {
-        m_W = std::cos(_angle * 0.5f * CBTMathUtil::DEG2RAD);
-        m_XYZ = std::sin(_angle * 0.5f * CBTMathUtil::DEG2RAD) * NS_CBT::Normalized(_rotationAxis);
+        m_W = std::cos(_angle * 0.5f * cbtMathUtil::DEG2RAD);
+        m_XYZ = std::sin(_angle * 0.5f * cbtMathUtil::DEG2RAD) * NS_CBT::Normalized(_rotationAxis);
     }
 }
 
 // Operator Overload(s)
-CBTQuaternion& CBTQuaternion::operator=(const CBTQuaternion& _rhs)
+cbtQuaternion& cbtQuaternion::operator=(const cbtQuaternion& _rhs)
 {
     Set(_rhs.GetW(), _rhs.GetX(), _rhs.GetY(), _rhs.GetZ());
 
     return *this;
 }
 
-cbtBool CBTQuaternion::operator==(const CBTQuaternion& _rhs) const
+cbtBool cbtQuaternion::operator==(const cbtQuaternion& _rhs) const
 {
-    return CBTMathUtil::IsApproxEqual(m_W, _rhs.m_W) && (m_XYZ == _rhs.m_XYZ);
+    return cbtMathUtil::IsApproxEqual(m_W, _rhs.m_W) && (m_XYZ == _rhs.m_XYZ);
 }
 
-cbtBool CBTQuaternion::operator!=(const CBTQuaternion& _rhs) const
+cbtBool cbtQuaternion::operator!=(const cbtQuaternion& _rhs) const
 {
     return !(*this == _rhs);
 }
 
-CBTQuaternion CBTQuaternion::operator*(const CBTQuaternion& _rhs) const
+cbtQuaternion cbtQuaternion::operator*(const cbtQuaternion& _rhs) const
 {
     cbtF32 w = m_W * _rhs.m_W - NS_CBT::Dot(m_XYZ, _rhs.m_XYZ);
     CBTVector3F xyz = m_W * _rhs.m_XYZ + _rhs.m_W * m_XYZ + NS_CBT::Cross(m_XYZ, _rhs.m_XYZ);
 
-    return CBTQuaternion(w, xyz.GetX(), xyz.GetY(), xyz.GetZ());
+    return cbtQuaternion(w, xyz.GetX(), xyz.GetY(), xyz.GetZ());
 }
 
-CBTQuaternion& CBTQuaternion::operator*=(const CBTQuaternion& _rhs)
+cbtQuaternion& cbtQuaternion::operator*=(const cbtQuaternion& _rhs)
 {
     *this = *this * _rhs;
 
@@ -191,24 +191,24 @@ CBTQuaternion& CBTQuaternion::operator*=(const CBTQuaternion& _rhs)
 }
 
 // Static Function(s)
-CBTVector3F CBTQuaternion::Rotate(const CBTVector3F& _point, cbtF32 _angle, const CBTVector3F& _rotationAxis)
+CBTVector3F cbtQuaternion::Rotate(const CBTVector3F& _point, cbtF32 _angle, const CBTVector3F& _rotationAxis)
 {
-    CBTQuaternion rotation(_angle, _rotationAxis);
-    CBTQuaternion point(0.0f, _point.GetX(), _point.GetY(), _point.GetZ());
-    CBTQuaternion result = rotation * point * rotation.Inversed();
+    cbtQuaternion rotation(_angle, _rotationAxis);
+    cbtQuaternion point(0.0f, _point.GetX(), _point.GetY(), _point.GetZ());
+    cbtQuaternion result = rotation * point * rotation.Inversed();
     
     return CBTVector3F(result.GetX(), result.GetY(), result.GetZ());
 }
 
 // This function assumes that _start & _end are unit quaternions.
-CBTQuaternion CBTQuaternion::Slerp(const CBTQuaternion& _start, const CBTQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio)
+cbtQuaternion cbtQuaternion::Slerp(const cbtQuaternion& _start, const cbtQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio)
 {
-    CBT_ASSERT(CBTMathUtil::IsApproxEqual(_start.LengthSquared(), 1.0f));
-    CBT_ASSERT(CBTMathUtil::IsApproxEqual(_end.LengthSquared(), 1.0f));
+    CBT_ASSERT(cbtMathUtil::IsApproxEqual(_start.LengthSquared(), 1.0f));
+    CBT_ASSERT(cbtMathUtil::IsApproxEqual(_end.LengthSquared(), 1.0f));
 
     if (_clampRatio)
     {
-        _ratio = CBTMathUtil::Clamp<cbtF32>(_ratio, 0.0f, 1.0f);
+        _ratio = cbtMathUtil::Clamp<cbtF32>(_ratio, 0.0f, 1.0f);
     }
 
     /*
@@ -222,7 +222,7 @@ CBTQuaternion CBTQuaternion::Slerp(const CBTQuaternion& _start, const CBTQuatern
     d * s * s.Inversed = e * s.Inversed [s * s.Inversed cancels each other out.]
     d = e * s.Inversed
     */
-    CBTQuaternion d = _end * _start.Inversed();
+    cbtQuaternion d = _end * _start.Inversed();
 
     /*
     Since s * d = e, if we want for example to only turn halfway, then we need to half the angle that d turns.
@@ -235,7 +235,7 @@ CBTQuaternion CBTQuaternion::Slerp(const CBTQuaternion& _start, const CBTQuatern
     d.ToAxisAngle(dAngle, dAxis);
 
     // Now that we have the angle and axis to rotate around, we have our result.
-    return CBTQuaternion(dAngle * _ratio, dAxis) * _start;
+    return cbtQuaternion(dAngle * _ratio, dAxis) * _start;
 }
 
 NS_CBT_END

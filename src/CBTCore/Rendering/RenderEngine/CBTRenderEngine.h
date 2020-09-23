@@ -1,48 +1,48 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Core/General/CBTSingleton.h"
-#include "Core/General/CBTLibrary.h"
-#include "Rendering/Color/CBTColor.h"
-#include "Rendering/Window/CBTWindow.h"
-#include "CBTRenderAPI.h"
-#include "Rendering/Renderer/CBTRenderer.h"
+#include "cbtMacros.h"
+#include "Core/General/cbtSingleton.h"
+#include "Core/General/cbtLibrary.h"
+#include "Rendering/Color/cbtColor.h"
+#include "Rendering/Window/cbtWindow.h"
+#include "cbtRenderAPI.h"
+#include "Rendering/Renderer/cbtRenderer.h"
 
 NS_CBT_BEGIN
 
-class CBTRenderEngine : public CBTSingleton<CBTRenderEngine>
+class cbtRenderEngine : public cbtSingleton<cbtRenderEngine>
 {
-    friend class CBTSingleton<CBTRenderEngine>;
+    friend class cbtSingleton<cbtRenderEngine>;
 
 protected:
-    CBTLibrary<CBTMaterial>* m_MaterialLibrary = nullptr;
-    CBTLibrary<CBTShaderProgram>* m_ShaderLibrary = nullptr;
-    CBTLibrary<CBTMesh>* m_MeshLibrary = nullptr;
-    CBTLibrary<CBTTexture>* m_TextureLibrary = nullptr;
+    cbtLibrary<cbtMaterial>* m_MaterialLibrary = nullptr;
+    cbtLibrary<cbtShaderProgram>* m_ShaderLibrary = nullptr;
+    cbtLibrary<cbtMesh>* m_MeshLibrary = nullptr;
+    cbtLibrary<cbtTexture>* m_TextureLibrary = nullptr;
 
-    CBTRenderEngine() {}
-    virtual ~CBTRenderEngine() {}
+    cbtRenderEngine() {}
+    virtual ~cbtRenderEngine() {}
 
-    static CBTRenderEngine* CreateInstance();
+    static cbtRenderEngine* CreateInstance();
 
 public:
-    inline const CBTLibrary<CBTMaterial>* GetMaterialLibrary() const { return m_MaterialLibrary; }
-    inline CBTLibrary<CBTMaterial>* GetMaterialLibrary() { return m_MaterialLibrary; }
+    inline const cbtLibrary<cbtMaterial>* GetMaterialLibrary() const { return m_MaterialLibrary; }
+    inline cbtLibrary<cbtMaterial>* GetMaterialLibrary() { return m_MaterialLibrary; }
 
-    inline const CBTLibrary<CBTShaderProgram>* GetShaderLibrary() const { return m_ShaderLibrary; }
-    inline CBTLibrary<CBTShaderProgram>* GetShaderLibrary() { return m_ShaderLibrary; }
+    inline const cbtLibrary<cbtShaderProgram>* GetShaderLibrary() const { return m_ShaderLibrary; }
+    inline cbtLibrary<cbtShaderProgram>* GetShaderLibrary() { return m_ShaderLibrary; }
 
-    inline const CBTLibrary<CBTMesh>* GetMeshLibrary() const { return m_MeshLibrary; }
-    inline CBTLibrary<CBTMesh>* GetMeshLibrary() { return m_MeshLibrary; }
+    inline const cbtLibrary<cbtMesh>* GetMeshLibrary() const { return m_MeshLibrary; }
+    inline cbtLibrary<cbtMesh>* GetMeshLibrary() { return m_MeshLibrary; }
 
-    inline const CBTLibrary<CBTTexture>* GetTextureLibrary() const { return m_TextureLibrary; }
-    inline CBTLibrary<CBTTexture>* GetTextureLibrary() { return m_TextureLibrary; }
+    inline const cbtLibrary<cbtTexture>* GetTextureLibrary() const { return m_TextureLibrary; }
+    inline cbtLibrary<cbtTexture>* GetTextureLibrary() { return m_TextureLibrary; }
 
-    virtual const CBTWindow* GetWindow() const = 0;
-    virtual CBTWindow* GetWindow() = 0;
+    virtual const cbtWindow* GetWindow() const = 0;
+    virtual cbtWindow* GetWindow() = 0;
 
-    virtual void Init(const CBTWindowProperties& _winProp) = 0;
+    virtual void Init(const cbtWindowProperties& _winProp) = 0;
     virtual void Update() = 0;
     virtual void Exit() = 0;
 };

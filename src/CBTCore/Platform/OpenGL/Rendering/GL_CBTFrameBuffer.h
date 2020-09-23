@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Buffer/CBTFrameBuffer.h"
-#include "GL_CBTTexture.h"
+#include "Rendering/Buffer/cbtFrameBuffer.h"
+#include "GL_cbtTexture.h"
 
 #ifdef CBT_OPENGL
 
@@ -12,37 +12,37 @@
 
 NS_CBT_BEGIN
 
-class GL_CBTFrameBuffer : public CBTFrameBuffer
+class GL_cbtFrameBuffer : public cbtFrameBuffer
 {
 protected:
-    GL_CBTTexture* m_ColorAttachments[GL_MAX_COLOR_ATTACHMENTS];
-    GL_CBTTexture* m_DepthAttachment;
-    GL_CBTTexture* m_StencilAttachment;
-    GL_CBTTexture* m_DepthStencilAttachment;
+    GL_cbtTexture* m_ColorAttachments[GL_MAX_COLOR_ATTACHMENTS];
+    GL_cbtTexture* m_DepthAttachment;
+    GL_cbtTexture* m_StencilAttachment;
+    GL_cbtTexture* m_DepthStencilAttachment;
     GLuint m_BufferName;
 
-    virtual ~GL_CBTFrameBuffer();
+    virtual ~GL_cbtFrameBuffer();
 
 public:
-    GL_CBTFrameBuffer();
+    GL_cbtFrameBuffer();
 
     GLuint GetBufferName() { return m_BufferName; }
 
-    virtual void AddColorAttachment(CBTTexture* _attachment, cbtU32 _index);
-    virtual CBTTexture* GetColorAttachment(cbtU32 _index) { return m_ColorAttachments[_index]; }
-    virtual const CBTTexture* GetColorAttachment(cbtU32 _index) const { return m_ColorAttachments[_index]; }
+    virtual void AddColorAttachment(cbtTexture* _attachment, cbtU32 _index);
+    virtual cbtTexture* GetColorAttachment(cbtU32 _index) { return m_ColorAttachments[_index]; }
+    virtual const cbtTexture* GetColorAttachment(cbtU32 _index) const { return m_ColorAttachments[_index]; }
 
-    virtual void AddDepthAttachment(CBTTexture* _attachment);
-    virtual CBTTexture* GetDepthAttachment() { return m_DepthAttachment; }
-    virtual const CBTTexture* GetDepthAttachment() const { return m_DepthAttachment; }
+    virtual void AddDepthAttachment(cbtTexture* _attachment);
+    virtual cbtTexture* GetDepthAttachment() { return m_DepthAttachment; }
+    virtual const cbtTexture* GetDepthAttachment() const { return m_DepthAttachment; }
 
-    virtual void AddStencilAttachment(CBTTexture* _attachment);
-    virtual CBTTexture* GetStencilAttachment() { return m_StencilAttachment; }
-    virtual const CBTTexture* GetStencilAttachment() const { return m_StencilAttachment; }
+    virtual void AddStencilAttachment(cbtTexture* _attachment);
+    virtual cbtTexture* GetStencilAttachment() { return m_StencilAttachment; }
+    virtual const cbtTexture* GetStencilAttachment() const { return m_StencilAttachment; }
 
-    virtual void AddDepthStencilAttachment(CBTTexture* _attachment);
-    virtual CBTTexture* GetDepthStencilAttachment() { return m_DepthStencilAttachment; }
-    virtual const CBTTexture* GetDepthStencilAttachment() const { return m_DepthStencilAttachment; }
+    virtual void AddDepthStencilAttachment(cbtTexture* _attachment);
+    virtual cbtTexture* GetDepthStencilAttachment() { return m_DepthStencilAttachment; }
+    virtual const cbtTexture* GetDepthStencilAttachment() const { return m_DepthStencilAttachment; }
 
     virtual void SetReadColorBuffer(cbtU32 _index) { glNamedFramebufferReadBuffer(m_BufferName, GL_COLOR_ATTACHMENT0 + _index); }
     virtual void SetDrawColorBuffer(cbtU32 _index) { glNamedFramebufferDrawBuffer(m_BufferName, GL_COLOR_ATTACHMENT0 + _index); }

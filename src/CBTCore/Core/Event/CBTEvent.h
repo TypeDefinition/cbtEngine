@@ -1,19 +1,19 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief 
-        Event(s) contain data that is dispatched by an EventDispatcher,
-        and is received by an EventListener that is subscribed to the EventDispatcher.
-        Create new Event types by inheriting from Event.
+        cbtEvent(s) contain data that is dispatched by an cbtEventDispatcher,
+        and is received by an cbtEventListener that is subscribed to the cbtEventDispatcher.
+        Create new cbtEvent types by inheriting from cbtEvent.
  
-        Example Event(s): InputEvent, AxisEvent, ButtonEvent, ClickEvent
+        Example cbtEvent(s): InputEvent, AxisEvent, ButtonEvent, ClickEvent
 */
-class CBTEvent
+class cbtEvent
 {
 private:
     /// A flag to state if the event has already been handled.
@@ -23,13 +23,13 @@ public:
     /** 
         \brief Default Constructor.
 
-        \return A new CBTEvent.
+        \return A new cbtEvent.
     */
-    CBTEvent() {}
+    cbtEvent() {}
     /**
         \brief Virtual Destructor.
     */
-    virtual ~CBTEvent() {}
+    virtual ~cbtEvent() {}
 
     /**
         \brief Returns true if the event has been handled, false if it has not.

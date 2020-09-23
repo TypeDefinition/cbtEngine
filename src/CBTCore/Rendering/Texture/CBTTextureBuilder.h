@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "Core/General/CBTLibrary.h"
-#include "CBTTexture.h"
+#include "Core/General/cbtLibrary.h"
+#include "cbtTexture.h"
 
 // Include STD
 #include <unordered_map>
@@ -10,7 +10,7 @@
 
 NS_CBT_BEGIN
 
-class CBTTextureBuilder
+class cbtTextureBuilder
 {
 protected:
     /**
@@ -94,15 +94,15 @@ protected:
     /**
         \brief Private Constructor. All functions should be static. No objects of this class should be created.
     */
-    CBTTextureBuilder() {}
+    cbtTextureBuilder() {}
     /**
         \brief Private Destructor. All functions should be static. No objects of this class should be created.
     */
-    ~CBTTextureBuilder() {}
+    ~cbtTextureBuilder() {}
 
 public:
-    static CBTTexture* Create2DTexture(const cbtStr& _name, const cbtStr& _filePath, cbtBool _flipVertical = true, cbtBool _flipHorizontal = false);
-    static CBTTexture* CreateCubeMap(const cbtStr& _name, std::array<cbtStr, CBT_CUBEMAP_MAX_SIDES> _filePath, cbtBool _flipVertical = false , cbtBool _flipHorizontal = true);
+    static cbtTexture* Create2DTexture(const cbtStr& _name, const cbtStr& _filePath, cbtBool _flipVertical = true, cbtBool _flipHorizontal = false);
+    static cbtTexture* CreateCubeMap(const cbtStr& _name, std::array<cbtStr, CBT_CUBEMAP_MAX_SIDES> _filePath, cbtBool _flipVertical = false , cbtBool _flipHorizontal = true);
 };
 
 NS_CBT_END

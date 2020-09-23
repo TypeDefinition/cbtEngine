@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
@@ -11,9 +11,9 @@ NS_CBT_BEGIN
 
         How to use:\n
         \code{.cpp}
-        class MySingleton : public CBTSingleton<MySingleton>
+        class MySingleton : public cbtSingleton<MySingleton>
         {
-            friend class CBTSingleton<MySingleton>;
+            friend class cbtSingleton<MySingleton>;
 
         private:
             MySingleton() {}
@@ -29,7 +29,7 @@ NS_CBT_BEGIN
         \endcode
 */
 template <typename T>
-class CBTSingleton
+class cbtSingleton
 {
 private:
     /// The singleton instance.
@@ -39,13 +39,13 @@ protected:
     /**
         \brief Constructor
 
-        \return A CBTSingleton
+        \return A cbtSingleton
     */
-    CBTSingleton() {}
+    cbtSingleton() {}
     /**
         \brief Destructor
     */
-    virtual ~CBTSingleton() {}
+    virtual ~cbtSingleton() {}
 
 public:
     /**
@@ -78,6 +78,6 @@ public:
 };
 
 template <typename T>
-T* CBTSingleton<T>::s_Instance = nullptr;
+T* cbtSingleton<T>::s_Instance = nullptr;
 
 NS_CBT_END

@@ -1,23 +1,23 @@
 // Include CBT
-#include "GL_CBTFrameBuffer.h"
+#include "GL_cbtFrameBuffer.h"
 
 #ifdef CBT_OPENGL
 
 NS_CBT_BEGIN
 
 /************************************************************Frame Buffer************************************************************/
-void CBTFrameBuffer::Bind(CBTFrameBuffer* _frameBuffer)
+void cbtFrameBuffer::Bind(cbtFrameBuffer* _frameBuffer)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer ? static_cast<GL_CBTFrameBuffer*>(_frameBuffer)->GetBufferName() : 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer ? static_cast<GL_cbtFrameBuffer*>(_frameBuffer)->GetBufferName() : 0);
 }
 
-void CBTFrameBuffer::Blit(CBTFrameBuffer* _src, CBTFrameBuffer* _dest,
+void cbtFrameBuffer::Blit(cbtFrameBuffer* _src, cbtFrameBuffer* _dest,
     cbtBool _colorBuffer, cbtBool _depthBuffer, cbtBool _stencilBuffer,
     cbtS32 _srcX0, cbtS32 _srcY0, cbtS32 _srcX1, cbtS32 _srcY1,
     cbtS32 _destX0, cbtS32 _destY0, cbtS32 _destX1, cbtS32 _destY1)
 {
-    GL_CBTFrameBuffer* source = static_cast<GL_CBTFrameBuffer*>(_src);
-    GL_CBTFrameBuffer* destination = static_cast<GL_CBTFrameBuffer*>(_dest);
+    GL_cbtFrameBuffer* source = static_cast<GL_cbtFrameBuffer*>(_src);
+    GL_cbtFrameBuffer* destination = static_cast<GL_cbtFrameBuffer*>(_dest);
 
     GLbitfield mask = 0;
     mask |= (_colorBuffer ? GL_COLOR_BUFFER_BIT : 0);
@@ -32,9 +32,9 @@ void CBTFrameBuffer::Blit(CBTFrameBuffer* _src, CBTFrameBuffer* _dest,
         mask, GL_NEAREST);
 }
 
-void CBTFrameBuffer::ClearColorAll(CBTFrameBuffer* _frameBuffer, CBTColor _color)
+void cbtFrameBuffer::ClearColorAll(cbtFrameBuffer* _frameBuffer, cbtColor _color)
 {
-    GL_CBTFrameBuffer* frameBuffer = static_cast<GL_CBTFrameBuffer*>(_frameBuffer);
+    GL_cbtFrameBuffer* frameBuffer = static_cast<GL_cbtFrameBuffer*>(_frameBuffer);
 
     // Default FrameBuffer
     if (frameBuffer == nullptr)
@@ -51,9 +51,9 @@ void CBTFrameBuffer::ClearColorAll(CBTFrameBuffer* _frameBuffer, CBTColor _color
     }
 }
 
-void CBTFrameBuffer::ClearColor(CBTFrameBuffer* _frameBuffer, std::initializer_list<cbtU32> _attachmentIndices, CBTColor _color)
+void cbtFrameBuffer::ClearColor(cbtFrameBuffer* _frameBuffer, std::initializer_list<cbtU32> _attachmentIndices, cbtColor _color)
 {
-    GL_CBTFrameBuffer* frameBuffer = static_cast<GL_CBTFrameBuffer*>(_frameBuffer);
+    GL_cbtFrameBuffer* frameBuffer = static_cast<GL_cbtFrameBuffer*>(_frameBuffer);
 
     // Default FrameBuffer
     if (frameBuffer == nullptr)
@@ -70,25 +70,25 @@ void CBTFrameBuffer::ClearColor(CBTFrameBuffer* _frameBuffer, std::initializer_l
     }
 }
 
-void CBTFrameBuffer::ClearDepth(CBTFrameBuffer* _frameBuffer, cbtF32 _depth)
+void cbtFrameBuffer::ClearDepth(cbtFrameBuffer* _frameBuffer, cbtF32 _depth)
 {
-    GL_CBTFrameBuffer* frameBuffer = static_cast<GL_CBTFrameBuffer*>(_frameBuffer);
+    GL_cbtFrameBuffer* frameBuffer = static_cast<GL_cbtFrameBuffer*>(_frameBuffer);
     glClearNamedFramebufferfv(frameBuffer ? frameBuffer->GetBufferName() : 0, GL_DEPTH, 0, &_depth);
 }
 
-void CBTFrameBuffer::ClearDepthStencil(CBTFrameBuffer* _frameBuffer, cbtF32 _depth, cbtS32 _stencil)
+void cbtFrameBuffer::ClearDepthStencil(cbtFrameBuffer* _frameBuffer, cbtF32 _depth, cbtS32 _stencil)
 {
-    GL_CBTFrameBuffer* frameBuffer = static_cast<GL_CBTFrameBuffer*>(_frameBuffer);
+    GL_cbtFrameBuffer* frameBuffer = static_cast<GL_cbtFrameBuffer*>(_frameBuffer);
     glClearNamedFramebufferfi(frameBuffer ? frameBuffer->GetBufferName() : 0, GL_DEPTH_STENCIL, 0, _depth, _stencil);
 }
 
-void CBTFrameBuffer::ClearStencil(CBTFrameBuffer* _frameBuffer, cbtS32 _stencil)
+void cbtFrameBuffer::ClearStencil(cbtFrameBuffer* _frameBuffer, cbtS32 _stencil)
 {
-    GL_CBTFrameBuffer* frameBuffer = static_cast<GL_CBTFrameBuffer*>(_frameBuffer);
+    GL_cbtFrameBuffer* frameBuffer = static_cast<GL_cbtFrameBuffer*>(_frameBuffer);
     glClearNamedFramebufferiv(frameBuffer ? frameBuffer->GetBufferName() : 0, GL_STENCIL, 0, &_stencil);
 }
 
-void CBTFrameBuffer::ClearAttachmentsAll(CBTFrameBuffer* _frameBuffer, CBTColor _color, cbtF32 _depth, cbtS32 _stencil)
+void cbtFrameBuffer::ClearAttachmentsAll(cbtFrameBuffer* _frameBuffer, cbtColor _color, cbtF32 _depth, cbtS32 _stencil)
 {
     ClearColorAll(_frameBuffer, _color);
     ClearDepth(_frameBuffer, _depth);
@@ -96,9 +96,9 @@ void CBTFrameBuffer::ClearAttachmentsAll(CBTFrameBuffer* _frameBuffer, CBTColor 
     ClearStencil(_frameBuffer, _stencil);
 }
 
-CBTFrameBuffer* CBTFrameBuffer::CreateFrameBuffer() { return cbtNew GL_CBTFrameBuffer(); }
+cbtFrameBuffer* cbtFrameBuffer::CreateFrameBuffer() { return cbtNew GL_cbtFrameBuffer(); }
 
-GL_CBTFrameBuffer::GL_CBTFrameBuffer()
+GL_cbtFrameBuffer::GL_cbtFrameBuffer()
     : m_DepthAttachment(nullptr)
     , m_StencilAttachment(nullptr)
     , m_DepthStencilAttachment(nullptr)
@@ -107,7 +107,7 @@ GL_CBTFrameBuffer::GL_CBTFrameBuffer()
     glCreateFramebuffers(1, &m_BufferName);
 }
 
-GL_CBTFrameBuffer::~GL_CBTFrameBuffer()
+GL_cbtFrameBuffer::~GL_cbtFrameBuffer()
 {
     for (cbtU32 i = 0; i < GL_MAX_COLOR_ATTACHMENTS; ++i) { if (m_ColorAttachments[i]) { m_ColorAttachments[i]->Release(); } }
     if (m_DepthAttachment) { m_DepthAttachment->Release(); }
@@ -116,55 +116,55 @@ GL_CBTFrameBuffer::~GL_CBTFrameBuffer()
     glDeleteFramebuffers(1, &m_BufferName);
 }
 
-void GL_CBTFrameBuffer::AddColorAttachment(CBTTexture* _attachment, cbtU32 _index)
+void GL_cbtFrameBuffer::AddColorAttachment(cbtTexture* _attachment, cbtU32 _index)
 {
     CBT_ASSERT(m_ColorAttachments[_index] == nullptr);
 
-    GL_CBTTexture* attachment = static_cast<GL_CBTTexture*>(_attachment);
+    GL_cbtTexture* attachment = static_cast<GL_cbtTexture*>(_attachment);
     glNamedFramebufferTexture(m_BufferName, GL_COLOR_ATTACHMENT0 + _index, attachment->GetGLTextureName(), 0);
     _attachment->Retain();
     m_ColorAttachments[_index] = attachment;
 }
 
-void GL_CBTFrameBuffer::AddDepthAttachment(CBTTexture* _attachment)
+void GL_cbtFrameBuffer::AddDepthAttachment(cbtTexture* _attachment)
 {
     CBT_ASSERT(m_DepthAttachment == nullptr);
     CBT_ASSERT(m_DepthStencilAttachment == nullptr);
 
-    m_DepthAttachment = static_cast<GL_CBTTexture*>(_attachment);
+    m_DepthAttachment = static_cast<GL_cbtTexture*>(_attachment);
     m_DepthAttachment->Retain();
     glNamedFramebufferTexture(m_BufferName, GL_DEPTH_ATTACHMENT, m_DepthAttachment->GetGLTextureName(), 0);
 }
 
-void GL_CBTFrameBuffer::AddStencilAttachment(CBTTexture* _attachment)
+void GL_cbtFrameBuffer::AddStencilAttachment(cbtTexture* _attachment)
 {
     CBT_ASSERT(m_StencilAttachment == nullptr);
     CBT_ASSERT(m_DepthStencilAttachment == nullptr);
 
-    m_StencilAttachment = static_cast<GL_CBTTexture*>(_attachment);
+    m_StencilAttachment = static_cast<GL_cbtTexture*>(_attachment);
     m_StencilAttachment->Retain();
     glNamedFramebufferTexture(m_BufferName, GL_STENCIL_ATTACHMENT, m_StencilAttachment->GetGLTextureName(), 0);
 }
 
-void GL_CBTFrameBuffer::AddDepthStencilAttachment(CBTTexture* _attachment)
+void GL_cbtFrameBuffer::AddDepthStencilAttachment(cbtTexture* _attachment)
 {
     CBT_ASSERT(m_DepthAttachment == nullptr);
     CBT_ASSERT(m_StencilAttachment == nullptr);
     CBT_ASSERT(m_DepthStencilAttachment == nullptr);
 
-    m_DepthStencilAttachment = static_cast<GL_CBTTexture*>(_attachment);
+    m_DepthStencilAttachment = static_cast<GL_cbtTexture*>(_attachment);
     m_DepthStencilAttachment->Retain();
     glNamedFramebufferTexture(m_BufferName, GL_DEPTH_STENCIL_ATTACHMENT, m_DepthStencilAttachment->GetGLTextureName(), 0);
 }
 
-void GL_CBTFrameBuffer::SetDrawColorBuffers(std::initializer_list<cbtU32> _indices)
+void GL_cbtFrameBuffer::SetDrawColorBuffers(std::initializer_list<cbtU32> _indices)
 {
     std::vector<cbtU32> colorAttachments(_indices);
     for (cbtU32 i = 0; i < colorAttachments.size(); ++i) { colorAttachments[i] += GL_COLOR_ATTACHMENT0; }
     glNamedFramebufferDrawBuffers(m_BufferName, (GLsizei)colorAttachments.size(), &colorAttachments[0]);
 }
 
-void GL_CBTFrameBuffer::SetDrawColorBuffersAll()
+void GL_cbtFrameBuffer::SetDrawColorBuffersAll()
 {
     std::vector<cbtU32> colorAttachments;
     for (cbtU32 i = 0; i < GL_MAX_COLOR_ATTACHMENTS; ++i)

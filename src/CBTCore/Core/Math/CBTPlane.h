@@ -1,16 +1,16 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "CBTMathUtil.h"
-#include "CBTVector3.h"
+#include "cbtMacros.h"
+#include "cbtMathUtil.h"
+#include "cbtVector3.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief Represents the equation of a plane.
 */
-class CBTPlane
+class cbtPlane
 {
 public:
     /// \brief The normal of the plane.
@@ -26,7 +26,7 @@ public:
 
         \return A new plane with given normal and constant.
     */
-    CBTPlane(const CBTVector3F& _normal = CBTVector3F::ZERO, cbtF32 _constant = 0.0f);
+    cbtPlane(const CBTVector3F& _normal = CBTVector3F::ZERO, cbtF32 _constant = 0.0f);
     /**
         \brief Constructs a new Plane which is a copy of given Plane.
         
@@ -34,11 +34,11 @@ public:
 
         \return A new Plane which is a copy of _other.
     */
-    CBTPlane(const CBTPlane& _other);
+    cbtPlane(const cbtPlane& _other);
     /**
         \brief Destructor
     */
-    ~CBTPlane();
+    ~cbtPlane();
 
     /**
         \brief Sets the normal and constant of this plane.
@@ -81,7 +81,7 @@ public:
 
         \return A normalized version of this plane as a new Plane.
     */
-    CBTPlane Normalized();
+    cbtPlane Normalized();
 
     /**
         \brief Get the distance from this plane to the given point.
@@ -99,7 +99,7 @@ public:
 
         \return This plane after setting its values.
     */
-    CBTPlane& operator=(const CBTPlane& _other) { m_Normal = _other.m_Normal; m_Constant = _other.m_Constant; }
+    cbtPlane& operator=(const cbtPlane& _other) { m_Normal = _other.m_Normal; m_Constant = _other.m_Constant; }
 };
 
 NS_CBT_END

@@ -1,11 +1,11 @@
 #pragma once
 
 /**
-    \file CBT.h
+    \file cbt.h
     \brief A header file for the user's application to include.
 */
 
 // Include Header(s)
-#include "CBTMain.h"
-#include "CBTMacros.h"
-#include "Application/CBTApplication.h"
+#include "cbtMain.h"
+#include "cbtMacros.h"
+#include "Application/cbtApplication.h"

@@ -1,8 +1,8 @@
 #pragma once
 
 // Include CBT
-#include "Debug/CBTDebug.h"
-#include "CBTScene.h"
+#include "Debug/cbtDebug.h"
+#include "cbtScene.h"
 
 // Include STD
 #include <functional>
@@ -11,28 +11,28 @@
 
 NS_CBT_BEGIN
 
-class CBTSceneManager
+class cbtSceneManager
 {
 private:
-    typedef std::unordered_map<cbtStr, std::function<CBTScene*(void)>> SceneDictionary;
+    typedef std::unordered_map<cbtStr, std::function<cbtScene*(void)>> SceneDictionary;
 
     // Variable(s)
     SceneDictionary m_RegisteredScenes;
-    std::stack<CBTScene*> m_SceneStack;
-    CBTScene* m_ActiveScene;
-    CBTScene* m_NextScene;
+    std::stack<cbtScene*> m_SceneStack;
+    cbtScene* m_ActiveScene;
+    cbtScene* m_NextScene;
 
     template <typename T>
-    static CBTScene* CreateScene() { return new T(); }
+    static cbtScene* CreateScene() { return new T(); }
 
 public:
     // Constructor(s) & Destructor
-    CBTSceneManager();
-    ~CBTSceneManager();
+    cbtSceneManager();
+    ~cbtSceneManager();
 
     // Interface Function(s)
-    CBTScene * GetActiveScene() { return m_ActiveScene; }
-    const CBTScene * GetActiveScene() const { return m_ActiveScene; }
+    cbtScene * GetActiveScene() { return m_ActiveScene; }
+    const cbtScene * GetActiveScene() const { return m_ActiveScene; }
 
     cbtBool HasScene(const cbtStr& _sceneName) const;
     void ReplaceScene(const cbtStr& _sceneName);
@@ -45,7 +45,7 @@ public:
     void RegisterScene(const cbtStr& _sceneName)
     {
         CBT_ASSERT(!HasScene(_sceneName));
-        m_RegisteredScenes.insert(std::pair<cbtStr, std::function<CBTScene*(void)>>(_sceneName, &CBTSceneManager::CreateScene<T>));
+        m_RegisteredScenes.insert(std::pair<cbtStr, std::function<cbtScene*(void)>>(_sceneName, &cbtSceneManager::CreateScene<T>));
     }
 
     void UnregisterScene(const cbtStr& _sceneName)

@@ -1,9 +1,9 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/RenderEngine/CBTRenderEngine.h"
-#include "Rendering/Window/CBTWindow.h"
-#include "Rendering/Renderer/CBTRenderer.h"
+#include "Rendering/RenderEngine/cbtRenderEngine.h"
+#include "Rendering/Window/cbtWindow.h"
+#include "Rendering/Renderer/cbtRenderer.h"
 
 #ifdef CBT_OPENGL
 
@@ -12,24 +12,24 @@
 
 NS_CBT_BEGIN
 
-class GL_CBTRenderEngine : public CBTRenderEngine
+class GL_cbtRenderEngine : public cbtRenderEngine
 {
-    friend class CBTRenderEngine;
+    friend class cbtRenderEngine;
 
 protected:
-    CBTWindow* m_Window = nullptr;
-    CBTRenderer* m_Renderer = nullptr;
+    cbtWindow* m_Window = nullptr;
+    cbtRenderer* m_Renderer = nullptr;
 
-    GL_CBTRenderEngine() {}
-    virtual ~GL_CBTRenderEngine() {}
+    GL_cbtRenderEngine() {}
+    virtual ~GL_cbtRenderEngine() {}
 
 public:
-    virtual void Init(const CBTWindowProperties& _winProp);
+    virtual void Init(const cbtWindowProperties& _winProp);
     virtual void Update();
     virtual void Exit();
 
-    virtual const CBTWindow* GetWindow() const { return m_Window; }
-    virtual CBTWindow* GetWindow() { return m_Window; }
+    virtual const cbtWindow* GetWindow() const { return m_Window; }
+    virtual cbtWindow* GetWindow() { return m_Window; }
 };
 
 NS_CBT_END

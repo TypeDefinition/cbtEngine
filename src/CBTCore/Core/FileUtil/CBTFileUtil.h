@@ -1,24 +1,24 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
+#include "cbtMacros.h"
 
 NS_CBT_BEGIN
 
 /**
     \brief A file utility class.
 */
-class CBTFileUtil
+class cbtFileUtil
 {
 private:
     /**
         \brief Private Constructor. All functions should be static. No objects of this class should be created.
     */
-    CBTFileUtil() {}
+    cbtFileUtil() {}
     /**
         \brief Private Destructor. All functions should be static. No objects of this class should be created.
     */
-    ~CBTFileUtil() {}
+    ~cbtFileUtil() {}
 
 public:
     /**

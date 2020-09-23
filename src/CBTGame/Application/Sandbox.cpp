@@ -3,13 +3,13 @@
 
 USING_NS_CBT;
 
-CBTApplication* CBTApplication::CreateInstance()
+cbtApplication* cbtApplication::CreateInstance()
 {
     return new Sandbox("Sandbox");
 }
 
 Sandbox::Sandbox(const cbtStr& _name)
-    : CBTApplication(_name)
+    : cbtApplication(_name)
 {
 }
 
@@ -19,8 +19,8 @@ Sandbox::~Sandbox()
 
 void Sandbox::PostInit()
 {
-    CBTGameEngine::GetInstance()->GetSceneManager()->RegisterScene<GameScene>("Game Scene");
-    CBTGameEngine::GetInstance()->GetSceneManager()->PushScene("Game Scene");
+    cbtGameEngine::GetInstance()->GetSceneManager()->RegisterScene<GameScene>("Game Scene");
+    cbtGameEngine::GetInstance()->GetSceneManager()->PushScene("Game Scene");
 }
 
 void Sandbox::PreUpdate() {}

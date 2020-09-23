@@ -1,12 +1,12 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Core/General/CBTRef.h"
-#include "Core/General/CBTPasskey.h"
-#include "Core/General/CBTSparseSet.h"
-#include "Core/General/CBTHandleSet.h"
-#include "Core/General/CBTFlags.h"
+#include "cbtMacros.h"
+#include "Core/General/cbtRef.h"
+#include "Core/General/cbtPasskey.h"
+#include "Core/General/cbtSparseSet.h"
+#include "Core/General/cbtHandleSet.h"
+#include "Core/General/cbtFlags.h"
 
 // Include STD
 #include <utility>
@@ -14,12 +14,12 @@
 NS_CBT_BEGIN
 
 // Forward Declaration(s)
-class CBTScene;
+class cbtScene;
 
 // Type Definition(s)
 typedef cbtU32 cbtECS;
 
-typedef CBTHandleSet<cbtECS> CBTEntityPool;
+typedef cbtHandleSet<cbtECS> cbtEntityPool;
 
 // Component Flag(s)
 /// No Flags
@@ -70,9 +70,9 @@ typedef CBTHandleSet<cbtECS> CBTEntityPool;
 
 /**
     \brief
-        Base class of components. All components should inherit from CBTComponent.
+        Base class of components. All components should inherit from cbtComponent.
 */
-class CBTComponent : public CBTManaged
+class cbtComponent : public cbtManaged
 {
 private:
     /// The entity this component belongs to.
@@ -82,15 +82,15 @@ protected:
     /**
         \brief Protected Destructor. Use Ref::Release instead.
     */
-    virtual ~CBTComponent() {}
+    virtual ~cbtComponent() {}
 
 public:
     /**
         \brief Default Constructor.
 
-        \return A CBTComponent of type T.
+        \return A cbtComponent of type T.
     */
-    CBTComponent() {}
+    cbtComponent() {}
 
     /**
         \brief Initialises the entity.
@@ -116,7 +116,7 @@ public:
         Allows CBTScene to store all the components in a hash map, which would be impossible otherwise
         as the various components do not have a common base class.
 */
-class CBTComponentPool
+class cbtComponentPool
 {
 private:
     /// The number of pages in the sparse set.
@@ -138,13 +138,13 @@ private:
     /**
         \brief Private Constructor. Create an instance of CBTComponentPool using CreateComponentPool.
     */
-    CBTComponentPool() {}
+    cbtComponentPool() {}
 
 public:
     /**
         \brief Destructor
     */
-    ~CBTComponentPool() { m_Destructor(); }
+    ~cbtComponentPool() { m_Destructor(); }
 
     /**
         \brief Remove the component belonging to an entity.
@@ -177,8 +177,8 @@ public:
     template <typename T>
     const T* Get(cbtECS _entity) const
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
-        return (*static_cast<SparseSet*>(m_SparseSet))[CBTEntityPool::GetIndex(_entity)];
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        return (*static_cast<SparseSet*>(m_SparseSet))[cbtEntityPool::GetIndex(_entity)];
     }
 
     /**
@@ -191,8 +191,8 @@ public:
     template <typename T>
     T* Get(cbtECS _entity)
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
-        return (*static_cast<SparseSet*>(m_SparseSet))[CBTEntityPool::GetIndex(_entity)];
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        return (*static_cast<SparseSet*>(m_SparseSet))[cbtEntityPool::GetIndex(_entity)];
     }
 
     /**
@@ -203,7 +203,7 @@ public:
     template <typename T>
     const T** GetArray() const
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
         return static_cast<SparseSet*>(m_SparseSet)->GetArray();
     }
 
@@ -215,7 +215,7 @@ public:
     template <typename T>
     T** GetArray()
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
         return static_cast<SparseSet*>(m_SparseSet)->GetArray();
     }
 
@@ -230,10 +230,10 @@ public:
     template <typename T, typename ...Args>
     T* Add(cbtECS _entity, Args&&... _args)
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
         SparseSet* sparseSet = static_cast<SparseSet*>(m_SparseSet);
 
-        if (CBTFlags<T>::HasFlags(CBT_COMPONENT_FLAG_SCENE_UNIQUE))
+        if (cbtFlags<T>::HasFlags(CBT_COMPONENT_FLAG_SCENE_UNIQUE))
         {
             CBT_ASSERT(sparseSet->GetCount() == 0);
         }
@@ -241,7 +241,7 @@ public:
         T* component = cbtNew T();
         component->Retain();
         component->Init(_entity);
-        sparseSet->Insert(CBTEntityPool::GetIndex(_entity), component);
+        sparseSet->Insert(cbtEntityPool::GetIndex(_entity), component);
         component->Awake(std::forward<Args>(_args)...);
 
         return component;
@@ -255,21 +255,21 @@ public:
             \return A CBTComponentPool that can store components of type T.
     */
     template <typename T>
-    static CBTComponentPool* CreateComponentPool()
+    static cbtComponentPool* CreateComponentPool()
     {
-        typedef CBTSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
-        CBTComponentPool* componentPool = cbtNew CBTComponentPool();
+        typedef cbtSparseSet<T*, PAGE_COUNT, PARAGRAPH_COUNT> SparseSet;
+        cbtComponentPool* componentPool = cbtNew cbtComponentPool();
         componentPool->m_SparseSet = static_cast<void*>(cbtNew SparseSet());
         componentPool->m_Remove = [componentPool](cbtECS _entity) -> void
         {
             SparseSet* sparseSet = static_cast<SparseSet*>(componentPool->m_SparseSet);
-            cbtECS index = CBTEntityPool::GetIndex(_entity);
+            cbtECS index = cbtEntityPool::GetIndex(_entity);
             (*sparseSet)[index]->AutoRelease();
             sparseSet->Remove(index);
         };
         componentPool->m_Has = [componentPool](cbtECS _entity) -> cbtBool
         {
-            return static_cast<SparseSet*>(componentPool->m_SparseSet)->Has(CBTEntityPool::GetIndex(_entity));
+            return static_cast<SparseSet*>(componentPool->m_SparseSet)->Has(cbtEntityPool::GetIndex(_entity));
         };
         componentPool->m_GetCount = [componentPool](void) -> cbtU32
         {
@@ -296,7 +296,7 @@ public:
         all the CBTLightComponent, CBTTransformComponent and CBTCameraComponent at index 2 belongs to the same entity and so on.
 */
 template <typename T, typename U, typename ...Args>
-class CBTComponentGroup
+class cbtComponentGroup
 {
 private:
     /// The array size for each component.
@@ -338,7 +338,7 @@ private:
         \param _startIndex The index of m_ComponentArrays to copy the array.
     */
     template <typename Component>
-    void CopyArrays(const CBTComponentGroup& _other, cbtU32 _startIndex = 0)
+    void CopyArrays(const cbtComponentGroup& _other, cbtU32 _startIndex = 0)
     {
         Component** dstArray = static_cast<Component**>(m_ComponentArrays[_startIndex]);
         Component** srcArray = static_cast<Component**>(_other.m_ComponentArrays[_startIndex]);
@@ -352,7 +352,7 @@ private:
         \param _startIndex The index of m_ComponentArrays to copy the array.
     */
     template <typename ComponentA, typename ComponentB, typename ...ComponentArgs>
-    void CopyArrays(const CBTComponentGroup& _other, cbtU32 _startIndex = 0)
+    void CopyArrays(const cbtComponentGroup& _other, cbtU32 _startIndex = 0)
     {
         ComponentA** dstArray = static_cast<ComponentA**>(m_ComponentArrays[_startIndex]);
         ComponentA** srcArray = static_cast<ComponentA**>(_other.m_ComponentArrays[_startIndex]);
@@ -395,7 +395,7 @@ public:
 
         \return A CBTComponentGroup.
     */
-    CBTComponentGroup(cbtU32 _arraySize = 0)
+    cbtComponentGroup(cbtU32 _arraySize = 0)
         : m_ArraySize(_arraySize)
     {
         CreateArrays<T, U, Args...>();
@@ -407,7 +407,7 @@ public:
 
         \return A CBTComponentGroup.
     */
-    CBTComponentGroup(const CBTComponentGroup& _other)
+    cbtComponentGroup(const cbtComponentGroup& _other)
         : m_ArraySize(_other.m_ArraySize)
     {
         CreateArrays<T, U, Args...>();
@@ -416,7 +416,7 @@ public:
     /**
         \brief Destructor
     */
-    ~CBTComponentGroup()
+    ~cbtComponentGroup()
     {
         DeleteArrays<T, U, Args...>();
     }
@@ -461,7 +461,7 @@ public:
 
         \return This component pool after copying _other.
     */
-    CBTComponentGroup& operator=(const CBTComponentGroup& _other)
+    cbtComponentGroup& operator=(const cbtComponentGroup& _other)
     {
         m_ArraySize = _other.m_ArraySize;
         DeleteArrays<T, U, Args...>();

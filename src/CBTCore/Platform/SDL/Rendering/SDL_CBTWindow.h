@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "Rendering/Window/CBTWindow.h"
+#include "Rendering/Window/cbtWindow.h"
 
 #ifdef CBT_SDL
 
@@ -11,15 +11,15 @@
 
 NS_CBT_BEGIN
 
-class SDL_CBTWindow : public CBTWindow
+class SDL_cbtWindow : public cbtWindow
 {
 protected:
     SDL_GLContext m_SDL_GLContext;
     SDL_Window* m_SDL_Window;
 
 public:
-    SDL_CBTWindow(const CBTWindowProperties& _properties);
-    virtual ~SDL_CBTWindow();
+    SDL_cbtWindow(const cbtWindowProperties& _properties);
+    virtual ~SDL_cbtWindow();
 
     virtual void Resize(cbtU32 _width, cbtU32 _height);
     virtual void SwapBuffers();

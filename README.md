@@ -1,2 +1,2 @@
 # CBTEngine
-Game Engine by Lim Ngian Xin Terry
+A game engine by Lim Ngian Xin Terry. Work in progress.

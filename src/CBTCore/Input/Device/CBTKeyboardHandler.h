@@ -1,9 +1,9 @@
 #pragma once
 
 // Include CBT
-#include "Input/CBTInput.h"
-#include "Input/CBTInputEvent.h"
-#include "Core/Event/CBTEventDispatcher.h"
+#include "Input/cbtInput.h"
+#include "Input/cbtInputEvent.h"
+#include "Core/Event/cbtEventDispatcher.h"
 
 // Include STD
 #include <bitset>
@@ -11,27 +11,27 @@
 
 NS_CBT_BEGIN
 
-class CBTKeyboardHandler
+class cbtKeyboardHandler
 {
 protected:
     std::bitset<CBT_MAX_INPUT_NAME> m_PreviousInputState;
     std::bitset<CBT_MAX_INPUT_NAME> m_CurrentInputState;
 
-    std::unordered_map<CBTInputMask, std::bitset<CBT_MAX_INPUT_NAME>> m_RegisteredInputs;
+    std::unordered_map<cbtInputMask, std::bitset<CBT_MAX_INPUT_NAME>> m_RegisteredInputs;
 
 public:
     // Constructor(s) & Destructor
-    CBTKeyboardHandler();
-    virtual ~CBTKeyboardHandler();
+    cbtKeyboardHandler();
+    virtual ~cbtKeyboardHandler();
 
     // Input Registration
-    void RegisterButton(CBTInputMask _mask, CBTInputName _inputName);
-    void UnregisterButton(CBTInputMask _mask, CBTInputName _inputName);
+    void RegisterButton(cbtInputMask _mask, cbtInputName _inputName);
+    void UnregisterButton(cbtInputMask _mask, cbtInputName _inputName);
 
     // Events
-    void OnKeyPress(CBTInputContext _context, CBTKeycode _keycode);
-    void OnKeyRelease(CBTInputContext _context, CBTKeycode _keycode);
-    void DispatchEvents(CBTEventDispatcher& _dispatcher);
+    void OnKeyPress(cbtInputContext _context, cbtKeycode _keycode);
+    void OnKeyRelease(cbtInputContext _context, cbtKeycode _keycode);
+    void DispatchEvents(cbtEventDispatcher& _dispatcher);
 };
 
 NS_CBT_END

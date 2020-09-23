@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "Input/CBTKeycode.h"
+#include "Input/cbtKeycode.h"
 
 #ifdef CBT_SDL
 
@@ -10,7 +10,7 @@
 
 NS_CBT_BEGIN
 
-CBTKeycode ToCBTKeycode(SDL_Keycode _sdlKeycode)
+cbtKeycode ToCBTKeycode(SDL_Keycode _sdlKeycode)
 {
     switch (_sdlKeycode)
     {

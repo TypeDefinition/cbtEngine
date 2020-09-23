@@ -1,23 +1,23 @@
 // Include CBT
-#include "CBTGameEngine.h"
+#include "cbtGameEngine.h"
 
 NS_CBT_BEGIN
 
-void CBTGameEngine::Init()
+void cbtGameEngine::Init()
 {
-    m_SceneManager = new CBTSceneManager();
+    m_SceneManager = new cbtSceneManager();
 }
 
-void CBTGameEngine::Update()
+void cbtGameEngine::Update()
 {
     m_SceneManager->Update();
 }
 
-void CBTGameEngine::Exit()
+void cbtGameEngine::Exit()
 {
     delete m_SceneManager;
     m_SceneManager = nullptr;
-    CBTManaged::ClearReleasePool();
+    cbtManaged::ClearReleasePool();
 }
 
 NS_CBT_END

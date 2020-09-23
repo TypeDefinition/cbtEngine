@@ -1,8 +1,8 @@
 // Include CBT
-#include "GL_CBTUniformBuffer.h"
+#include "GL_cbtUniformBuffer.h"
 
 NS_CBT_BEGIN
 
-CBTUniformBuffer* CBTUniformBuffer::CreateUniformBuffer() { return cbtNew GL_CBTUniformBuffer(); }
+cbtUniformBuffer* cbtUniformBuffer::CreateUniformBuffer() { return cbtNew GL_cbtUniformBuffer(); }
 
 NS_CBT_END

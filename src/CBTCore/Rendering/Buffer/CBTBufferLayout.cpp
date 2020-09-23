@@ -1,24 +1,24 @@
 // Include CBT
-#include "CBTBufferLayout.h"
+#include "cbtBufferLayout.h"
 
 NS_CBT_BEGIN
 
-cbtU32 GetByteSize(CBTBufferDataType _dataType)
+cbtU32 GetByteSize(cbtBufferDataType _dataType)
 {
     switch (_dataType)
     {
-    case CBTBufferDataType::CBT_S8:
-    case CBTBufferDataType::CBT_U8:
+    case cbtBufferDataType::CBT_S8:
+    case cbtBufferDataType::CBT_U8:
         return 1;
-    case CBTBufferDataType::CBT_S16:
-    case CBTBufferDataType::CBT_U16:
-    case CBTBufferDataType::CBT_F16:
+    case cbtBufferDataType::CBT_S16:
+    case cbtBufferDataType::CBT_U16:
+    case cbtBufferDataType::CBT_F16:
         return 2;
-    case CBTBufferDataType::CBT_S32:
-    case CBTBufferDataType::CBT_U32:
-    case CBTBufferDataType::CBT_F32:
+    case cbtBufferDataType::CBT_S32:
+    case cbtBufferDataType::CBT_U32:
+    case cbtBufferDataType::CBT_F32:
         return 4;
-    case CBTBufferDataType::CBT_F64:
+    case cbtBufferDataType::CBT_F64:
         return 8;
     default:
         return 0;

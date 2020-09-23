@@ -1,25 +1,25 @@
 #pragma once
 
 // Include CBT
-#include "CBTMacros.h"
-#include "Core/General/CBTSingleton.h"
-#include "Game/Scene/CBTSceneManager.h"
+#include "cbtMacros.h"
+#include "Core/General/cbtSingleton.h"
+#include "Game/Scene/cbtSceneManager.h"
 
 NS_CBT_BEGIN
 
-class CBTGameEngine : public CBTSingleton<CBTGameEngine>
+class cbtGameEngine : public cbtSingleton<cbtGameEngine>
 {
-    friend class CBTSingleton<CBTGameEngine>;
+    friend class cbtSingleton<cbtGameEngine>;
 
 protected:
-    CBTSceneManager* m_SceneManager;
+    cbtSceneManager* m_SceneManager;
 
-    CBTGameEngine()
+    cbtGameEngine()
     : m_SceneManager(nullptr)
     {}
-    virtual ~CBTGameEngine() {}
+    virtual ~cbtGameEngine() {}
 
-    static CBTGameEngine* CreateInstance() { return cbtNew CBTGameEngine(); }
+    static cbtGameEngine* CreateInstance() { return cbtNew cbtGameEngine(); }
 
 public:
     void Init();
@@ -27,8 +27,8 @@ public:
     void Exit();
 
     // System(s)
-    inline const CBTSceneManager* GetSceneManager() const { return m_SceneManager; }
-    inline CBTSceneManager* GetSceneManager() { return m_SceneManager; }
+    inline const cbtSceneManager* GetSceneManager() const { return m_SceneManager; }
+    inline cbtSceneManager* GetSceneManager() { return m_SceneManager; }
 };
 
 NS_CBT_END
