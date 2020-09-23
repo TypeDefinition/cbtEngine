@@ -1,0 +1,8 @@
+// Include CBT
+#include "CBTGraphics.h"
+
+NS_CBT_BEGIN
+
+CBT_DEFINE_FLAGS(CBTGraphics, CBT_COMPONENT_FLAG_NONE);
+
+NS_CBT_END
