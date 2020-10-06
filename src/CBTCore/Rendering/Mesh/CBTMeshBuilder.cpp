@@ -5,6 +5,7 @@
 
 // Include STD
 #include <sstream>
+#include <cstdio>
 
 NS_CBT_BEGIN
 
@@ -292,7 +293,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         if (std::strncmp("v ", line.c_str(), 2) == 0)
         {
             CBTVector3F position;
-            sscanf_s(line.c_str() + 2, "%f%f%f", &position.m_X, &position.m_Y, &position.m_Z);
+            std::sscanf(line.c_str() + 2, "%f%f%f", &position.m_X, &position.m_Y, &position.m_Z);
             positions.push_back(position);
         }
 
@@ -300,7 +301,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         if (std::strncmp("vt ", line.c_str(), 3) == 0)
         {
             CBTVector2F texCoord;
-            sscanf_s(line.c_str() + 3, "%f%f", &texCoord.m_X, &texCoord.m_Y);
+            std::sscanf(line.c_str() + 3, "%f%f", &texCoord.m_X, &texCoord.m_Y);
             texCoords.push_back(texCoord);
         }
 
@@ -308,7 +309,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         if (std::strncmp("vn ", line.c_str(), 3) == 0)
         {
             CBTVector3F normal;
-            sscanf_s(line.c_str() + 3, "%f%f%f", &normal.m_X, &normal.m_Y, &normal.m_Z);
+            std::sscanf(line.c_str() + 3, "%f%f%f", &normal.m_X, &normal.m_Y, &normal.m_Z);
             normals.push_back(normal);
         }
 
@@ -319,7 +320,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
             cbtU32 texCoordIndices[3];
             cbtU32 normalIndices[3];
 
-            cbtS32 matches = sscanf_s(
+            cbtS32 matches = std::sscanf(
                 line.c_str() + 2,
                 "%d/%d/%d %d/%d/%d %d/%d/%d\n",
                 &positionIndices[0], &texCoordIndices[0], &normalIndices[0],

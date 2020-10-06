@@ -1,6 +1,9 @@
 // Include CBT
 #include "GL_cbtFrameBuffer.h"
 
+// Include STL
+#include <cstring>
+
 #ifdef CBT_OPENGL
 
 NS_CBT_BEGIN

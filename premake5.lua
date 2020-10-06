@@ -10,6 +10,8 @@ workspace("CBTEngine")
     configurations({"Debug", "Release"})
     startproject("CBTGame")
 
+    --buildoptions({"/permissive-"})
+
     filter("configurations:Debug")
         defines("CBT_DEBUG")
         symbols "On"
@@ -55,9 +57,9 @@ project("CBTCore")
     })
 
     links({
-        "opengl32.lib",
-        "glew32s.lib",
-        "SDL2.lib",
+        "opengl32",
+        "glew32s",
+        "SDL2",
         "SDL2_image",
     })
 

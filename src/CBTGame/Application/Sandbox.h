@@ -1,7 +1,7 @@
 #pragma once
 
 // Include CBT
-#include "CBT.h" // Include CBT.h in order to include the Main.h, which includes our application's entry point.
+#include "cbt.h" // Include cbt.h in order to include the Main.h, which includes our application's entry point.
 
 USING_NS_CBT;
 

@@ -128,7 +128,7 @@ public:
     template <typename T, typename... Args>
     static T Min(T _a, T _b, Args... _args)
     {
-        return Min(Min<T>(_a, _b), _args);
+        return Min(Min<T>(_a, _b), _args...);
     }
 
     /**
@@ -157,7 +157,7 @@ public:
     template <typename T, typename... Args>
     static T Max(T _a, T _b, Args... _args)
     {
-        return Max(Max<T>(_a, _b), _args);
+        return Max(Max<T>(_a, _b), _args...);
     }
 
     /**

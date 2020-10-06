@@ -4,6 +4,9 @@
 #include "cbtMacros.h"
 #include "cbtMathUtil.h"
 
+// Include STL
+#include <cstring>
+
 NS_CBT_BEGIN
 
 /**

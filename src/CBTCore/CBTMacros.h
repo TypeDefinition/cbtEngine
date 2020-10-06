@@ -226,7 +226,7 @@ struct TemplateType { using Type = typename TemplateType<INDEX - 1, Args...>::Ty
     \endcode
 */
 template<typename T, typename... Args>
-struct TemplateType<0, T, Args...> { using Type = typename T; };
+struct TemplateType<0, T, Args...> { using Type = T; };
 
 /**
     \brief Returns the number of template types.

@@ -54,10 +54,10 @@ protected:
     void PopulateComponentGroup(const std::vector<cbtECS>& _entities, ComponentGroup& _componentGroup)
     {
         cbtComponentPool* componentPool = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>())->second;
-        T** groupArray = _componentGroup.GetArray<T>();
+        T** groupArray = _componentGroup.template GetArray<T>();
         for (cbtU32 i = 0; i < _entities.size(); ++i)
         {
-            groupArray[i] = componentPool->Get<T>(_entities[i]);
+            groupArray[i] = componentPool->template Get<T>(_entities[i]);
         }
     }
 
@@ -65,10 +65,10 @@ protected:
     void PopulateComponentGroup(const std::vector<cbtECS>& _entities, ComponentGroup& _componentGroup)
     {
         cbtComponentPool* componentPool = m_ComponentPools.find(cbtFamily<cbtManaged>::GetID<T>())->second;
-        T** groupArray = _componentGroup.GetArray<T>();
+        T** groupArray = _componentGroup.template GetArray<T>();
         for (cbtU32 i = 0; i < _entities.size(); ++i)
         {
-            groupArray[i] = componentPool->Get<T>(_entities[i]);
+            groupArray[i] = componentPool->template Get<T>(_entities[i]);
         }
         PopulateComponentGroup<ComponentGroup, U, Args...>(_entities, _componentGroup);
     }

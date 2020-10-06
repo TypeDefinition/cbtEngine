@@ -6,6 +6,7 @@
 // Include STD
 #include <vector>
 #include <utility>
+#include <cstring>
 
 NS_CBT_BEGIN
 

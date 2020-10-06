@@ -99,7 +99,7 @@ public:
 
         \return This plane after setting its values.
     */
-    cbtPlane& operator=(const cbtPlane& _other) { m_Normal = _other.m_Normal; m_Constant = _other.m_Constant; }
+    cbtPlane& operator=(const cbtPlane& _other) { m_Normal = _other.m_Normal; m_Constant = _other.m_Constant; return *this; }
 };
 
 NS_CBT_END

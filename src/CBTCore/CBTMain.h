@@ -4,6 +4,7 @@
     \brief The file containing the main function of the C++ application.
 */
 
+/*
 // Memory Leak Checking
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -16,6 +17,7 @@
 #else
 #define DBG_NEW new
 #endif
+*/
 
 // SDL (This tells SDL that we have our own entry point.)
 #define SDL_MAIN_HANDLED
@@ -23,12 +25,14 @@
 // Include CBT
 #include "Application/cbtApplication.h"
 
+USING_NS_CBT;
+
 /**
     \brief The main function of the C++ application.
 */
 int main(int argc, char** argv)
 {
-    _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
+    // _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
 
     NS_CBT::cbtApplication* app = NS_CBT::cbtApplication::GetInstance();
     app->Run();

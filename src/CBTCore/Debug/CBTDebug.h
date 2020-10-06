@@ -102,6 +102,7 @@ public:
     static void Log(cbtLogCategory _category, cbtLogPriority _priority, const cbtS8* _format, ...);
 };
 
+/*
 /// Print a message to the console with priority CBT_LOG_PRIORITY_VERBOSE and a given category.
 #define CBT_LOG_VERBOSE(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_VERBOSE, __FORMAT__, __VA_ARGS__)
 /// Print a message to the console with priority CBT_LOG_PRIORITY_DEBUG and a given category.
@@ -114,5 +115,19 @@ public:
 #define CBT_LOG_ERROR(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_ERROR, __FORMAT__, __VA_ARGS__)
 /// Print a message to the console with priority CBT_LOG_PRIORITY_CRITICAL and a given category.
 #define CBT_LOG_CRITICAL(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_CRITICAL, __FORMAT__, __VA_ARGS__)
+*/
+
+/// Print a message to the console with priority CBT_LOG_PRIORITY_VERBOSE and a given category.
+#define CBT_LOG_VERBOSE(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_VERBOSE, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
+/// Print a message to the console with priority CBT_LOG_PRIORITY_DEBUG and a given category.
+#define CBT_LOG_DEBUG(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_DEBUG, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
+/// Print a message to the console with priority CBT_LOG_PRIORITY_INFO and a given category.
+#define CBT_LOG_INFO(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_INFO, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
+/// Print a message to the console with priority CBT_LOG_PRIORITY_WARN and a given category.
+#define CBT_LOG_WARN(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_WARN, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
+/// Print a message to the console with priority CBT_LOG_PRIORITY_ERROR and a given category.
+#define CBT_LOG_ERROR(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_ERROR, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
+/// Print a message to the console with priority CBT_LOG_PRIORITY_CRITICAL and a given category.
+#define CBT_LOG_CRITICAL(__LOG_CATEGORY__, __FORMAT__, ...) ::NS_CBT::cbtDebug::Log(__LOG_CATEGORY__, CBT_LOG_PRIORITY_CRITICAL, __FORMAT__ __VA_OPT__(,) __VA_ARGS__)
 
 NS_CBT_END

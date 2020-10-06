@@ -7,7 +7,7 @@
 
 // Include GL
 #include <glew.h>
-#include <gl/GL.h>
+// #include <gl/GL.h>
 
 NS_CBT_BEGIN
 

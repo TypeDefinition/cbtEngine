@@ -5,6 +5,10 @@
 // Include CBT
 #include "cbtMathUtil.h"
 
+// Include STL
+#include <float.h>
+#include <limits.h>
+
 NS_CBT_BEGIN
 
 // Static Constant Variable(s)

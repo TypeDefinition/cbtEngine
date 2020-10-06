@@ -7,6 +7,7 @@
 // Include STD
 #include <unordered_map>
 #include <array>
+#include <cstring>
 
 NS_CBT_BEGIN
 
