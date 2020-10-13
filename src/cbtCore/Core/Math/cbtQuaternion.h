@@ -90,13 +90,13 @@ private:
     /// The scalar component of the quaternion, represented by W.
     cbtF32 m_W;
     /// The vector3 component of the quaternion, represented by X, Y and Z.
-    CBTVector3F m_XYZ;
+    cbtVector3F m_XYZ;
 
 public:
     // Constructor(s) & Destructor
     cbtQuaternion(cbtF32 _w = 1.0f, cbtF32 _x = 0.0f, cbtF32 _y = 0.0f, cbtF32 _z = 0.0f);
     cbtQuaternion(const cbtQuaternion& _other);
-    cbtQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis);
+    cbtQuaternion(cbtF32 _angle, const cbtVector3F& _rotationAxis);
     ~cbtQuaternion();
 
     // Interface Function(s)
@@ -108,14 +108,14 @@ public:
         \param _y The Y component.
         \param _z The Z component.
     */
-    inline void Set(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z) { m_W = _w; m_XYZ = CBTVector3F(_x, _y, _z); }
+    inline void Set(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z) { m_W = _w; m_XYZ = cbtVector3F(_x, _y, _z); }
     /**
         \brief Set the components of this quaternion.
 
         \param _w The scalar component, represented by W.
         \param _xyz The vector3 component, represented by XYZ.
     */
-    inline void Set(cbtF32 _w, const CBTVector3F& _xyz) { m_W = _w; m_XYZ = _xyz; }
+    inline void Set(cbtF32 _w, const cbtVector3F& _xyz) { m_W = _w; m_XYZ = _xyz; }
     /**
         \brief Set the W component of this quaternion.
 
@@ -169,7 +169,7 @@ public:
 
         \return The XYZ component of this quaternion.
     */
-    inline const CBTVector3F& GetXYZ() const { return m_XYZ; }
+    inline const cbtVector3F& GetXYZ() const { return m_XYZ; }
 
     /**
         \brief Get the length of the quaternion. If possible, use LengthSquared() instead of Length() as it is more expensive to compute the length then the length squared.
@@ -222,7 +222,7 @@ public:
         \param _angle The resultant angle of rotation in degrees.
         \param _rotationAxis The resultant axis of rotation.
     */
-    void ToAxisAngle(cbtF32& _angle, CBTVector3F& _rotationAxis) const;
+    void ToAxisAngle(cbtF32& _angle, cbtVector3F& _rotationAxis) const;
     /**
         \brief Get this quaternion as a CBTMatrix4F rotation matrix.
 
@@ -237,7 +237,7 @@ public:
         \param _angle The angle rotation in degrees.
         \param _rotationAxis The axis of rotation.
     */
-    void SetToRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis);
+    void SetToRotation(cbtF32 _angle, const cbtVector3F& _rotationAxis);
 
     // Operator Overload(s)
     /**
@@ -292,7 +292,7 @@ public:
 
         \return The result of the point after the rotation.
     */
-    static CBTVector3F Rotate(const CBTVector3F& _point, cbtF32 _angle, const CBTVector3F& _rotationAxis);
+    static cbtVector3F Rotate(const cbtVector3F& _point, cbtF32 _angle, const cbtVector3F& _rotationAxis);
 
     /**
         \brief Spherical Linear Interpolation betwen 2 quaternions.

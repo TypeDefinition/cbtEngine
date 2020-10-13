@@ -18,7 +18,7 @@ cbtQuaternion::cbtQuaternion(const cbtQuaternion& _other)
     *this = _other;
 }
 
-cbtQuaternion::cbtQuaternion(cbtF32 _angle, const CBTVector3F& _rotationAxis)
+cbtQuaternion::cbtQuaternion(cbtF32 _angle, const cbtVector3F& _rotationAxis)
 {
     SetToRotation(_angle, _rotationAxis);
 }
@@ -44,7 +44,7 @@ void cbtQuaternion::Normalize()
     if (cbtMathUtil::IsApproxEqual(0.0f, LengthSquared()))
     {
         m_W = 0.0f;
-        m_XYZ = CBTVector3F::ZERO;
+        m_XYZ = cbtVector3F::ZERO;
     }
     else
     {
@@ -84,7 +84,7 @@ cbtF32 cbtQuaternion::Dot(const cbtQuaternion& _other) const
 }
 
 // Rotation Function(s)
-void cbtQuaternion::ToAxisAngle(cbtF32& _angle, CBTVector3F& _rotationAxis) const
+void cbtQuaternion::ToAxisAngle(cbtF32& _angle, cbtVector3F& _rotationAxis) const
 {
     // A rotational quaternion must be a unit quaternion.
     CBT_ASSERT(cbtMathUtil::IsApproxEqual(1.0f, LengthSquared()));
@@ -143,7 +143,7 @@ cbtMatrix4F cbtQuaternion::ToRotationMatrix() const
     return matrixA * matrixB;
 }
 
-void cbtQuaternion::SetToRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis)
+void cbtQuaternion::SetToRotation(cbtF32 _angle, const cbtVector3F& _rotationAxis)
 {
     // If the rotation axis is invalid, set this to a identity quaternion.
     if (cbtMathUtil::IsApproxEqual(NS_CBT::LengthSquared(_rotationAxis), 0.0f))
@@ -178,7 +178,7 @@ cbtBool cbtQuaternion::operator!=(const cbtQuaternion& _rhs) const
 cbtQuaternion cbtQuaternion::operator*(const cbtQuaternion& _rhs) const
 {
     cbtF32 w = m_W * _rhs.m_W - NS_CBT::Dot(m_XYZ, _rhs.m_XYZ);
-    CBTVector3F xyz = m_W * _rhs.m_XYZ + _rhs.m_W * m_XYZ + NS_CBT::Cross(m_XYZ, _rhs.m_XYZ);
+    cbtVector3F xyz = m_W * _rhs.m_XYZ + _rhs.m_W * m_XYZ + NS_CBT::Cross(m_XYZ, _rhs.m_XYZ);
 
     return cbtQuaternion(w, xyz.GetX(), xyz.GetY(), xyz.GetZ());
 }
@@ -191,13 +191,13 @@ cbtQuaternion& cbtQuaternion::operator*=(const cbtQuaternion& _rhs)
 }
 
 // Static Function(s)
-CBTVector3F cbtQuaternion::Rotate(const CBTVector3F& _point, cbtF32 _angle, const CBTVector3F& _rotationAxis)
+cbtVector3F cbtQuaternion::Rotate(const cbtVector3F& _point, cbtF32 _angle, const cbtVector3F& _rotationAxis)
 {
     cbtQuaternion rotation(_angle, _rotationAxis);
     cbtQuaternion point(0.0f, _point.GetX(), _point.GetY(), _point.GetZ());
     cbtQuaternion result = rotation * point * rotation.Inversed();
     
-    return CBTVector3F(result.GetX(), result.GetY(), result.GetZ());
+    return cbtVector3F(result.GetX(), result.GetY(), result.GetZ());
 }
 
 // This function assumes that _start & _end are unit quaternions.
@@ -231,7 +231,7 @@ cbtQuaternion cbtQuaternion::Slerp(const cbtQuaternion& _start, const cbtQuatern
     To do that, we must first figure out what the angle and axis of d is.
     */
     cbtF32 dAngle;
-    CBTVector3F dAxis;
+    cbtVector3F dAxis;
     d.ToAxisAngle(dAngle, dAxis);
 
     // Now that we have the angle and axis to rotate around, we have our result.

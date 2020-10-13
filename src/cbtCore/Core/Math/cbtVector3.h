@@ -338,9 +338,9 @@ template <typename T> const cbtVector3<T> cbtVector3<T>::DOWN = -UP;
 template <typename T> const cbtVector3<T> cbtVector3<T>::ZERO = cbtVector3<T>(0, 0, 0);
 
 // Type Definition(s)
-typedef cbtVector3<cbtF32> CBTVector3F;
-typedef cbtVector3<cbtU32> CBTVector3U;
-typedef cbtVector3<cbtS32> CBTVector3S;
+typedef cbtVector3<cbtF32> cbtVector3F;
+typedef cbtVector3<cbtU32> cbtVector3U;
+typedef cbtVector3<cbtS32> cbtVector3S;
 
 /**
     \brief Get the square of the length of this vector.

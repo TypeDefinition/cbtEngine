@@ -277,9 +277,9 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
     std::vector<cbtU32> indices;
 
     // Vertex Attribute(s)
-    std::vector<CBTVector3F> positions;
-    std::vector<CBTVector3F> normals;
-    std::vector<CBTVector2F> texCoords;
+    std::vector<cbtVector3F> positions;
+    std::vector<cbtVector3F> normals;
+    std::vector<cbtVector2F> texCoords;
 
     // Read the file.
     cbtStr fileString = cbtFileUtil::FileToString(_filePath);
@@ -292,7 +292,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         // Position
         if (std::strncmp("v ", line.c_str(), 2) == 0)
         {
-            CBTVector3F position;
+            cbtVector3F position;
             std::sscanf(line.c_str() + 2, "%f%f%f", &position.m_X, &position.m_Y, &position.m_Z);
             positions.push_back(position);
         }
@@ -300,7 +300,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         // TexCoord
         if (std::strncmp("vt ", line.c_str(), 3) == 0)
         {
-            CBTVector2F texCoord;
+            cbtVector2F texCoord;
             std::sscanf(line.c_str() + 3, "%f%f", &texCoord.m_X, &texCoord.m_Y);
             texCoords.push_back(texCoord);
         }
@@ -308,7 +308,7 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
         // Normal
         if (std::strncmp("vn ", line.c_str(), 3) == 0)
         {
-            CBTVector3F normal;
+            cbtVector3F normal;
             std::sscanf(line.c_str() + 3, "%f%f%f", &normal.m_X, &normal.m_Y, &normal.m_Z);
             normals.push_back(normal);
         }
@@ -382,9 +382,9 @@ cbtMesh* cbtMeshBuilder::LoadAsset(const cbtStr& _name, const cbtStr& _filePath)
 
         cbtMatrix<cbtF32, 3, 2> tangents = cbtMatrixUtil::GetInverseMatrix(tangentToBitangentRatio) * edges;
 
-        vertices[indices[i + 0]].m_Tangent += CBTVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
-        vertices[indices[i + 1]].m_Tangent += CBTVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
-        vertices[indices[i + 2]].m_Tangent += CBTVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
+        vertices[indices[i + 0]].m_Tangent += cbtVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
+        vertices[indices[i + 1]].m_Tangent += cbtVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
+        vertices[indices[i + 2]].m_Tangent += cbtVector3F(tangents[0][0], tangents[1][0], tangents[2][0]);
     }
 
     for (cbtU32 i = 0; i < vertices.size(); ++i) { Normalize(vertices[i].m_Tangent); }

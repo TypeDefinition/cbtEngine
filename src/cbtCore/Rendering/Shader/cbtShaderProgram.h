@@ -152,14 +152,14 @@ public:
     virtual void SetUniform(const cbtStr& _uniformName, const cbtColor& _value) = 0;
 
     // Vector2
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2F& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2U& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2S& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2F& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2U& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2S& _value) = 0;
 
     // Vector3
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3F& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3U& _value) = 0;
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3S& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3F& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3U& _value) = 0;
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3S& _value) = 0;
 
     // Float
     virtual void SetUniform(cbtU32 _uniformID, cbtF32 _value0) = 0;
@@ -203,14 +203,14 @@ public:
     virtual void SetUniform(cbtU32 _uniformID, const cbtColor& _value) = 0;
 
     // Vector2
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2F& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2U& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2S& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2F& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2U& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2S& _value) = 0;
 
     // Vector3
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3F& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3U& _value) = 0;
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3S& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3F& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3U& _value) = 0;
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3S& _value) = 0;
 
     static cbtShaderProgram* CreateShaderProgram(const cbtStr& _name, const std::vector<cbtStr>& _vertexShaderSources, const std::vector<cbtStr>& _fragmentShaderSources);
 };

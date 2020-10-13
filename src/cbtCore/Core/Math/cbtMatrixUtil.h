@@ -466,7 +466,7 @@ public:
         \return Returns a perspective Matrix based on the specified parameters.
 
         \warning _fov is the angle between the view direction and the extreme left or right border of what the camera can see.
-                 So a FOV of 35° actually has a total viewing angle 70°.
+                 So a FOV of 35Â° actually has a total viewing angle 70Â°.
         \see Perspective Matrix [http://ogldev.atspace.co.uk/www/tutorial12/tutorial12.html]
     */
     static cbtMatrix4F GetPerspectiveMatrix(cbtF32 _aspectRatio, cbtF32 _fov, cbtF32 _nearPlane, cbtF32 _farPlane)
@@ -538,11 +538,11 @@ public:
 
         \return Returns a view Matrix based on specified values.
     */
-    static cbtMatrix4F GetViewMatrix(const CBTVector3F& _forward, const CBTVector3F& _up, const CBTVector3F& _position)
+    static cbtMatrix4F GetViewMatrix(const cbtVector3F& _forward, const cbtVector3F& _up, const cbtVector3F& _position)
     {
         /* Even though OpenGL uses right handed coordinates, when converting to Camera Space, we negate the X-Axis because NDC uses left-handed coordinates
         system. In NDC, the Z-Axis points into the screen, The Y-Axis points upwards and the X-Axis points to the right. */
-        CBTVector3F right = Cross(_forward, _up);
+        cbtVector3F right = Cross(_forward, _up);
 
         cbtMatrix4F viewMatrix;
         viewMatrix[3][3] = 1.0f;
@@ -577,7 +577,7 @@ public:
 
         \return Returns a translation Matrix based on a Vector3 translation.
     */
-    static cbtMatrix4F GetTranslationMatrix(const CBTVector3F& _translation)
+    static cbtMatrix4F GetTranslationMatrix(const cbtVector3F& _translation)
     {
         cbtMatrix4F translationMatrix;
         SetToIdentity(translationMatrix);
@@ -596,7 +596,7 @@ public:
 
         \return Returns a scale Matrix based on a Vector3 scale.
     */
-    static cbtMatrix4F GetScaleMatrix(const CBTVector3F& _scale)
+    static cbtMatrix4F GetScaleMatrix(const cbtVector3F& _scale)
     {
         cbtMatrix4F scaleMatrix;
 

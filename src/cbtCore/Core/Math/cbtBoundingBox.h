@@ -16,11 +16,11 @@ public:
 
 private:
     /// The 8 points of the bounding box.
-    CBTVector3F m_Vertices[NUM_POINTS];
+    cbtVector3F m_Vertices[NUM_POINTS];
     /// The minimum bounds of the bounding box.
-    CBTVector3F m_Min;
+    cbtVector3F m_Min;
     /// The maximum bounds of the bounding box.
-    CBTVector3F m_Max;
+    cbtVector3F m_Max;
 
 public:
     /**
@@ -48,7 +48,7 @@ public:
 
         \return A cbtBoundingBox
     */
-    cbtBoundingBox(const CBTVector3F& _min, const CBTVector3F& _max) { Set(_min, _max); }
+    cbtBoundingBox(const cbtVector3F& _min, const cbtVector3F& _max) { Set(_min, _max); }
 
     /**
         \brief Copy Constructor
@@ -70,7 +70,7 @@ public:
         \param _min The minimum bounds of the bounding box.
         \param _max The maximum bounds of the bounding box.
     */
-    void Set(const CBTVector3F& _min, const CBTVector3F& _max) { Set(_min.m_X, _min.m_Y, _min.m_Z, _max.m_X, _max.m_Y, _max.m_Z); }
+    void Set(const cbtVector3F& _min, const cbtVector3F& _max) { Set(_min.m_X, _min.m_Y, _min.m_Z, _max.m_X, _max.m_Y, _max.m_Z); }
 
     /**
         \brief Setter function taking in the minimum and maximum bounds of the bounding box.
@@ -105,20 +105,20 @@ public:
 
         \return The nth vertex of the bounding box as specified by _index.
     */
-    inline const CBTVector3F& GetVertex(cbtU32 _index) const { return m_Vertices[_index]; }
+    inline const cbtVector3F& GetVertex(cbtU32 _index) const { return m_Vertices[_index]; }
     /**
         \brief Get a pointer to the array of vertices of the bounding box.
 
         \return A pointer to the array of vertices of the bounding box.
     */
-    inline const CBTVector3F* GetVertices() { return &m_Vertices[0]; }
+    inline const cbtVector3F* GetVertices() { return &m_Vertices[0]; }
 
     /**
         \brief Get the minimum bounds of the bounding box.
 
         \return The minimum bounds of the bounding box.
     */
-    inline CBTVector3F GetMin() const { return m_Min; }
+    inline cbtVector3F GetMin() const { return m_Min; }
     /**
         \brief Get the minimum X bound of the bounding box.
 
@@ -143,7 +143,7 @@ public:
 
         \return The maximum bounds of the bounding box.
     */
-    inline CBTVector3F GetMax() const { return m_Max; }
+    inline cbtVector3F GetMax() const { return m_Max; }
     /**
         \brief Get the maximum X bound of the bounding box.
 
@@ -168,7 +168,7 @@ public:
 
         \return The size of the bounding box.
     */
-    inline CBTVector3F GetSize() const { return m_Max - m_Min; }
+    inline cbtVector3F GetSize() const { return m_Max - m_Min; }
     /**
         \brief Get the X size of the bounding box.
 
@@ -195,7 +195,7 @@ public:
 
         \return The nth vertex of the bounding box as specified by _index.
     */
-    const CBTVector3F& operator[](cbtU32 _index) const { return m_Vertices[_index]; }
+    const cbtVector3F& operator[](cbtU32 _index) const { return m_Vertices[_index]; }
 
     /**
         \brief Check if this bounding box is the same as another bounding box.

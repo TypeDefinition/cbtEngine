@@ -264,14 +264,14 @@ void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, cbtBool _transp
 void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtColor& _color) { glProgramUniform4f(m_ProgramID, GetUniformLocation(_uniformName), _color.m_R, _color.m_G, _color.m_B, _color.m_A); }
 
 // Vector2
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector2F& _value) { glProgramUniform2f(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector2U& _value) { glProgramUniform2ui(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector2S& _value) { glProgramUniform2i(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector2F& _value) { glProgramUniform2f(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector2U& _value) { glProgramUniform2ui(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector2S& _value) { glProgramUniform2i(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y); }
 
 // Vector3
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector3F& _value) { glProgramUniform3f(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector3U& _value) { glProgramUniform3ui(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
-void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const CBTVector3S& _value) { glProgramUniform3i(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector3F& _value) { glProgramUniform3f(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector3U& _value) { glProgramUniform3ui(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(const cbtStr& _uniformName, const cbtVector3S& _value) { glProgramUniform3i(m_ProgramID, GetUniformLocation(_uniformName), _value.m_X, _value.m_Y, _value.m_Z); }
 
 // Float
 void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, cbtF32 _value0) { glProgramUniform1f(m_ProgramID, m_Uniforms[_uniformID], _value0); }
@@ -315,14 +315,14 @@ void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, cbtBool _transpose, cons
 void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtColor& _color) { glProgramUniform4f(m_ProgramID, m_Uniforms[_uniformID], _color.m_R, _color.m_G, _color.m_B, _color.m_A); }
 
 // Vector2
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector2F& _value) { glProgramUniform2f(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector2U& _value) { glProgramUniform2ui(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector2S& _value) { glProgramUniform2i(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector2F& _value) { glProgramUniform2f(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector2U& _value) { glProgramUniform2ui(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector2S& _value) { glProgramUniform2i(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y); }
 
 // Vector3
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector3F& _value) { glProgramUniform3f(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector3U& _value) { glProgramUniform3ui(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
-void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const CBTVector3S& _value) { glProgramUniform3i(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector3F& _value) { glProgramUniform3f(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector3U& _value) { glProgramUniform3ui(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
+void GL_cbtShaderProgram::SetUniform(cbtU32 _uniformID, const cbtVector3S& _value) { glProgramUniform3i(m_ProgramID, m_Uniforms[_uniformID], _value.m_X, _value.m_Y, _value.m_Z); }
 
 NS_CBT_END
 

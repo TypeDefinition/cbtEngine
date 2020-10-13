@@ -19,7 +19,7 @@ cbtMesh::cbtMesh(const cbtStr&_name, const cbtVertex _vertices[], cbtU32 _vertex
     std::memcpy(m_Indices, _indices, sizeof(m_Indices[0]) * m_IndexCount);
 
     // Bounding Box
-    CBTVector3F min, max;
+    cbtVector3F min, max;
     for (cbtU32 i = 0; i < m_VertexCount; ++i)
     {
         min.m_X = cbtMathUtil::Min(min.m_X, _vertices[i].m_Position.m_X);

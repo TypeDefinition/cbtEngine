@@ -34,8 +34,8 @@ protected:
     cbtF32 m_DisplacementScale = 0.1f;
     cbtS32 m_MinDisplacementSamples = 1;
     cbtS32 m_MaxDisplacementSamples = 25;
-    CBTVector2F m_TextureOffset;
-    CBTVector2F m_TextureScale = CBTVector2F(1.0f, 1.0f);
+    cbtVector2F m_TextureOffset;
+    cbtVector2F m_TextureScale = cbtVector2F(1.0f, 1.0f);
 
     /// Albedo Texture
     cbtRef<cbtTexture> m_TextureAlbedo;
@@ -88,11 +88,11 @@ public:
     inline cbtS32 GetMinDisplacementSamples() const { return m_MinDisplacementSamples; }
     inline void SetDisplacementSamples(cbtS32 _min, cbtS32 _max) { m_MinDisplacementSamples = _min; m_MaxDisplacementSamples = _max; }
 
-    const CBTVector2F& GetTextureOffset() const { return m_TextureOffset; }
-    inline void SetTextureOffset(const CBTVector2F& _textureOffset) { m_TextureOffset = _textureOffset; }
+    const cbtVector2F& GetTextureOffset() const { return m_TextureOffset; }
+    inline void SetTextureOffset(const cbtVector2F& _textureOffset) { m_TextureOffset = _textureOffset; }
 
-    const CBTVector2F& GetTextureScale() const { return m_TextureScale; }
-    inline void SetTextureScale(const CBTVector2F& _textureScale) { m_TextureScale = _textureScale; }
+    const cbtVector2F& GetTextureScale() const { return m_TextureScale; }
+    inline void SetTextureScale(const cbtVector2F& _textureScale) { m_TextureScale = _textureScale; }
 
     inline const cbtTexture* GetTextureAlbedo() const { return m_TextureAlbedo.GetRawPointer(); }
     inline cbtTexture* GetTextureAlbedo() { return m_TextureAlbedo.GetRawPointer(); }

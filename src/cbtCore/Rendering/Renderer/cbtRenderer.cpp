@@ -13,17 +13,17 @@ cbtBool cbtRenderer::InViewFrustum(const cbtMatrix4F& _viewProjectionMatrix, con
     // The planes of the frustum.
     cbtPlane frustumPlanes[6];
     // Left Plane
-    frustumPlanes[0].Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][0], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][0], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][0]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][0]);
+    frustumPlanes[0].Set(cbtVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][0], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][0], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][0]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][0]);
     // Right Plane
-    frustumPlanes[1].Set(CBTVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][0], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][0], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][0]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][0]);
+    frustumPlanes[1].Set(cbtVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][0], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][0], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][0]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][0]);
     // Bottom Plane
-    frustumPlanes[2].Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][1], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][1], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][1]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][1]);
+    frustumPlanes[2].Set(cbtVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][1], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][1], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][1]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][1]);
     // Top Plane
-    frustumPlanes[3].Set(CBTVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][1], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][1], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][1]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][1]);
+    frustumPlanes[3].Set(cbtVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][1], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][1], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][1]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][1]);
     // Far Plane
-    frustumPlanes[4].Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][2]);
+    frustumPlanes[4].Set(cbtVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][2]);
     // Near Plane
-    frustumPlanes[5].Set(CBTVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][2]);
+    frustumPlanes[5].Set(cbtVector3F(_viewProjectionMatrix[0][3] - _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] - _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] - _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] - _viewProjectionMatrix[3][2]);
 
     // For each plane, check if the points of the bounding box are on the "inner" side of the frustum plane.
     for (cbtU32 i = 0; i < 6; ++i)
@@ -38,7 +38,7 @@ cbtBool cbtRenderer::InViewFrustum(const cbtMatrix4F& _viewProjectionMatrix, con
             pointModelSpace[0][3] = 1.0f;
 
             cbtMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
-            CBTVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
+            cbtVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
 
             cbtF32 distance = frustumPlanes[i].DistanceToPoint(testPoint);
             if (distance > 0.0f)
@@ -63,7 +63,7 @@ cbtF32 cbtRenderer::GetObjectDistanceToCamera(const cbtMatrix4F& _viewProjection
 {
     // Near Plane
     cbtPlane nearPlane;
-    nearPlane.Set(CBTVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][2]);
+    nearPlane.Set(cbtVector3F(_viewProjectionMatrix[0][3] + _viewProjectionMatrix[0][2], _viewProjectionMatrix[1][3] + _viewProjectionMatrix[1][2], _viewProjectionMatrix[2][3] + _viewProjectionMatrix[2][2]), _viewProjectionMatrix[3][3] + _viewProjectionMatrix[3][2]);
 
     cbtF32 longestDistance = cbtMathUtil::F32_LOWEST;
     for (cbtU32 i = 0; i < cbtBoundingBox::NUM_POINTS; ++i)
@@ -75,7 +75,7 @@ cbtF32 cbtRenderer::GetObjectDistanceToCamera(const cbtMatrix4F& _viewProjection
         pointModelSpace[0][3] = 1.0f;
 
         cbtMatrix<cbtF32, 1, 4> pointWorldSpace = _modelMatrix * pointModelSpace;
-        CBTVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
+        cbtVector3F testPoint(pointWorldSpace[0][0], pointWorldSpace[0][1], pointWorldSpace[0][2]);
 
         cbtF32 distance = nearPlane.DistanceToPoint(testPoint);
         longestDistance = (distance > longestDistance) ? distance : longestDistance;
@@ -374,9 +374,9 @@ void cbtRenderer::RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F&
     shader->SetUniform(CBT_U_NEAR_PLANE, _camCamera->GetNearPlane());
     shader->SetUniform(CBT_U_FAR_PLANE, _camCamera->GetFarPlane());
 
-    CBTVector3F camRight = _camTransform->GetRight();
-    CBTVector3F camUp = _camTransform->GetUp();
-    CBTVector3F camForward = _camTransform->GetForward();
+    cbtVector3F camRight = _camTransform->GetRight();
+    cbtVector3F camUp = _camTransform->GetUp();
+    cbtVector3F camForward = _camTransform->GetForward();
     cbtU32 numLights = m_Lights.GetArraySize();
     cbtU32 numPasses = numLights / CBT_MAX_LIGHTS + 1;
     cbtLight** lightLightArray = m_Lights.GetArray<cbtLight>();
@@ -392,7 +392,7 @@ void cbtRenderer::RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F&
             cbtLight* light = lightLightArray[k];
             cbtTransform* transform = lightTransformArray[k];
             cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
-            CBTVector3F directionVector;
+            cbtVector3F directionVector;
             directionVector.m_X = Dot(camRight, transform->GetForward());
             directionVector.m_Y = Dot(camUp, transform->GetForward());
             directionVector.m_Z = Dot(camForward, transform->GetForward());
@@ -406,7 +406,7 @@ void cbtRenderer::RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F&
             shader->SetUniform(j + CBT_U_LIGHT_ATTENUATION_QUADRATIC0, light->GetAttenuationQuadratic());
             shader->SetUniform(j + CBT_U_LIGHT_SPOTLIGHT_INNER_COSINE0, light->GetSpotlightInnerConsine());
             shader->SetUniform(j + CBT_U_LIGHT_SPOTLIGHT_OUTER_COSINE0, light->GetSpotlightOuterConsine());
-            shader->SetUniform(j + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, CBTVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
+            shader->SetUniform(j + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, cbtVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
             shader->SetUniform(j + CBT_U_LIGHT_DIRECTION_CAMERA_SPACE0, directionVector);
             
             ++activeLights;
@@ -431,9 +431,9 @@ void cbtRenderer::RenderFPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F&
 {
     cbtFrameBuffer::Bind(m_FBuffer);
 
-    CBTVector3F camRight = _camTransform->GetRight();
-    CBTVector3F camUp = _camTransform->GetUp();
-    CBTVector3F camForward = _camTransform->GetForward();
+    cbtVector3F camRight = _camTransform->GetRight();
+    cbtVector3F camUp = _camTransform->GetUp();
+    cbtVector3F camForward = _camTransform->GetForward();
     cbtTransform** lightTransformArray = m_Lights.GetArray<cbtTransform>();
     cbtLight** lightLightArray = m_Lights.GetArray<cbtLight>();
     cbtTransform** objectTransformArray = m_Objects.GetArray<cbtTransform>();
@@ -498,7 +498,7 @@ CBT_REGION(RENDER_OPAQUE)
                 cbtLight* light = lightLightArray[i];
                 cbtTransform* transform = lightTransformArray[i];
                 cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
-                CBTVector3F directionVector;
+                cbtVector3F directionVector;
                 directionVector.m_X = Dot(camRight, transform->GetForward());
                 directionVector.m_Y = Dot(camUp, transform->GetForward());
                 directionVector.m_Z = Dot(camForward, transform->GetForward());
@@ -512,7 +512,7 @@ CBT_REGION(RENDER_OPAQUE)
                 shader->SetUniform(i + CBT_U_LIGHT_ATTENUATION_QUADRATIC0, light->GetAttenuationQuadratic());
                 shader->SetUniform(i + CBT_U_LIGHT_SPOTLIGHT_INNER_COSINE0, light->GetSpotlightInnerConsine());
                 shader->SetUniform(i + CBT_U_LIGHT_SPOTLIGHT_OUTER_COSINE0, light->GetSpotlightOuterConsine());
-                shader->SetUniform(i + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, CBTVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
+                shader->SetUniform(i + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, cbtVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
                 shader->SetUniform(i + CBT_U_LIGHT_DIRECTION_CAMERA_SPACE0, directionVector);
 
                 ++activeLights;
@@ -650,7 +650,7 @@ CBT_REGION(RENDER_TRANSPARENT)
                 cbtLight* light = lightLightArray[i];
                 cbtTransform* transform = lightTransformArray[i];
                 cbtMatrix4F positionMatrix = _viewMatrix * transform->GetGlobalModelMatrix();;
-                CBTVector3F directionVector;
+                cbtVector3F directionVector;
                 directionVector.m_X = Dot(camRight, transform->GetForward());
                 directionVector.m_Y = Dot(camUp, transform->GetForward());
                 directionVector.m_Z = Dot(camForward, transform->GetForward());
@@ -664,7 +664,7 @@ CBT_REGION(RENDER_TRANSPARENT)
                 shader->SetUniform(i + CBT_U_LIGHT_ATTENUATION_QUADRATIC0, light->GetAttenuationQuadratic());
                 shader->SetUniform(i + CBT_U_LIGHT_SPOTLIGHT_INNER_COSINE0, light->GetSpotlightInnerConsine());
                 shader->SetUniform(i + CBT_U_LIGHT_SPOTLIGHT_OUTER_COSINE0, light->GetSpotlightOuterConsine());
-                shader->SetUniform(i + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, CBTVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
+                shader->SetUniform(i + CBT_U_LIGHT_POSITION_CAMERA_SPACE0, cbtVector3F(positionMatrix[3][0], positionMatrix[3][1], positionMatrix[3][2]));
                 shader->SetUniform(i + CBT_U_LIGHT_DIRECTION_CAMERA_SPACE0, directionVector);
 
                 ++activeLights;

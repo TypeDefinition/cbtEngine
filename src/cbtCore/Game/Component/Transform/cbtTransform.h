@@ -20,8 +20,8 @@ private:
     cbtTransform* m_SiblingNext;
 
     // Local Data
-    CBTVector3F m_LocalPosition;
-    CBTVector3F m_LocalScale;
+    cbtVector3F m_LocalPosition;
+    cbtVector3F m_LocalScale;
     cbtQuaternion m_LocalRotation;
 
 public:
@@ -43,19 +43,19 @@ public:
     void SetParent(cbtTransform* _parent);
 
     // Local Translation
-    inline const CBTVector3F& GetLocalPosition() const { return m_LocalPosition; }
-    void SetLocalPosition(const CBTVector3F& _position) { m_LocalPosition = _position; }
-    void LocalTranslate(const CBTVector3F& _translation) { m_LocalPosition += _translation; }
+    inline const cbtVector3F& GetLocalPosition() const { return m_LocalPosition; }
+    void SetLocalPosition(const cbtVector3F& _position) { m_LocalPosition = _position; }
+    void LocalTranslate(const cbtVector3F& _translation) { m_LocalPosition += _translation; }
 
     // Rotation
-    inline const CBTVector3F& GetLocalScale() const { return m_LocalScale; }
+    inline const cbtVector3F& GetLocalScale() const { return m_LocalScale; }
     inline const cbtQuaternion& GetLocalRotation() const { return m_LocalRotation; }
-    void SetLocalRotation(cbtF32 _angle, const CBTVector3F& _rotationAxis) { m_LocalRotation.SetToRotation(_angle, _rotationAxis); }
-    void LocalRotate(cbtF32 _angle, const CBTVector3F& _rotationAxis) { m_LocalRotation = (cbtQuaternion(_angle, _rotationAxis) * m_LocalRotation).Normalized(); }
+    void SetLocalRotation(cbtF32 _angle, const cbtVector3F& _rotationAxis) { m_LocalRotation.SetToRotation(_angle, _rotationAxis); }
+    void LocalRotate(cbtF32 _angle, const cbtVector3F& _rotationAxis) { m_LocalRotation = (cbtQuaternion(_angle, _rotationAxis) * m_LocalRotation).Normalized(); }
 
     // LocalScale
-    void SetLocalScale(const CBTVector3F& _scale) { m_LocalScale = _scale; }
-    void LocalScale(const CBTVector3F& _scale) { m_LocalScale *= _scale; }
+    void SetLocalScale(const cbtVector3F& _scale) { m_LocalScale = _scale; }
+    void LocalScale(const cbtVector3F& _scale) { m_LocalScale *= _scale; }
     void LocalScale(cbtF32 _scale) { m_LocalScale *= _scale; }
 
     /*
@@ -76,13 +76,13 @@ public:
     cbtMatrix4F GetGlobalModelMatrix() const { return m_Parent ? GetLocalModelMatrix() * m_Parent->GetGlobalModelMatrix() : GetLocalModelMatrix(); }
 
     // These functions will give the vector relative to the WORLD.
-    CBTVector3F GetGlobalPosition() const;
-    CBTVector3F GetForward() const;
-    CBTVector3F GetBackwards() const { return -GetForward(); }
-    CBTVector3F GetUp() const;
-    CBTVector3F GetDown() const { return -GetUp(); }
-    CBTVector3F GetLeft() const;
-    CBTVector3F GetRight() const { return -GetLeft(); }
+    cbtVector3F GetGlobalPosition() const;
+    cbtVector3F GetForward() const;
+    cbtVector3F GetBackwards() const { return -GetForward(); }
+    cbtVector3F GetUp() const;
+    cbtVector3F GetDown() const { return -GetUp(); }
+    cbtVector3F GetLeft() const;
+    cbtVector3F GetRight() const { return -GetLeft(); }
 };
 
 NS_CBT_END

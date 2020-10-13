@@ -11,10 +11,10 @@ NS_CBT_BEGIN
 struct cbtVertex
 {
     // Variable(s)
-    CBTVector3F m_Position;
-    CBTVector3F m_Normal;
-    CBTVector2F m_TexCoord;
-    CBTVector3F m_Tangent;
+    cbtVector3F m_Position;
+    cbtVector3F m_Normal;
+    cbtVector2F m_TexCoord;
+    cbtVector3F m_Tangent;
 
     // Constructor(s) & Destructor
     cbtVertex() {}

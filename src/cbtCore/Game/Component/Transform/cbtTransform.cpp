@@ -11,7 +11,7 @@ cbtTransform::cbtTransform()
     , m_Child(nullptr)
     , m_SiblingPrev(nullptr)
     , m_SiblingNext(nullptr)
-    , m_LocalPosition(CBTVector3F::ZERO)
+    , m_LocalPosition(cbtVector3F::ZERO)
     , m_LocalScale(1.0f, 1.0f, 1.0f)
     , m_LocalRotation(cbtQuaternion::IDENTITY)
 {
@@ -81,28 +81,28 @@ void cbtTransform::SetParent(cbtTransform* _parent)
 }
 
 // These functions will give the vector relative to the WORLD.
-CBTVector3F cbtTransform::GetGlobalPosition() const
+cbtVector3F cbtTransform::GetGlobalPosition() const
 {
     cbtMatrix4F globalModelMatrix = GetGlobalModelMatrix();
-    return CBTVector3F(globalModelMatrix[3][0], globalModelMatrix[3][1], globalModelMatrix[3][2]);
+    return cbtVector3F(globalModelMatrix[3][0], globalModelMatrix[3][1], globalModelMatrix[3][2]);
 }
 
-CBTVector3F cbtTransform::GetForward() const
+cbtVector3F cbtTransform::GetForward() const
 {
-    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::FORWARDS);
-    return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(cbtVector3F::FORWARDS);
+    return cbtVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 
-CBTVector3F cbtTransform::GetUp() const
+cbtVector3F cbtTransform::GetUp() const
 {
-    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::UP);
-    return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(cbtVector3F::UP);
+    return cbtVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 
-CBTVector3F cbtTransform::GetLeft() const
+cbtVector3F cbtTransform::GetLeft() const
 {
-    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(CBTVector3F::LEFT);
-    return CBTVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
+    cbtMatrix4F matrix = GetGlobalRotationMatrix() * cbtMatrixUtil::GetTranslationMatrix(cbtVector3F::LEFT);
+    return cbtVector3F(matrix[3][0], matrix[3][1], matrix[3][2]);
 }
 
 NS_CBT_END

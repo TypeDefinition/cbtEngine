@@ -74,14 +74,14 @@ public:
     virtual void SetUniform(const cbtStr& _uniformName, const cbtColor& _value);
 
     // Vector2
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2F& _value);
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2U& _value);
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector2S& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2F& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2U& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector2S& _value);
 
     // Vector3
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3F& _value);
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3U& _value);
-    virtual void SetUniform(const cbtStr& _uniformName, const CBTVector3S& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3F& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3U& _value);
+    virtual void SetUniform(const cbtStr& _uniformName, const cbtVector3S& _value);
 
     // Float
     virtual void SetUniform(cbtU32 _uniformID, cbtF32 _value0);
@@ -125,14 +125,14 @@ public:
     virtual void SetUniform(cbtU32 _uniformID, const cbtColor& _value);
 
     // Vector2
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2F& _value);
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2U& _value);
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector2S& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2F& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2U& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector2S& _value);
 
     // Vector3
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3F& _value);
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3U& _value);
-    virtual void SetUniform(cbtU32 _uniformID, const CBTVector3S& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3F& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3U& _value);
+    virtual void SetUniform(cbtU32 _uniformID, const cbtVector3S& _value);
 };
 
 NS_CBT_END

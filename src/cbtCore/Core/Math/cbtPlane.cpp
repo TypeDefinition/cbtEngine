@@ -3,7 +3,7 @@
 
 NS_CBT_BEGIN
 
-cbtPlane::cbtPlane(const CBTVector3F& _normal, cbtF32 _constant)
+cbtPlane::cbtPlane(const cbtVector3F& _normal, cbtF32 _constant)
     : m_Normal(_normal)
     , m_Constant(_constant)
 {
@@ -32,7 +32,7 @@ cbtPlane cbtPlane::Normalized()
     return cbtPlane(m_Normal * (1.0f/normalLength), m_Constant / normalLength);
 }
 
-cbtF32 cbtPlane::DistanceToPoint(const CBTVector3F& _point)
+cbtF32 cbtPlane::DistanceToPoint(const cbtVector3F& _point)
 {
     return (Dot(_point, m_Normal) + m_Constant) / Length(m_Normal);
 }
