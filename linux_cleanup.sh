@@ -1,5 +1,5 @@
 #!/bin/sh
 
-rm -r ./bin
-rm -r ./bin-int
+rm -r ./premake-build
+rm -r ./cmake-build-debug
 rm -r ./workspace

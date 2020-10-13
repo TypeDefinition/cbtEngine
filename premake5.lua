@@ -2,6 +2,7 @@ SRC_DIR = "src"
 WORKSPACE_DIR = "workspace"
 PROJECT_DIR = "%{wks.location}/%{prj.name}"
 OUTPUT_DIR = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+BUILD_DIR = "premake-build"
 
 workspace("cbtEngine")
     location(WORKSPACE_DIR)
@@ -34,8 +35,8 @@ project("cbtCore")
     language("C++")
     kind("StaticLib")
 
-    targetdir("bin/" .. OUTPUT_DIR .. "/%{prj.name}")
-    objdir("bin-int/" .. OUTPUT_DIR .. "/%{prj.name}")
+    targetdir(BUILD_DIR .. "/bin/" .. OUTPUT_DIR .. "/%{prj.name}")
+    objdir(BUILD_DIR .. "/bin-int/" .. OUTPUT_DIR .. "/%{prj.name}")
 
     files({
         SRC_DIR .. "/%{prj.name}/**.h",
@@ -60,8 +61,8 @@ project("cbtGame")
     language("C++")
     kind("ConsoleApp")
 
-    targetdir("bin/" .. OUTPUT_DIR .. "/%{prj.name}")
-    objdir("bin-int/" .. OUTPUT_DIR .. "/%{prj.name}")
+    targetdir(BUILD_DIR .. "/bin/" .. OUTPUT_DIR .. "/%{prj.name}")
+    objdir(BUILD_DIR .. "/bin-int/" .. OUTPUT_DIR .. "/%{prj.name}")
 
     files({
         SRC_DIR .. "/%{prj.name}/**.h",
