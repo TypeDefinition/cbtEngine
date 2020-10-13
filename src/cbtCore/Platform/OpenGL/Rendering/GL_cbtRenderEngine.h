@@ -8,7 +8,7 @@
 #ifdef CBT_OPENGL
 
 // Include GLEW
-#include <glew.h>
+#include <GL/glew.h>
 
 NS_CBT_BEGIN
 

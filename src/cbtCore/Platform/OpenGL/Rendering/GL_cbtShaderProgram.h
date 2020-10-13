@@ -6,7 +6,7 @@
 #ifdef CBT_OPENGL
 
 // Include GL
-#include <glew.h>
+#include <GL/glew.h>
 // #include <gl/GL.h>
 
 NS_CBT_BEGIN

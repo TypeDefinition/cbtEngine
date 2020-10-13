@@ -2,7 +2,7 @@
 #include "Debug/cbtDebug.h"
 
 // Include SDL
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 NS_CBT_BEGIN
 

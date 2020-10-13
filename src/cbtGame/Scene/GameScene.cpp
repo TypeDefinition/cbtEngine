@@ -95,10 +95,10 @@ GameScene::GameScene()
             "../../assets/Textures/Skybox/Nebula/Skybox_Nebula_001_Back_2048x2048.png"
             }));
         playerCamera->SetPostProcessShaders({
-            // CBTShaderBuilder::CreateShaderProgram("Greyscale", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTGreyscale.frag" }),
-            // CBTShaderBuilder::CreateShaderProgram("Blur", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTBlur.frag" }),
-            // CBTShaderBuilder::CreateShaderProgram("Invert", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTInvert.frag" }),
-            cbtShaderBuilder::CreateShaderProgram("Outline", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTOutline.frag" }),
+            cbtShaderBuilder::CreateShaderProgram("Greyscale", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTGreyscale.frag" }),
+            // cbtShaderBuilder::CreateShaderProgram("Blur", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTBlur.frag" }),
+            // cbtShaderBuilder::CreateShaderProgram("Invert", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTInvert.frag" }),
+            // cbtShaderBuilder::CreateShaderProgram("Outline", { "../../assets/Shaders/OpenGL/CBTScreenQuad.vert" }, { "../../assets/Shaders/OpenGL/CBTOutline.frag" }),
             });
     }
 
