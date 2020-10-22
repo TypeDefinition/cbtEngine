@@ -13,34 +13,46 @@ NS_CBT_BEGIN
  
         Example cbtEvent(s): InputEvent, AxisEvent, ButtonEvent, ClickEvent
 */
-class cbtEvent
-{
-private:
-    /// A flag to state if the event has already been handled.
-    cbtBool m_Handled = false;
+    class cbtEvent
+    {
+    private:
+        /// A flag to state if the event has already been handled.
+        cbtBool m_Handled = false;
 
-public:
-    /** 
-        \brief Default Constructor.
+    public:
+        /**
+            \brief Default Constructor.
 
-        \return A new cbtEvent.
-    */
-    cbtEvent() {}
-    /**
-        \brief Virtual Destructor.
-    */
-    virtual ~cbtEvent() {}
+            \return A new cbtEvent.
+        */
+        cbtEvent()
+        {
+        }
 
-    /**
-        \brief Returns true if the event has been handled, false if it has not.
+        /**
+            \brief Virtual Destructor.
+        */
+        virtual ~cbtEvent()
+        {
+        }
 
-        \return Returns true if the event has been handled, false if it has not.
-    */
-    cbtBool IsHandled() const { return m_Handled; }
-    /**
-        \brief Sets the handled flag of the event to true.
-    */
-    void SetHandled() { m_Handled = true; }
-};
+        /**
+            \brief Returns true if the event has been handled, false if it has not.
+
+            \return Returns true if the event has been handled, false if it has not.
+        */
+        cbtBool IsHandled() const
+        {
+            return m_Handled;
+        }
+
+        /**
+            \brief Sets the handled flag of the event to true.
+        */
+        void SetHandled()
+        {
+            m_Handled = true;
+        }
+    };
 
 NS_CBT_END

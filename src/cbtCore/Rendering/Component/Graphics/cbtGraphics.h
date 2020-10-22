@@ -17,21 +17,38 @@ NS_CBT_BEGIN
     const int *const ptr; // const pointer to const int
 */
 
-class cbtGraphics : public cbtComponent
-{
-private:
-    // Variable(s)
-    cbtRef<cbtMaterial> m_Material;
+    class cbtGraphics : public cbtComponent
+    {
+    private:
+        // Variable(s)
+        cbtRef<cbtMaterial> m_Material;
 
-public:
-    // Constructor(s) & Destructor
-    cbtGraphics() : m_Material(nullptr) {}
-    virtual ~cbtGraphics() {}
+    public:
+        // Constructor(s) & Destructor
+        cbtGraphics()
+                :m_Material(nullptr)
+        {
+        }
 
-    // Interface Function(s)
-    inline const cbtMaterial* GetMaterial() const { return m_Material.GetRawPointer(); }
-    inline cbtMaterial* GetMaterial() { return m_Material.GetRawPointer(); }
-    inline void SetMaterial(cbtMaterial* _material) { m_Material = _material; }
-};
+        virtual ~cbtGraphics()
+        {
+        }
+
+        // Interface Function(s)
+        inline const cbtMaterial* GetMaterial() const
+        {
+            return m_Material.GetRawPointer();
+        }
+
+        inline cbtMaterial* GetMaterial()
+        {
+            return m_Material.GetRawPointer();
+        }
+
+        inline void SetMaterial(cbtMaterial* _material)
+        {
+            m_Material = _material;
+        }
+    };
 
 NS_CBT_END

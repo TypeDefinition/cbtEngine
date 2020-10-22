@@ -84,231 +84,288 @@ NS_CBT_BEGIN
                   | z  -y   x   w |\n
         </pre>
 */
-class cbtQuaternion
-{
-private:
-    /// The scalar component of the quaternion, represented by W.
-    cbtF32 m_W;
-    /// The vector3 component of the quaternion, represented by X, Y and Z.
-    cbtVector3F m_XYZ;
+    class cbtQuaternion
+    {
+    private:
+        /// The scalar component of the quaternion, represented by W.
+        cbtF32 m_W;
+        /// The vector3 component of the quaternion, represented by X, Y and Z.
+        cbtVector3F m_XYZ;
 
-public:
-    // Constructor(s) & Destructor
-    cbtQuaternion(cbtF32 _w = 1.0f, cbtF32 _x = 0.0f, cbtF32 _y = 0.0f, cbtF32 _z = 0.0f);
-    cbtQuaternion(const cbtQuaternion& _other);
-    cbtQuaternion(cbtF32 _angle, const cbtVector3F& _rotationAxis);
-    ~cbtQuaternion();
+    public:
+        // Constructor(s) & Destructor
+        cbtQuaternion(cbtF32 _w = 1.0f, cbtF32 _x = 0.0f, cbtF32 _y = 0.0f, cbtF32 _z = 0.0f);
 
-    // Interface Function(s)
-    /**
-        \brief Set the components of this quaternion.
+        cbtQuaternion(const cbtQuaternion& _other);
 
-        \param _w The W component.
-        \param _x The X component.
-        \param _y The Y component.
-        \param _z The Z component.
-    */
-    inline void Set(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z) { m_W = _w; m_XYZ = cbtVector3F(_x, _y, _z); }
-    /**
-        \brief Set the components of this quaternion.
+        cbtQuaternion(cbtF32 _angle, const cbtVector3F& _rotationAxis);
 
-        \param _w The scalar component, represented by W.
-        \param _xyz The vector3 component, represented by XYZ.
-    */
-    inline void Set(cbtF32 _w, const cbtVector3F& _xyz) { m_W = _w; m_XYZ = _xyz; }
-    /**
-        \brief Set the W component of this quaternion.
+        ~cbtQuaternion();
 
-        \param _w The W component.
-    */
-    inline void SetW(cbtF32 _w) { m_W = _w; }
-    /**
-        \brief Set the X component of this quaternion.
+        // Interface Function(s)
+        /**
+            \brief Set the components of this quaternion.
 
-        \param _x The X component.
-    */
-    inline void SetX(cbtF32 _x) { m_XYZ.SetX(_x); }
-    /**
-        \brief Set the Y component of this quaternion.
+            \param _w The W component.
+            \param _x The X component.
+            \param _y The Y component.
+            \param _z The Z component.
+        */
+        inline void Set(cbtF32 _w, cbtF32 _x, cbtF32 _y, cbtF32 _z)
+        {
+            m_W = _w;
+            m_XYZ = cbtVector3F(_x, _y, _z);
+        }
 
-        \param _y The Y component.
-    */
-    inline void SetY(cbtF32 _y) { m_XYZ.SetY(_y); }
-    /**
-        \brief Set the Z component of this quaternion.
+        /**
+            \brief Set the components of this quaternion.
 
-        \param _z The Z component.
-    */
-    inline void SetZ(cbtF32 _z) { m_XYZ.SetZ(_z); }
-    /**
-        \brief Get the W component of this quaternion.
+            \param _w The scalar component, represented by W.
+            \param _xyz The vector3 component, represented by XYZ.
+        */
+        inline void Set(cbtF32 _w, const cbtVector3F& _xyz)
+        {
+            m_W = _w;
+            m_XYZ = _xyz;
+        }
 
-        \return The W component of this quaternion.
-    */
-    inline cbtF32 GetW() const { return m_W; }
-    /**
-        \brief Get the X component of this quaternion.
+        /**
+            \brief Set the W component of this quaternion.
 
-        \return The X component of this quaternion.
-    */
-    inline cbtF32 GetX() const { return m_XYZ.GetX(); }
-    /**
-        \brief Get the Y component of this quaternion.
+            \param _w The W component.
+        */
+        inline void SetW(cbtF32 _w)
+        {
+            m_W = _w;
+        }
 
-        \return The Y component of this quaternion.
-    */
-    inline cbtF32 GetY() const { return m_XYZ.GetY(); }
-    /**
-        \brief Get the Z component of this quaternion.
+        /**
+            \brief Set the X component of this quaternion.
 
-        \return The Z component of this quaternion.
-    */
-    inline cbtF32 GetZ() const { return m_XYZ.GetZ(); }
-    /**
-        \brief Get the XYZ component of this quaternion.
+            \param _x The X component.
+        */
+        inline void SetX(cbtF32 _x)
+        {
+            m_XYZ.SetX(_x);
+        }
 
-        \return The XYZ component of this quaternion.
-    */
-    inline const cbtVector3F& GetXYZ() const { return m_XYZ; }
+        /**
+            \brief Set the Y component of this quaternion.
 
-    /**
-        \brief Get the length of the quaternion. If possible, use LengthSquared() instead of Length() as it is more expensive to compute the length then the length squared.
+            \param _y The Y component.
+        */
+        inline void SetY(cbtF32 _y)
+        {
+            m_XYZ.SetY(_y);
+        }
 
-        \return The length of the quaternion.
-    */
-    cbtF32 Length() const;
-    /**
-        \brief Get the length squared of the quaternion. If possible, use LengthSquared() instead of Length() as it is more expensive to compute the length then the length squared.
+        /**
+            \brief Set the Z component of this quaternion.
 
-        \return The length squared of the quaternion.
-    */
-    cbtF32 LengthSquared() const;
+            \param _z The Z component.
+        */
+        inline void SetZ(cbtF32 _z)
+        {
+            m_XYZ.SetZ(_z);
+        }
 
-    /**
-        \brief Normalise this quaternion.
-    */
-    void Normalize();
-    /**
-        \brief Get the normalised version of this quaternion.
+        /**
+            \brief Get the W component of this quaternion.
 
-        \return The normalised version of this quaternion.
-    */
-    cbtQuaternion Normalized();
+            \return The W component of this quaternion.
+        */
+        inline cbtF32 GetW() const
+        {
+            return m_W;
+        }
 
-    /**
-        \brief Inverse this quaternion.
-    */
-    void Inverse();
-    /**
-        \brief Get the inversed version of this quaternion.
+        /**
+            \brief Get the X component of this quaternion.
 
-        \return The inverse version of this quaternion.
-    */
-    cbtQuaternion Inversed() const;
+            \return The X component of this quaternion.
+        */
+        inline cbtF32 GetX() const
+        {
+            return m_XYZ.GetX();
+        }
 
-    /**
-        \brief Get the dot product of this quaternion and another quaternion.
+        /**
+            \brief Get the Y component of this quaternion.
 
-        \param _other The other quaterion to calculate the dot product with.
+            \return The Y component of this quaternion.
+        */
+        inline cbtF32 GetY() const
+        {
+            return m_XYZ.GetY();
+        }
 
-        \return The dot product of this quaternion and the other quaternion.
-    */
-    cbtF32 Dot(const cbtQuaternion& _other) const;
+        /**
+            \brief Get the Z component of this quaternion.
 
-    // Rotation Function(s)
-    /**
-        \brief Get this quaterion as a rotation in degrees, around an axis.
+            \return The Z component of this quaternion.
+        */
+        inline cbtF32 GetZ() const
+        {
+            return m_XYZ.GetZ();
+        }
 
-        \param _angle The resultant angle of rotation in degrees.
-        \param _rotationAxis The resultant axis of rotation.
-    */
-    void ToAxisAngle(cbtF32& _angle, cbtVector3F& _rotationAxis) const;
-    /**
-        \brief Get this quaternion as a CBTMatrix4F rotation matrix.
+        /**
+            \brief Get the XYZ component of this quaternion.
 
-        \return This quaternion as a CBTMatrix4F rotation matrix.
+            \return The XYZ component of this quaternion.
+        */
+        inline const cbtVector3F& GetXYZ() const
+        {
+            return m_XYZ;
+        }
 
-        \warning A rotation quaternion must be a unit quaternion.
-    */
-    cbtMatrix4F ToRotationMatrix() const;
-    /**
-        \brief Set this quaternion to a rotation given an angle in degrees and an axis.
+        /**
+            \brief Get the length of the quaternion. If possible, use LengthSquared() instead of Length() as it is more expensive to compute the length then the length squared.
 
-        \param _angle The angle rotation in degrees.
-        \param _rotationAxis The axis of rotation.
-    */
-    void SetToRotation(cbtF32 _angle, const cbtVector3F& _rotationAxis);
+            \return The length of the quaternion.
+        */
+        cbtF32 Length() const;
 
-    // Operator Overload(s)
-    /**
-        \brief Set the W, X, Y and Z component of this quaternion to the W, X, Y and Z component of another quaternion.
+        /**
+            \brief Get the length squared of the quaternion. If possible, use LengthSquared() instead of Length() as it is more expensive to compute the length then the length squared.
 
-        \param _rhs The quaternion whose W, X, Y and Z component to set to.
+            \return The length squared of the quaternion.
+        */
+        cbtF32 LengthSquared() const;
 
-        \return Returns this quaternion after setting its W, X, Y and Z components.
-    */
-    cbtQuaternion& operator=(const cbtQuaternion& _rhs);
-    /**
-        \brief Returns true if this quaternion and another quaternion are approximately equal.
+        /**
+            \brief Normalise this quaternion.
+        */
+        void Normalize();
 
-        \param _rhs The quaternion to compare to.
+        /**
+            \brief Get the normalised version of this quaternion.
 
-        \return Returns true if this quaternion and another quaternion are approximately equal. Otherwise, return false.
-    */
-    cbtBool operator==(const cbtQuaternion& _rhs) const;
-    /**
-        \brief Returns true if this quaternion and another quaternion are NOT approximately equal.
+            \return The normalised version of this quaternion.
+        */
+        cbtQuaternion Normalized();
 
-        \param _rhs The quaternion to compare to.
+        /**
+            \brief Inverse this quaternion.
+        */
+        void Inverse();
 
-        \return Returns true if this quaternion and another quaternion are NOT approximately equal. Otherwise, return false.
-    */
-    cbtBool operator!=(const cbtQuaternion& _rhs) const;
+        /**
+            \brief Get the inversed version of this quaternion.
 
-    /**
-        \brief Multiply this quaternion with another quaternion. This original quaternion is not changed.
+            \return The inverse version of this quaternion.
+        */
+        cbtQuaternion Inversed() const;
 
-        \param _rhs The quaternion to multiply.
+        /**
+            \brief Get the dot product of this quaternion and another quaternion.
 
-        \return Returns the result as a new CBTQuaternion.
-    */
-    cbtQuaternion operator*(const cbtQuaternion& _rhs) const;
-    /**
-        \brief Multiply this quaternion with another quaternion. This vector will become the resultant vector.
+            \param _other The other quaterion to calculate the dot product with.
 
-        \param _rhs The quaternion to multiply.
+            \return The dot product of this quaternion and the other quaternion.
+        */
+        cbtF32 Dot(const cbtQuaternion& _other) const;
 
-        \return Returns the result as a new CBTQuaternion.
-    */
-    cbtQuaternion& operator*=(const cbtQuaternion& _rhs);
+        // Rotation Function(s)
+        /**
+            \brief Get this quaterion as a rotation in degrees, around an axis.
 
-    // Static Function(s)
-    /**
-        \brief Rotate a point around an axis by an angle in degrees.
+            \param _angle The resultant angle of rotation in degrees.
+            \param _rotationAxis The resultant axis of rotation.
+        */
+        void ToAxisAngle(cbtF32& _angle, cbtVector3F& _rotationAxis) const;
 
-        \param _point The point to rotate.
-        \param _angle The angle of rotation in degrees.
-        \param _rotationAxis The axis of rotation.
+        /**
+            \brief Get this quaternion as a CBTMatrix4F rotation matrix.
 
-        \return The result of the point after the rotation.
-    */
-    static cbtVector3F Rotate(const cbtVector3F& _point, cbtF32 _angle, const cbtVector3F& _rotationAxis);
+            \return This quaternion as a CBTMatrix4F rotation matrix.
 
-    /**
-        \brief Spherical Linear Interpolation betwen 2 quaternions.
+            \warning A rotation quaternion must be a unit quaternion.
+        */
+        cbtMatrix4F ToRotationMatrix() const;
 
-        \_param _start The starting quaternion.
-        \_param _end The ending quaternion
-        \_param _ratio The ratio to interpolate between _start and _end. A value of 0 will return _start, and a value of 1 will return _end.
-        \_param _clampRatio If set to true, the _ratio is clamped to between 0 and 1. The default value is false.
-    */
-    static cbtQuaternion Slerp(const cbtQuaternion& _start, const cbtQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio = false);
+        /**
+            \brief Set this quaternion to a rotation given an angle in degrees and an axis.
 
-    // Static Constant Variable(s)
-    /// Equivalent to CBTQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
-    static const cbtQuaternion IDENTITY;
-    /// Equivalent to CBTQuaternion(0.0f, 0.0f, 0.0f, 0.0f);
-    static const cbtQuaternion ZERO;
-};
+            \param _angle The angle rotation in degrees.
+            \param _rotationAxis The axis of rotation.
+        */
+        void SetToRotation(cbtF32 _angle, const cbtVector3F& _rotationAxis);
+
+        // Operator Overload(s)
+        /**
+            \brief Set the W, X, Y and Z component of this quaternion to the W, X, Y and Z component of another quaternion.
+
+            \param _rhs The quaternion whose W, X, Y and Z component to set to.
+
+            \return Returns this quaternion after setting its W, X, Y and Z components.
+        */
+        cbtQuaternion& operator=(const cbtQuaternion& _rhs);
+
+        /**
+            \brief Returns true if this quaternion and another quaternion are approximately equal.
+
+            \param _rhs The quaternion to compare to.
+
+            \return Returns true if this quaternion and another quaternion are approximately equal. Otherwise, return false.
+        */
+        cbtBool operator==(const cbtQuaternion& _rhs) const;
+
+        /**
+            \brief Returns true if this quaternion and another quaternion are NOT approximately equal.
+
+            \param _rhs The quaternion to compare to.
+
+            \return Returns true if this quaternion and another quaternion are NOT approximately equal. Otherwise, return false.
+        */
+        cbtBool operator!=(const cbtQuaternion& _rhs) const;
+
+        /**
+            \brief Multiply this quaternion with another quaternion. This original quaternion is not changed.
+
+            \param _rhs The quaternion to multiply.
+
+            \return Returns the result as a new CBTQuaternion.
+        */
+        cbtQuaternion operator*(const cbtQuaternion& _rhs) const;
+
+        /**
+            \brief Multiply this quaternion with another quaternion. This vector will become the resultant vector.
+
+            \param _rhs The quaternion to multiply.
+
+            \return Returns the result as a new CBTQuaternion.
+        */
+        cbtQuaternion& operator*=(const cbtQuaternion& _rhs);
+
+        // Static Function(s)
+        /**
+            \brief Rotate a point around an axis by an angle in degrees.
+
+            \param _point The point to rotate.
+            \param _angle The angle of rotation in degrees.
+            \param _rotationAxis The axis of rotation.
+
+            \return The result of the point after the rotation.
+        */
+        static cbtVector3F Rotate(const cbtVector3F& _point, cbtF32 _angle, const cbtVector3F& _rotationAxis);
+
+        /**
+            \brief Spherical Linear Interpolation betwen 2 quaternions.
+
+            \_param _start The starting quaternion.
+            \_param _end The ending quaternion
+            \_param _ratio The ratio to interpolate between _start and _end. A value of 0 will return _start, and a value of 1 will return _end.
+            \_param _clampRatio If set to true, the _ratio is clamped to between 0 and 1. The default value is false.
+        */
+        static cbtQuaternion
+        Slerp(const cbtQuaternion& _start, const cbtQuaternion& _end, cbtF32 _ratio, cbtBool _clampRatio = false);
+
+        // Static Constant Variable(s)
+        /// Equivalent to CBTQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
+        static const cbtQuaternion IDENTITY;
+        /// Equivalent to CBTQuaternion(0.0f, 0.0f, 0.0f, 0.0f);
+        static const cbtQuaternion ZERO;
+    };
 
 NS_CBT_END

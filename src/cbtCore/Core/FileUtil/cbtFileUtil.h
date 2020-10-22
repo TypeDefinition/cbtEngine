@@ -8,39 +8,44 @@ NS_CBT_BEGIN
 /**
     \brief A file utility class.
 */
-class cbtFileUtil
-{
-private:
-    /**
-        \brief Private Constructor. All functions should be static. No objects of this class should be created.
-    */
-    cbtFileUtil() {}
-    /**
-        \brief Private Destructor. All functions should be static. No objects of this class should be created.
-    */
-    ~cbtFileUtil() {}
+    class cbtFileUtil
+    {
+    private:
+        /**
+            \brief Private Constructor. All functions should be static. No objects of this class should be created.
+        */
+        cbtFileUtil()
+        {
+        }
 
-public:
-    /**
-        \brief Opens a file and reads it into a cbtStr.
+        /**
+            \brief Private Destructor. All functions should be static. No objects of this class should be created.
+        */
+        ~cbtFileUtil()
+        {
+        }
 
-        \param _filePath The file path of the file to open and read.
+    public:
+        /**
+            \brief Opens a file and reads it into a cbtStr.
 
-        \return A cbtStr containing the contents of the file specified by _filePath.
+            \param _filePath The file path of the file to open and read.
 
-        \sa StringToFile(const cbtStr& _filePath, const cbtStr& _string)
-    */
-    static cbtStr FileToString(const cbtStr& _filePath);
+            \return A cbtStr containing the contents of the file specified by _filePath.
 
-    /**
-        \brief Opens a file and write the contents of _string to it. If the file does not exist, it is created.
+            \sa StringToFile(const cbtStr& _filePath, const cbtStr& _string)
+        */
+        static cbtStr FileToString(const cbtStr& _filePath);
 
-        \param _filePath The file path of the file to open and write.
-        \param _string The contents to write to the file specified by _filePath.
+        /**
+            \brief Opens a file and write the contents of _string to it. If the file does not exist, it is created.
 
-        \sa FileToString(const cbtStr& _filePath)
-    */
-    static void StringToFile(const cbtStr& _filePath, const cbtStr& _string);
-};
+            \param _filePath The file path of the file to open and write.
+            \param _string The contents to write to the file specified by _filePath.
+
+            \sa FileToString(const cbtStr& _filePath)
+        */
+        static void StringToFile(const cbtStr& _filePath, const cbtStr& _string);
+    };
 
 NS_CBT_END

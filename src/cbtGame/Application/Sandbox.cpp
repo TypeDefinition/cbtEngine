@@ -9,7 +9,7 @@ cbtApplication* cbtApplication::CreateInstance()
 }
 
 Sandbox::Sandbox(const cbtStr& _name)
-    : cbtApplication(_name)
+        :cbtApplication(_name)
 {
 }
 
@@ -23,8 +23,14 @@ void Sandbox::PostInit()
     cbtGameEngine::GetInstance()->GetSceneManager()->PushScene("Game Scene");
 }
 
-void Sandbox::PreUpdate() {}
+void Sandbox::PreUpdate()
+{
+}
 
-void Sandbox::PostUpdate() {}
+void Sandbox::PostUpdate()
+{
+}
 
-void Sandbox::PreExit() {}
+void Sandbox::PreExit()
+{
+}

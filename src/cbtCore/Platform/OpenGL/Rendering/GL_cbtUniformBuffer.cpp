@@ -3,6 +3,9 @@
 
 NS_CBT_BEGIN
 
-cbtUniformBuffer* cbtUniformBuffer::CreateUniformBuffer() { return cbtNew GL_cbtUniformBuffer(); }
+    cbtUniformBuffer* cbtUniformBuffer::CreateUniformBuffer()
+    {
+        return cbtNew GL_cbtUniformBuffer();
+    }
 
 NS_CBT_END

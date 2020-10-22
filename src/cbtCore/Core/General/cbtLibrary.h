@@ -12,7 +12,7 @@
         A template class which stores items of type T using a cbtStr as the key.
         When items are stored, they are given a unique name. They are also retrieved using that name.
 */
-template <typename T>
+template<typename T>
 class cbtLibrary
 {
 protected:
@@ -25,12 +25,17 @@ public:
 
         \return A cbtLibrary
     */
-    cbtLibrary() {}
+    cbtLibrary()
+    {
+    }
 
     /**
         \brief Destructor
     */
-    virtual ~cbtLibrary() { RemoveAllItems(); }
+    virtual ~cbtLibrary()
+    {
+        RemoveAllItems();
+    }
 
     /**
         \brief Checks if an item of a given name exists.
@@ -39,7 +44,10 @@ public:
 
         \return Returns true if m_Item contains an item of name _name. Otherwise, returns false.
     */
-    inline cbtBool HasItem(const cbtStr& _name) const { return m_Items.find(_name) != m_Items.end(); }
+    inline cbtBool HasItem(const cbtStr& _name) const
+    {
+        return m_Items.find(_name) != m_Items.end();
+    }
 
     /**
         \brief Get the item of given a name.
@@ -174,7 +182,7 @@ public:
             You can search for more information on this or just take it for granted that when the compiler tells you to write typename, you write typename.
             Alternatively, make your code nicer and solve the problem at the same time, by using auto instead.
     */
-    template <class U>
+    template<class U>
     U* GetItem(const cbtStr& _name)
     {
         auto iter = m_Items.find(_name);
@@ -231,7 +239,7 @@ public:
     {
         std::unordered_map<cbtStr, T*> clearPool;
         clearPool.swap(m_Items);
-        
+
         while (!clearPool.empty())
         {
             auto iter = clearPool.begin();

@@ -40,73 +40,104 @@ NS_CBT_BEGIN
   * 13 - To Be Defined
   * 14 - To Be Defined
   * 15 - To Be Defined */
-struct cbtMeshInstance
-{
-public:
-    // Variable(s)
-    cbtF32 m_ModelViewMatrix[16];
-    cbtF32 m_NormalMatrix[9];
-
-    // Constructor(s) & Destructor
-    cbtMeshInstance()
+    struct cbtMeshInstance
     {
-        std::memset(&m_ModelViewMatrix[0], 0, 16 * sizeof(m_ModelViewMatrix[0]));
-        std::memset(&m_NormalMatrix[0], 0, 9 * sizeof(m_NormalMatrix[0]));
-    }
-    cbtMeshInstance(const cbtMeshInstance& _other)
-    {
-        std::memcpy(m_ModelViewMatrix, _other.m_ModelViewMatrix, 16 * sizeof(m_ModelViewMatrix[0]));
-        std::memcpy(m_NormalMatrix, _other.m_NormalMatrix, 9 * sizeof(m_NormalMatrix[0]));
-    }
-    ~cbtMeshInstance() {}
+    public:
+        // Variable(s)
+        cbtF32 m_ModelViewMatrix[16];
+        cbtF32 m_NormalMatrix[9];
 
-    // Interface Function(s)
-    inline void SetModelViewMatrix(const cbtMatrix4F& _matrix) { _matrix.CopyToArray(m_ModelViewMatrix); }
-    inline void SetNormalMatrix(const cbtMatrix3F& _matrix) { _matrix.CopyToArray(m_NormalMatrix); }
-};
+        // Constructor(s) & Destructor
+        cbtMeshInstance()
+        {
+            std::memset(&m_ModelViewMatrix[0], 0, 16 * sizeof(m_ModelViewMatrix[0]));
+            std::memset(&m_NormalMatrix[0], 0, 9 * sizeof(m_NormalMatrix[0]));
+        }
 
-class cbtMeshBuilder;
+        cbtMeshInstance(const cbtMeshInstance& _other)
+        {
+            std::memcpy(m_ModelViewMatrix, _other.m_ModelViewMatrix, 16 * sizeof(m_ModelViewMatrix[0]));
+            std::memcpy(m_NormalMatrix, _other.m_NormalMatrix, 9 * sizeof(m_NormalMatrix[0]));
+        }
 
-class cbtMesh : public cbtManaged
-{
-public:
-    /// An enum to represent the VBOs.
-    enum VertexBuffers
-    {
-        VERTEX_DATA = 0,
-        INSTANCE_DATA,
+        ~cbtMeshInstance()
+        {
+        }
 
-        NUM_VBO_CATEGORY,
+        // Interface Function(s)
+        inline void SetModelViewMatrix(const cbtMatrix4F& _matrix)
+        {
+            _matrix.CopyToArray(m_ModelViewMatrix);
+        }
+
+        inline void SetNormalMatrix(const cbtMatrix3F& _matrix)
+        {
+            _matrix.CopyToArray(m_NormalMatrix);
+        }
     };
 
-protected:
-    /// The name of the Mesh.
-    const cbtStr m_Name;
-    /// Vertices
-    cbtVertex* m_Vertices;
-    /// Vertex Count
-    cbtU32 m_VertexCount;
-    /// Indices
-    cbtU32* m_Indices;
-    /// Index Count
-    cbtU32 m_IndexCount;
-    /// Bounding Box
-    cbtBoundingBox m_BoundingBox;
-    /// Vertex Array Object
-    cbtVertexArray* m_VAO;
+    class cbtMeshBuilder;
 
-    virtual ~cbtMesh();
+    class cbtMesh : public cbtManaged
+    {
+    public:
+        /// An enum to represent the VBOs.
+        enum VertexBuffers
+        {
+            VERTEX_DATA = 0,
+            INSTANCE_DATA,
 
-public:
-    cbtMesh(const cbtStr&_name, const cbtVertex _vertices[], cbtU32 _vertexCount, const cbtU32 _indices[], cbtU32 _indexCount);
+            NUM_VBO_CATEGORY,
+        };
 
-    inline const cbtStr& GetName() const { return m_Name; }
-    inline const cbtBoundingBox& GetBoundingBox() const { return m_BoundingBox; }
-    inline cbtU32 GetVertexCount() const { return m_VertexCount; }
-    inline cbtU32 GetIndexCount() const { return m_IndexCount; }
+    protected:
+        /// The name of the Mesh.
+        const cbtStr m_Name;
+        /// Vertices
+        cbtVertex* m_Vertices;
+        /// Vertex Count
+        cbtU32 m_VertexCount;
+        /// Indices
+        cbtU32* m_Indices;
+        /// Index Count
+        cbtU32 m_IndexCount;
+        /// Bounding Box
+        cbtBoundingBox m_BoundingBox;
+        /// Vertex Array Object
+        cbtVertexArray* m_VAO;
 
-    void SetInstanceData(cbtU32 _instanceCount, cbtMeshInstance* _instanceData);
-    void Bind() { m_VAO->Bind(); }
-};
+        virtual ~cbtMesh();
+
+    public:
+        cbtMesh(const cbtStr& _name, const cbtVertex _vertices[], cbtU32 _vertexCount, const cbtU32 _indices[],
+                cbtU32 _indexCount);
+
+        inline const cbtStr& GetName() const
+        {
+            return m_Name;
+        }
+
+        inline const cbtBoundingBox& GetBoundingBox() const
+        {
+            return m_BoundingBox;
+        }
+
+        inline cbtU32 GetVertexCount() const
+        {
+            return m_VertexCount;
+        }
+
+        inline cbtU32 GetIndexCount() const
+        {
+            return m_IndexCount;
+        }
+
+        void SetInstanceData(cbtU32 _instanceCount, cbtMeshInstance* _instanceData);
+
+        void Bind()
+        {
+            m_VAO->Bind();
+        }
+    };
 
 NS_CBT_END

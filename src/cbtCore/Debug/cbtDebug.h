@@ -12,95 +12,114 @@ NS_CBT_BEGIN
 #define CBT_ASSERT(__CONDITION__) assert(__CONDITION__)
 
 /// Log Category
-enum cbtLogCategory : cbtU32
-{
-    CBT_LOG_CATEGORY_APPLICATION,
-    CBT_LOG_CATEGORY_AUDIO,
-    CBT_LOG_CATEGORY_RENDER,
-    CBT_LOG_CATEGORY_INPUT,
-    CBT_LOG_CATEGORY_PHYSICS,
-    CBT_LOG_CATEGORY_TEST,
-};
+    enum cbtLogCategory : cbtU32
+    {
+        CBT_LOG_CATEGORY_APPLICATION,
+        CBT_LOG_CATEGORY_AUDIO,
+        CBT_LOG_CATEGORY_RENDER,
+        CBT_LOG_CATEGORY_INPUT,
+        CBT_LOG_CATEGORY_PHYSICS,
+        CBT_LOG_CATEGORY_TEST,
+    };
 
 /// Log Priority
-enum cbtLogPriority : cbtU32
-{
-    CBT_LOG_PRIORITY_VERBOSE,
-    CBT_LOG_PRIORITY_DEBUG,
-    CBT_LOG_PRIORITY_INFO,
-    CBT_LOG_PRIORITY_WARN,
-    CBT_LOG_PRIORITY_ERROR,
-    CBT_LOG_PRIORITY_CRITICAL,
-};
+    enum cbtLogPriority : cbtU32
+    {
+        CBT_LOG_PRIORITY_VERBOSE,
+        CBT_LOG_PRIORITY_DEBUG,
+        CBT_LOG_PRIORITY_INFO,
+        CBT_LOG_PRIORITY_WARN,
+        CBT_LOG_PRIORITY_ERROR,
+        CBT_LOG_PRIORITY_CRITICAL,
+    };
 
 /**
     \brief A debug utility class.
 */
-class cbtDebug
-{
-private:
-    /**
-        \brief Private Constructor. All functions should be static. No objects of this class should be created.
-    */
-    cbtDebug() {}
-    /**
-        \brief Private Destructor. All functions should be static. No objects of this class should be created.
-    */
-    ~cbtDebug() {}
-
-    /**
-        \brief Get the string description of a cbtLogCategory.
-
-        \param _category The cbtLogCategory.
-
-        \return The string description of the cbtLogCategory.
-    */
-    static cbtStr ToString(cbtLogCategory _category)
+    class cbtDebug
     {
-        switch (_category)
+    private:
+        /**
+            \brief Private Constructor. All functions should be static. No objects of this class should be created.
+        */
+        cbtDebug()
         {
-        case CBT_LOG_CATEGORY_APPLICATION: return "APPLICATION";
-        case CBT_LOG_CATEGORY_AUDIO: return "AUDIO";
-        case CBT_LOG_CATEGORY_RENDER: return "RENDER";
-        case CBT_LOG_CATEGORY_INPUT: return "INPUT";
-        case CBT_LOG_CATEGORY_PHYSICS: return "PHYSICS";
-        case CBT_LOG_CATEGORY_TEST: return "TEST";
-        default: return "UNKNOWN CATEGORY";
         }
-    }
 
-    /**
-        \brief Get the string description of a cbtLogPriority.
-
-        \param _priority The cbtLogPriority.
-
-        \return The string description of the cbtLogPriority.
-    */
-    static cbtStr ToString(cbtLogPriority _priority)
-    {
-        switch (_priority)
+        /**
+            \brief Private Destructor. All functions should be static. No objects of this class should be created.
+        */
+        ~cbtDebug()
         {
-        case CBT_LOG_PRIORITY_VERBOSE: return "VERBOSE";
-        case CBT_LOG_PRIORITY_DEBUG: return "DEBUG";
-        case CBT_LOG_PRIORITY_INFO: return "INFO";
-        case CBT_LOG_PRIORITY_WARN: return "WARN";
-        case CBT_LOG_PRIORITY_ERROR: return "ERROR";
-        case CBT_LOG_PRIORITY_CRITICAL: return "CRITICAL";
-        default: return "UNKNOWN PRIORITY";
         }
-    }
 
-public:
-    /**
-        \brief Print a message to the console.
+        /**
+            \brief Get the string description of a cbtLogCategory.
 
-        \param _category The message category.
-        \param _priority The message priority.
-        \param _format The message string in printf() format.
-        \param ... Additional arguments.
-    */
-    static void Log(cbtLogCategory _category, cbtLogPriority _priority, const cbtS8* _format, ...);
-};
+            \param _category The cbtLogCategory.
+
+            \return The string description of the cbtLogCategory.
+        */
+        static cbtStr ToString(cbtLogCategory _category)
+        {
+            switch (_category)
+            {
+            case CBT_LOG_CATEGORY_APPLICATION:
+                return "APPLICATION";
+            case CBT_LOG_CATEGORY_AUDIO:
+                return "AUDIO";
+            case CBT_LOG_CATEGORY_RENDER:
+                return "RENDER";
+            case CBT_LOG_CATEGORY_INPUT:
+                return "INPUT";
+            case CBT_LOG_CATEGORY_PHYSICS:
+                return "PHYSICS";
+            case CBT_LOG_CATEGORY_TEST:
+                return "TEST";
+            default:
+                return "UNKNOWN CATEGORY";
+            }
+        }
+
+        /**
+            \brief Get the string description of a cbtLogPriority.
+
+            \param _priority The cbtLogPriority.
+
+            \return The string description of the cbtLogPriority.
+        */
+        static cbtStr ToString(cbtLogPriority _priority)
+        {
+            switch (_priority)
+            {
+            case CBT_LOG_PRIORITY_VERBOSE:
+                return "VERBOSE";
+            case CBT_LOG_PRIORITY_DEBUG:
+                return "DEBUG";
+            case CBT_LOG_PRIORITY_INFO:
+                return "INFO";
+            case CBT_LOG_PRIORITY_WARN:
+                return "WARN";
+            case CBT_LOG_PRIORITY_ERROR:
+                return "ERROR";
+            case CBT_LOG_PRIORITY_CRITICAL:
+                return "CRITICAL";
+            default:
+                return "UNKNOWN PRIORITY";
+            }
+        }
+
+    public:
+        /**
+            \brief Print a message to the console.
+
+            \param _category The message category.
+            \param _priority The message priority.
+            \param _format The message string in printf() format.
+            \param ... Additional arguments.
+        */
+        static void Log(cbtLogCategory _category, cbtLogPriority _priority, const cbtS8* _format, ...);
+    };
 
 /*
 /// Print a message to the console with priority CBT_LOG_PRIORITY_VERBOSE and a given category.

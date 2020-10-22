@@ -12,25 +12,39 @@
 
 NS_CBT_BEGIN
 
-class GL_cbtRenderEngine : public cbtRenderEngine
-{
-    friend class cbtRenderEngine;
+    class GL_cbtRenderEngine : public cbtRenderEngine
+    {
+        friend class cbtRenderEngine;
 
-protected:
-    cbtWindow* m_Window = nullptr;
-    cbtRenderer* m_Renderer = nullptr;
+    protected:
+        cbtWindow* m_Window = nullptr;
+        cbtRenderer* m_Renderer = nullptr;
 
-    GL_cbtRenderEngine() {}
-    virtual ~GL_cbtRenderEngine() {}
+        GL_cbtRenderEngine()
+        {
+        }
 
-public:
-    virtual void Init(const cbtWindowProperties& _winProp);
-    virtual void Update();
-    virtual void Exit();
+        virtual ~GL_cbtRenderEngine()
+        {
+        }
 
-    virtual const cbtWindow* GetWindow() const { return m_Window; }
-    virtual cbtWindow* GetWindow() { return m_Window; }
-};
+    public:
+        virtual void Init(const cbtWindowProperties& _winProp);
+
+        virtual void Update();
+
+        virtual void Exit();
+
+        virtual const cbtWindow* GetWindow() const
+        {
+            return m_Window;
+        }
+
+        virtual cbtWindow* GetWindow()
+        {
+            return m_Window;
+        }
+    };
 
 NS_CBT_END
 

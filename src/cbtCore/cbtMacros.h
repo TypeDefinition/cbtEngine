@@ -78,15 +78,15 @@ typedef std::string cbtStr;
 #define CBT_OVERRIDE override
 
 /// \brief Allows a non-static member function with no parameters to be passed as a parameter.
-#define CBT_CALLBACK_0(__SELECTOR__, __TARGET__,...)   ::std::bind(&__SELECTOR__, __TARGET__, ##__VA_ARGS__)
+#define CBT_CALLBACK_0(__SELECTOR__, __TARGET__, ...)   ::std::bind(&__SELECTOR__, __TARGET__, ##__VA_ARGS__)
 /// \brief Allows a non-static member function with 1 parameter to be passed as a parameter.
-#define CBT_CALLBACK_1(__SELECTOR__, __TARGET__,...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, ##__VA_ARGS__)
+#define CBT_CALLBACK_1(__SELECTOR__, __TARGET__, ...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, ##__VA_ARGS__)
 /// \brief Allows a non-static member function with 2 parameters to be passed as a parameter.
-#define CBT_CALLBACK_2(__SELECTOR__, __TARGET__,...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
+#define CBT_CALLBACK_2(__SELECTOR__, __TARGET__, ...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 /// \brief Allows a non-static member function with 3 parameters to be passed as a parameter.
-#define CBT_CALLBACK_3(__SELECTOR__, __TARGET__,...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
+#define CBT_CALLBACK_3(__SELECTOR__, __TARGET__, ...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 /// \brief Allows a non-static member function with 4 parameters to be passed as a parameter.
-#define CBT_CALLBACK_4(__SELECTOR__, __TARGET__,...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, ##__VA_ARGS__)
+#define CBT_CALLBACK_4(__SELECTOR__, __TARGET__, ...)   ::std::bind(&__SELECTOR__, __TARGET__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, ##__VA_ARGS__)
 
 /// \brief Resolves to true if typename __BASE__ is a base class of typename __DERIVED__. Otherwise, resolves to false.
 #define CBT_IS_BASE_OF(__BASE__, __DERIVED__) ::std::is_base_of<__BASE__, __DERIVED__>::value
@@ -203,8 +203,13 @@ typedef std::string cbtStr;
     \param _a The first value to be swapped.
     \param _b The second value to be swapped.
 */
-template <typename T>
-void CBTShallowSwap(T& _a, T& _b) { T temp = _a; _a = _b; _b = temp; }
+template<typename T>
+void CBTShallowSwap(T& _a, T& _b)
+{
+    T temp = _a;
+    _a = _b;
+    _b = temp;
+}
 
 /**
     \brief A template class to get a specific typename in a list of types as specified by INDEX.
@@ -215,7 +220,10 @@ void CBTShallowSwap(T& _a, T& _b) { T temp = _a; _a = _b; _b = temp; }
     \endcode
 */
 template<cbtU32 INDEX, typename T, typename... Args>
-struct TemplateType { using Type = typename TemplateType<INDEX - 1, Args...>::Type; };
+struct TemplateType
+{
+    using Type = typename TemplateType<INDEX - 1, Args...>::Type;
+};
 
 /**
     \brief A template class to get a specific typename in a list of types as specified by INDEX.
@@ -226,12 +234,15 @@ struct TemplateType { using Type = typename TemplateType<INDEX - 1, Args...>::Ty
     \endcode
 */
 template<typename T, typename... Args>
-struct TemplateType<0, T, Args...> { using Type = T; };
+struct TemplateType<0, T, Args...>
+{
+    using Type = T;
+};
 
 /**
     \brief Returns the number of template types.
 */
-template <typename ...Args>
+template<typename ...Args>
 constexpr cbtU32 CBT_TEMPLATE_COUNT = sizeof...(Args);
 
 /*
@@ -239,16 +250,22 @@ constexpr cbtU32 CBT_TEMPLATE_COUNT = sizeof...(Args);
         In a list of template types, get the index of CHECK.
         For example, GetTemplateIndex<cbtU32, cbtStr, cbtS32, cbtU32, cbtBool>() will return 2, because first type cbtU32, appears at index 2 in the list cbtStr, cbtS32, cbtU32, cbtBool.
 */
-template <typename CHECK>
-cbtU32 CBTTemplateIndex() { return 0; }
+template<typename CHECK>
+cbtU32 CBTTemplateIndex()
+{
+    return 0;
+}
 
 /*
     \brief
         In a list of template types, get the index of CHECK.
         For example, GetTemplateIndex<cbtU32, cbtStr, cbtS32, cbtU32, cbtBool>() will return 2, because first type cbtU32, appears at index 2 in the list cbtStr, cbtS32, cbtU32, cbtBool.
 */
-template <typename CHECK, typename T, typename ...Args>
-cbtU32 CBTTemplateIndex() { return std::is_same<CHECK, T>::value ? 0 : (1 + CBTTemplateIndex<CHECK, Args...>()); }
+template<typename CHECK, typename T, typename ...Args>
+cbtU32 CBTTemplateIndex()
+{
+    return std::is_same<CHECK, T>::value ? 0 : (1 + CBTTemplateIndex<CHECK, Args...>());
+}
 
 // External APIs
 #define CBT_OPENGL

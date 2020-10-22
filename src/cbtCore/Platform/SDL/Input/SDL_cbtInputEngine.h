@@ -9,27 +9,40 @@
 
 NS_CBT_BEGIN
 
-class SDL_cbtInputEngine : public cbtInputEngine
-{
-    friend class cbtInputEngine;
+    class SDL_cbtInputEngine : public cbtInputEngine
+    {
+        friend class cbtInputEngine;
 
-protected:
-    cbtKeyboardHandler* m_KeyboardHandler;
-    SDLEventListener m_SDLEventListener;
+    protected:
+        cbtKeyboardHandler* m_KeyboardHandler;
+        SDLEventListener m_SDLEventListener;
 
-    SDL_cbtInputEngine()
-        : m_KeyboardHandler(nullptr)
-    {}
-    virtual ~SDL_cbtInputEngine() {}
+        SDL_cbtInputEngine()
+                :m_KeyboardHandler(nullptr)
+        {
+        }
 
-public:
-    virtual void Init();
-    virtual void Update();
-    virtual void Exit();
+        virtual ~SDL_cbtInputEngine()
+        {
+        }
 
-    virtual cbtKeyboardHandler* GetKeyboardHandler() { return m_KeyboardHandler; }
-    virtual const cbtKeyboardHandler* GetKeyboardHandler() const { return m_KeyboardHandler; }
-};
+    public:
+        virtual void Init();
+
+        virtual void Update();
+
+        virtual void Exit();
+
+        virtual cbtKeyboardHandler* GetKeyboardHandler()
+        {
+            return m_KeyboardHandler;
+        }
+
+        virtual const cbtKeyboardHandler* GetKeyboardHandler() const
+        {
+            return m_KeyboardHandler;
+        }
+    };
 
 NS_CBT_END
 

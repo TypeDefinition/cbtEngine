@@ -39,73 +39,85 @@ NS_CBT_BEGIN
         }
         \endcode
  */
-template <typename T>
-class cbtPasskey
-{
-    friend T;
+    template<typename T>
+    class cbtPasskey
+    {
+        friend T;
 
-private:
-    /**
-        \brief Constructor. Can only be created by class T.
+    private:
+        /**
+            \brief Constructor. Can only be created by class T.
 
-        \return A cbtPasskey.
-    */
-    cbtPasskey() {}
+            \return A cbtPasskey.
+        */
+        cbtPasskey()
+        {
+        }
 
-public:
-    /**
-        \brief Destructor
-    */
-    ~cbtPasskey() {}
-};
+    public:
+        /**
+            \brief Destructor
+        */
+        ~cbtPasskey()
+        {
+        }
+    };
 
 /**
     \brief Same as cbtPasskey, but allows 2 classes to create cbtPasskey2.
 */
-template <typename T, typename U>
-class cbtPasskey2
-{
-    friend T;
-    friend U;
+    template<typename T, typename U>
+    class cbtPasskey2
+    {
+        friend T;
+        friend U;
 
-private:
-    /**
-        \brief Constructor. Can only be created by class T and class U.
+    private:
+        /**
+            \brief Constructor. Can only be created by class T and class U.
 
-        \return A cbtPasskey2.
-    */
-    cbtPasskey2() {}
+            \return A cbtPasskey2.
+        */
+        cbtPasskey2()
+        {
+        }
 
-public:
-    /**
-        \brief Destructor
-    */
-    ~cbtPasskey2() {}
-};
+    public:
+        /**
+            \brief Destructor
+        */
+        ~cbtPasskey2()
+        {
+        }
+    };
 
 /**
     \brief Same as cbtPasskey, but allows 3 classes to create cbtPasskey3.
 */
-template <typename T, typename U, typename V>
-class cbtPasskey3
-{
-    friend T;
-    friend U;
-    friend V;
+    template<typename T, typename U, typename V>
+    class cbtPasskey3
+    {
+        friend T;
+        friend U;
+        friend V;
 
-private:
-    /**
-        \brief Constructor. Can only be created by class T and class U and class V.
+    private:
+        /**
+            \brief Constructor. Can only be created by class T and class U and class V.
 
-        \return A cbtPasskey3.
-    */
-    cbtPasskey3() {}
+            \return A cbtPasskey3.
+        */
+        cbtPasskey3()
+        {
+        }
 
-public:
-    /**
-        \brief Destructor
-    */
-    ~cbtPasskey3() {}
-};
+    public:
+        /**
+            \brief Destructor
+        */
+        ~cbtPasskey3()
+        {
+        }
+    };
 
 NS_CBT_END

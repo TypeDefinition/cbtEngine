@@ -5,7 +5,7 @@
 
 NS_CBT_BEGIN
 
-std::vector<SDLEventListener*> SDLEventPoller::m_Listeners;
+    std::vector<SDLEventListener*> SDLEventPoller::m_Listeners;
 
 NS_CBT_END
 

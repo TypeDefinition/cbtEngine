@@ -38,16 +38,16 @@
 NS_CBT_BEGIN
 
 /// \brief Input name.
-typedef cbtU32 cbtInputName;
+    typedef cbtU32 cbtInputName;
 
 /// \brief The maximum number of input names.
 #define CBT_MAX_INPUT_NAME 128
 
 /// \brief 64bit Input Mask.
-typedef cbtU64 cbtInputMask;
+    typedef cbtU64 cbtInputMask;
 
 /// \brief 16bit Controller Index.
-typedef cbtU16 cbtControllerIndex;
+    typedef cbtU16 cbtControllerIndex;
 
 #define CBT_CONTROLLER_NONE 0x0000
 #define CBT_CONTROLLER_ALL 0xFFFF
@@ -73,8 +73,8 @@ typedef cbtU16 cbtControllerIndex;
 #define CBT_CONTROLLER_DEFAULT CBT_CONTROLLER_ALL
 
 /// \brief Input Context
-typedef cbtU16 cbtInputContext;
- 
+    typedef cbtU16 cbtInputContext;
+
 #define CBT_INPUT_CONTEXT_NONE 0x0000
 #define CBT_INPUT_CONTEXT_ALL 0xFFFF
 
@@ -101,105 +101,115 @@ typedef cbtU16 cbtInputContext;
 /**
     \brief Input Utility Class
 */
-class cbtInput
-{
-private:
-    /**
-        \brief Private Constructor. All functions should be static. No objects of this class should be created.
-    */
-    cbtInput() = default;
-    /**
-        \brief Private Destructor. All functions should be static. No objects of this class should be created.
-    */
-    ~cbtInput() = default;
+    class cbtInput
+    {
+    private:
+        /**
+            \brief Private Constructor. All functions should be static. No objects of this class should be created.
+        */
+        cbtInput() = default;
 
-public:
-    /**
-        \brief Generate an cbtInputMask given a cbtInputContext, cbtControllerIndex and cbtKeycode.
+        /**
+            \brief Private Destructor. All functions should be static. No objects of this class should be created.
+        */
+        ~cbtInput() = default;
 
-        \param _context The input context.
-        \param _controllerIndex The controller index.
-        \param _keycode The keycode.
+    public:
+        /**
+            \brief Generate an cbtInputMask given a cbtInputContext, cbtControllerIndex and cbtKeycode.
 
-        \return An cbtInputMask representing the given cbtInputContext, cbtControllerIndex and cbtKeycode.
+            \param _context The input context.
+            \param _controllerIndex The controller index.
+            \param _keycode The keycode.
 
-        \sa GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
-    */
-    static cbtInputMask GenerateInputMask(cbtInputContext _context, cbtControllerIndex _controllerIndex, cbtKeycode _keyCode);
-    /**
-        \brief Extract the cbtInputContext from a cbtInputMask.
+            \return An cbtInputMask representing the given cbtInputContext, cbtControllerIndex and cbtKeycode.
 
-        \param _inputMask The cbtInputMask to extract from.
+            \sa GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
+        */
+        static cbtInputMask
+        GenerateInputMask(cbtInputContext _context, cbtControllerIndex _controllerIndex, cbtKeycode _keyCode);
 
-        \return The cbtInputContext of the cbtInputMask.
+        /**
+            \brief Extract the cbtInputContext from a cbtInputMask.
 
-        \sa GenerateInputMask, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
-    */
-    static cbtInputContext GetContext(cbtInputMask _inputMask);
-    /**
-        \brief Extract the cbtControllerIndex from a cbtInputMask.
+            \param _inputMask The cbtInputMask to extract from.
 
-        \param _inputMask The cbtInputMask to extract from.
+            \return The cbtInputContext of the cbtInputMask.
 
-        \return The cbtControllerIndex of the cbtInputMask.
+            \sa GenerateInputMask, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
+        */
+        static cbtInputContext GetContext(cbtInputMask _inputMask);
 
-        \sa GenerateInputMask, GetContext, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
-    */
-    static cbtControllerIndex GetControllerIndex(cbtInputMask _inputMask);
-    /**
-        \brief Extract the cbtKeycode from a cbtInputMask.
+        /**
+            \brief Extract the cbtControllerIndex from a cbtInputMask.
 
-        \param _inputMask The cbtInputMask to extract from.
+            \param _inputMask The cbtInputMask to extract from.
 
-        \return The cbtKeycode of the cbtInputMask.
+            \return The cbtControllerIndex of the cbtInputMask.
 
-        \sa GenerateInputMask, GetContext, GetControllerIndex, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
-    */
-    static cbtKeycode GetKeycode(cbtInputMask _inputMask);
-    /**
-        \brief Compare 2 CBTInputContexts.
+            \sa GenerateInputMask, GetContext, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
+        */
+        static cbtControllerIndex GetControllerIndex(cbtInputMask _inputMask);
 
-        \param _contextA The first cbtInputContext to compare.
-        \param _contextB The second cbtInputContext to compare.
+        /**
+            \brief Extract the cbtKeycode from a cbtInputMask.
 
-        \return Returns (_contextA & _contextB) != 0.
+            \param _inputMask The cbtInputMask to extract from.
 
-        \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareControllerIndex, CompareKeyCode, CompareMask
-    */
-    static cbtBool CompareContext(cbtInputContext _contextA, cbtInputContext _contextB);
-    /**
-        \brief Compare 2 cbtControllerIndex.
+            \return The cbtKeycode of the cbtInputMask.
 
-        \param _controllerIndexA The first cbtControllerIndex to compare.
-        \param _controllerIndexB The second cbtControllerIndex to compare.
+            \sa GenerateInputMask, GetContext, GetControllerIndex, CompareContext, CompareControllerIndex, CompareKeyCode, CompareMask
+        */
+        static cbtKeycode GetKeycode(cbtInputMask _inputMask);
 
-        \return Returns (_controllerIndexA & _controllerIndexB) != 0.
+        /**
+            \brief Compare 2 CBTInputContexts.
 
-        \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareKeyCode, CompareMask
-    */
-    static cbtBool CompareControllerIndex(cbtControllerIndex _controllerIndexA, cbtControllerIndex _controllerIndexB);
-    /**
-        \brief Compare 2 cbtKeycode.
+            \param _contextA The first cbtInputContext to compare.
+            \param _contextB The second cbtInputContext to compare.
 
-        \param _keyCodeA The first cbtKeycode to compare.
-        \param _keyCodeB The second cbtKeycode to compare.
+            \return Returns (_contextA & _contextB) != 0.
 
-        \return Returns _keyCodeA == _keyCodeB.
+            \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareControllerIndex, CompareKeyCode, CompareMask
+        */
+        static cbtBool CompareContext(cbtInputContext _contextA, cbtInputContext _contextB);
 
-        \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareMask
-    */
-    static cbtBool CompareKeyCode(cbtKeycode _keyCodeA, cbtKeycode _keyCodeB);
-    /**
-        \brief Compare 2 cbtInputMask.
+        /**
+            \brief Compare 2 cbtControllerIndex.
 
-        \param _maskA The first cbtInputMask to compare.
-        \param _maskB The second cbtInputMask to compare.
+            \param _controllerIndexA The first cbtControllerIndex to compare.
+            \param _controllerIndexB The second cbtControllerIndex to compare.
 
-        \return Returns true result of comparing the masks' controller index, keycode and input context.
+            \return Returns (_controllerIndexA & _controllerIndexB) != 0.
 
-        \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode
-    */
-    static cbtBool CompareMask(cbtInputMask _maskA, cbtInputMask _maskB);
-};
+            \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareKeyCode, CompareMask
+        */
+        static cbtBool
+        CompareControllerIndex(cbtControllerIndex _controllerIndexA, cbtControllerIndex _controllerIndexB);
+
+        /**
+            \brief Compare 2 cbtKeycode.
+
+            \param _keyCodeA The first cbtKeycode to compare.
+            \param _keyCodeB The second cbtKeycode to compare.
+
+            \return Returns _keyCodeA == _keyCodeB.
+
+            \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareMask
+        */
+        static cbtBool CompareKeyCode(cbtKeycode _keyCodeA, cbtKeycode _keyCodeB);
+
+        /**
+            \brief Compare 2 cbtInputMask.
+
+            \param _maskA The first cbtInputMask to compare.
+            \param _maskB The second cbtInputMask to compare.
+
+            \return Returns true result of comparing the masks' controller index, keycode and input context.
+
+            \sa GenerateInputMask, GetContext, GetControllerIndex, GetKeycode, CompareContext, CompareControllerIndex, CompareKeyCode
+        */
+        static cbtBool CompareMask(cbtInputMask _maskA, cbtInputMask _maskB);
+    };
 
 NS_CBT_END

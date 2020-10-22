@@ -9,7 +9,7 @@ file(GLOB_RECURSE CBT_CORE_SRC LIST_DIRECTORIES true CONFIGURE_DEPENDS
         "${CBT_CORE_SRC_DIR}/*.c"
         "${CBT_CORE_SRC_DIR}/*.hpp"
         "${CBT_CORE_SRC_DIR}/*.cpp")
-add_library("cbtCore" ${CBT_CORE_SRC})
+add_library("cbtCore" ${CBT_CORE_SRC} src/cbtCore/Core/Math/cbtPhysicsUtil.h src/cbtCore/Core/Math/cbtPhysicsUtil.cpp)
 
 target_include_directories("cbtCore" PUBLIC ${CBT_CORE_SRC_DIR})
 target_link_libraries("cbtCore" "GL" "GLEW" "SDL2" "SDL2_image")

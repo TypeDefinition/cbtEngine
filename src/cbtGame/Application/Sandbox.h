@@ -14,7 +14,10 @@ public:
     Sandbox(const cbtStr& _name);
 
     virtual void PostInit();
+
     virtual void PreUpdate();
+
     virtual void PostUpdate();
+
     virtual void PreExit();
 };

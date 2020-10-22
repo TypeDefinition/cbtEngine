@@ -7,28 +7,44 @@
 
 NS_CBT_BEGIN
 
-class cbtGameEngine : public cbtSingleton<cbtGameEngine>
-{
-    friend class cbtSingleton<cbtGameEngine>;
+    class cbtGameEngine : public cbtSingleton<cbtGameEngine>
+    {
+        friend class cbtSingleton<cbtGameEngine>;
 
-protected:
-    cbtSceneManager* m_SceneManager;
+    protected:
+        cbtSceneManager* m_SceneManager;
 
-    cbtGameEngine()
-    : m_SceneManager(nullptr)
-    {}
-    virtual ~cbtGameEngine() {}
+        cbtGameEngine()
+                :m_SceneManager(nullptr)
+        {
+        }
 
-    static cbtGameEngine* CreateInstance() { return cbtNew cbtGameEngine(); }
+        virtual ~cbtGameEngine()
+        {
+        }
 
-public:
-    void Init();
-    void Update();
-    void Exit();
+        static cbtGameEngine* CreateInstance()
+        {
+            return cbtNew cbtGameEngine();
+        }
 
-    // System(s)
-    inline const cbtSceneManager* GetSceneManager() const { return m_SceneManager; }
-    inline cbtSceneManager* GetSceneManager() { return m_SceneManager; }
-};
+    public:
+        void Init();
+
+        void Update();
+
+        void Exit();
+
+        // System(s)
+        inline const cbtSceneManager* GetSceneManager() const
+        {
+            return m_SceneManager;
+        }
+
+        inline cbtSceneManager* GetSceneManager()
+        {
+            return m_SceneManager;
+        }
+    };
 
 NS_CBT_END

@@ -18,54 +18,75 @@ NS_CBT_BEGIN
 // Stencil Value(s)
 #define CBT_STENCIL_OPAQUE 1
 
-class cbtRenderer
-{
-private:
-    cbtEventListener m_EventListener;
+    class cbtRenderer
+    {
+    private:
+        cbtEventListener m_EventListener;
 
-    cbtRef<cbtMesh> m_ScreenQuad;
-    cbtRef<cbtMesh> m_SkyboxMesh;
+        cbtRef<cbtMesh> m_ScreenQuad;
+        cbtRef<cbtMesh> m_SkyboxMesh;
 
-    cbtF32 m_RenderScale;
-    cbtS32 m_BufferWidth, m_BufferHeight;
-    cbtS32 m_WindowWidth, m_WindowHeight;
-    cbtFrameBuffer* m_GBuffer;
-    cbtFrameBuffer* m_LBuffer;
-    cbtFrameBuffer* m_FBuffer;
-    cbtFrameBuffer* m_PBuffer;
+        cbtF32 m_RenderScale;
+        cbtS32 m_BufferWidth, m_BufferHeight;
+        cbtS32 m_WindowWidth, m_WindowHeight;
+        cbtFrameBuffer* m_GBuffer;
+        cbtFrameBuffer* m_LBuffer;
+        cbtFrameBuffer* m_FBuffer;
+        cbtFrameBuffer* m_PBuffer;
 
-    cbtComponentGroup<cbtLight, cbtTransform> m_Lights;
-    cbtComponentGroup<cbtCamera, cbtTransform> m_Cameras;
-    cbtComponentGroup<cbtGraphics, cbtTransform> m_Objects;
+        cbtComponentGroup<cbtLight, cbtTransform> m_Lights;
+        cbtComponentGroup<cbtCamera, cbtTransform> m_Cameras;
+        cbtComponentGroup<cbtGraphics, cbtTransform> m_Objects;
 
-    std::unordered_map<cbtMaterial*, std::vector<cbtU32>> m_Deferred;
-    std::unordered_map<cbtMaterial*, std::vector<cbtU32>> m_Forward;
-    std::vector<cbtU32> m_Transparent;
+        std::unordered_map<cbtMaterial*, std::vector<cbtU32>> m_Deferred;
+        std::unordered_map<cbtMaterial*, std::vector<cbtU32>> m_Forward;
+        std::vector<cbtU32> m_Transparent;
 
-    static cbtBool InViewFrustum(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix, const cbtBoundingBox& _boundingBox);
-    static cbtF32 GetObjectDistanceToCamera(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix, const cbtBoundingBox& _boundingBox);
+        static cbtBool InViewFrustum(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix,
+                const cbtBoundingBox& _boundingBox);
 
-    void SortRenderObjects();
-    void ClearRenderObjects();
+        static cbtF32
+        GetObjectDistanceToCamera(const cbtMatrix4F& _viewProjectionMatrix, const cbtMatrix4F& _modelMatrix,
+                const cbtBoundingBox& _boundingBox);
 
-    void DistanceMergeSort(cbtF32* _distanceArray, cbtU32* _indexArray, cbtU32 _numElements);
-    std::vector<cbtU32> SortTransparentObjects(const cbtMatrix4F& _viewProjectionMatrix);
+        void SortRenderObjects();
 
-    void RenderGPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera);
-    void RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform);
-    void RenderFPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform);
-    void RenderPPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform);
+        void ClearRenderObjects();
 
-    void Render();
+        void DistanceMergeSort(cbtF32* _distanceArray, cbtU32* _indexArray, cbtU32 _numElements);
 
-public:
-    cbtRenderer();
-    ~cbtRenderer();
+        std::vector<cbtU32> SortTransparentObjects(const cbtMatrix4F& _viewProjectionMatrix);
 
-    inline void SetRenderScale(cbtF32 _renderScale) { m_RenderScale = _renderScale; }
-    inline cbtF32 GetRenderScale() const { return m_RenderScale; }
+        void RenderGPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix,
+                const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera);
 
-    void Update();
-};
+        void RenderLPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix, cbtCamera* _camCamera,
+                cbtTransform* _camTransform);
+
+        void RenderFPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix,
+                const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform);
+
+        void RenderPPass(const cbtMatrix4F& _viewMatrix, const cbtMatrix4F& _projectionMatrix,
+                const cbtMatrix4F& _viewProjectionMatrix, cbtCamera* _camCamera, cbtTransform* _camTransform);
+
+        void Render();
+
+    public:
+        cbtRenderer();
+
+        ~cbtRenderer();
+
+        inline void SetRenderScale(cbtF32 _renderScale)
+        {
+            m_RenderScale = _renderScale;
+        }
+
+        inline cbtF32 GetRenderScale() const
+        {
+            return m_RenderScale;
+        }
+
+        void Update();
+    };
 
 NS_CBT_END

@@ -3,8 +3,8 @@
 
 NS_CBT_BEGIN
 
-CBT_DEFINE_FLAGS(cbtLight, CBT_COMPONENT_FLAG_NONE);
+    CBT_DEFINE_FLAGS(cbtLight, CBT_COMPONENT_FLAG_NONE);
 
-cbtBool cbtLight::s_LightingEnabled = true;
+    cbtBool cbtLight::s_LightingEnabled = true;
 
 NS_CBT_END
