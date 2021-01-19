@@ -71,7 +71,7 @@ bool NormalCheck()
     float deltaVertical = 0.0f;
     float deltaHorizontal = 0.0f;
     vec3 normal = texelFetch(CBT_FBUFFER_NORMAL_CAMERA_SPACE, ivec2(gl_FragCoord), 0).rgb;
-    
+
     int loopIteration = 0;
     for (int x = -1; x <= 1; ++x)
     {
